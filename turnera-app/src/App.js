@@ -49,6 +49,8 @@ function getStepContent(step) {
       return <FormTurnos />;
     case 2:
       return <FormContacto />;
+    case 3:
+      return 'Presentar información del turno';
     default:
       return "Unknown step";
   }

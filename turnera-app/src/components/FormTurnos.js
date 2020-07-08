@@ -1,19 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { MenuItem, Select, FormControl, InputLabel, Button } from "@material-ui/core";
+import setHours from "date-fns/setHours";
+import setMinutes from "date-fns/setMinutes";
+import CustomDatePicker from './DatePicker'
 import { getSucursales } from '../api';
-import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider, KeyboardTimePicker, KeyboardDatePicker } from '@material-ui/pickers';
+
 
 const FormTurnos = () => {
 
-	const [sucursales, setSucursales] = React.useState([]);
-	const [selectedDate, setSelectedDate] = React.useState(new Date());
-
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-  };
-
+	const [sucursales, setSucursales] = useState([]);
+	const [ error, setError] = useState("");
+	const [ excludedTimes, setExcludedTimes ] = useState([]);
+	
 	const formik = useFormik({
 		initialValues: {
 			sucursal: '',
@@ -22,16 +21,30 @@ const FormTurnos = () => {
 		},
 		onSubmit: values => {
 			alert(JSON.stringify(values, null, 2));
-		},
+		}
 	});
 
 	async function getSucursalesFunc() {
-    const res = await getSucursales();
-    setSucursales(res.data);
-  }
+		const res = await getSucursales();
+		setSucursales(res.data);
+	}
+
+	function getDates (sucursal) {
+		const times = sucursales.find(x => x.id === sucursal);
+		const resultTimes = []
+		if (times !== undefined){
+			const { horaDeApertura, horaDeCierre, horaDeFinDeBreak, horaDeInicioDeBreak } = times;
+			resultTimes.push(setHours(setMinutes(new Date(), horaDeApertura.split(":")[1]), horaDeApertura.split(":")[0]), setHours(setMinutes(new Date(), horaDeCierre.split(":")[1]), horaDeCierre.split(":")[0]));
+		}
+		return resultTimes;
+	}
 
 	useEffect(() => {
-		getSucursalesFunc()
+		try{
+			getSucursalesFunc()
+		} catch(err){
+			setError(err)
+		}
 	}, [])
 
 	return (
@@ -45,35 +58,19 @@ const FormTurnos = () => {
 						onChange={formik.handleChange}
 						value={formik.values.sucursal}>
 						{sucursales && sucursales.map(sucursal => (
-							<MenuItem key={`sucursal_${sucursal.id}`} value={sucursal.id}>{sucursal.nombre}</MenuItem>
+							<MenuItem 
+								key={`sucursal_${sucursal.id}`} 
+								value={sucursal.id}>
+									{sucursal.nombre}
+							</MenuItem>
 						))}
 					</Select>
 				</FormControl>
-				<MuiPickersUtilsProvider utils={DateFnsUtils}>
-					<KeyboardDatePicker
-						margin="normal"
-						id="date-picker-dialog"
-						label="Date picker dialog"
-						format="MM-dd-yyyy"
-						value={selectedDate}
-						onChange={handleDateChange}
-						KeyboardButtonProps={{
-							'aria-label': 'change date',
-						}}
-					/>
-					<KeyboardTimePicker
-						margin="normal"
-						id="time-picker"
-						label="Time picker"
-						value={selectedDate}
-						onChange={handleDateChange}
-						KeyboardButtonProps={{
-							'aria-label': 'change time',
-						}}
-					/>
-				</MuiPickersUtilsProvider>
-				
-			
+				<CustomDatePicker 
+					interval={30}
+					excludedTimes={getDates(formik.values.sucursal)}
+					dateFormat="MMMM d, yyyy h:mm aa"	 
+				/>			
 			<Button 
 				type="submit" 
 				variant="contained" 
