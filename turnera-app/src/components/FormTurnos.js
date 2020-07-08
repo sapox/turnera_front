@@ -29,14 +29,20 @@ const FormTurnos = () => {
 		setSucursales(res.data);
 	}
 
-	function getBreakTimes (sucursal) {
+	function getBreakTimesMinMax (sucursal, min, max) {
 		const times = sucursales.find(x => x.id === sucursal);
-		const resultTimes = []
-		if (times !== undefined){
+		if(times !== undefined){
 			const { horaDeApertura, horaDeCierre, horaDeFinDeBreak, horaDeInicioDeBreak } = times;
-			resultTimes.push(setHours(setMinutes(new Date(), horaDeInicioDeBreak.split(":")[1]), horaDeInicioDeBreak.split(":")[0]), setHours(setMinutes(new Date(), horaDeFinDeBreak.split(":")[1]), horaDeFinDeBreak.split(":")[0]));
+			const resultTimesArr = [];
+			if(!min && !max){
+				resultTimesArr.push(setHours(setMinutes(new Date(), horaDeInicioDeBreak.split(":")[1]), horaDeInicioDeBreak.split(":")[0]), setHours(setMinutes(new Date(), horaDeFinDeBreak.split(":")[1]), horaDeFinDeBreak.split(":")[0]));
+				return resultTimesArr;
+			} else if(min && !max){
+				return setHours(setMinutes(new Date(), horaDeApertura.split(":")[1]), horaDeApertura.split(":")[0]);
+			} else if(!min && max){
+				return setHours(setMinutes(new Date(), horaDeCierre.split(":")[1]), horaDeCierre.split(":")[0]);
+			}
 		}
-		return resultTimes;
 	}
 
 	function getMinTime (sucursal) {
@@ -88,9 +94,9 @@ const FormTurnos = () => {
 				</FormControl>
 				<CustomDatePicker 
 					interval={30}
-					excludedTimes={getBreakTimes(formik.values.sucursal)}
-					minTime={getMinTime(formik.values.sucursal)}
-					maxTime={getMaxTime(formik.values.sucursal)}
+					excludedTimes={getBreakTimesMinMax(formik.values.sucursal, false, false)}
+					minTime={getBreakTimesMinMax(formik.values.sucursal, true, false)}
+					maxTime={getBreakTimesMinMax(formik.values.sucursal, false, true)}
 					dateFormat="MMMM d, yyyy h:mm aa"	 
 				/>			
 			<Button 
