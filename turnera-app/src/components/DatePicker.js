@@ -23,6 +23,8 @@ const CustomDatePicker = props => {
 			inline
 			timeIntervals={props.interval}
 			excludeTimes={props.excludedTimes}
+			minTime={props.minTime}
+      maxTime={props.maxTime}
 			dateFormat={props.dateFormat}
 		/>
 	);
