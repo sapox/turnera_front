@@ -11,7 +11,6 @@ const FormTurnos = () => {
 
 	const [sucursales, setSucursales] = useState([]);
 	const [ error, setError] = useState("");
-	const [ excludedTimes, setExcludedTimes ] = useState([]);
 	
 	const formik = useFormik({
 		initialValues: {
@@ -43,26 +42,6 @@ const FormTurnos = () => {
 				return setHours(setMinutes(new Date(), horaDeCierre.split(":")[1]), horaDeCierre.split(":")[0]);
 			}
 		}
-	}
-
-	function getMinTime (sucursal) {
-		const times = sucursales.find(x => x.id === sucursal);
-		let resultTimes;
-		if (times !== undefined){
-			const { horaDeApertura } = times;
-			resultTimes = setHours(setMinutes(new Date(), horaDeApertura.split(":")[1]), horaDeApertura.split(":")[0]);
-		}
-		return resultTimes;
-	}
-
-	function getMaxTime (sucursal) {
-		const times = sucursales.find(x => x.id === sucursal);
-		let resultTimes;
-		if (times !== undefined){
-			const { horaDeCierre } = times;
-			resultTimes = setHours(setMinutes(new Date(), horaDeCierre.split(":")[1]), horaDeCierre.split(":")[0]);
-		}
-		return resultTimes;
 	}
 
 	useEffect(() => {
