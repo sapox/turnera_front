@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { MenuItem, Select, FormControl, InputLabel, Button } from "@material-ui/core";
-import setHours from "date-fns/setHours";
-import setMinutes from "date-fns/setMinutes";
+import { setHours, setMinutes, getDay } from "date-fns";
 import CustomDatePicker from './DatePicker'
-import { getSucursales } from '../api';
+import { getSucursales, getFeriados } from '../api';
 
 
 const FormTurnos = () => {
 
-	const [sucursales, setSucursales] = useState([]);
-	const [ error, setError] = useState("");
+	const [ sucursales, setSucursales ] = useState([]);
+	const [ feriados, setFeriados ] = useState([]);
+	const [ error, setError ] = useState("");
+
+	const isWeekday = date => {
+    const day = getDay(date);
+    return day !== 0 && day !== 6;
+	};
 	
 	const formik = useFormik({
 		initialValues: {
@@ -26,6 +31,11 @@ const FormTurnos = () => {
 	async function getSucursalesFunc() {
 		const res = await getSucursales();
 		setSucursales(res.data);
+	}
+
+	async function getFeriadosFunc() {
+		const res = await getFeriados();
+		setFeriados(res.data);
 	}
 
 	function getBreakTimesMinMax (sucursal, min, max) {
@@ -44,13 +54,24 @@ const FormTurnos = () => {
 		}
 	}
 
+	function populateFeriados(){
+		const dates = [];
+		if(feriados.length > 0){
+			for(let a=0; a < feriados.length; a++){
+				dates.push(feriados[a].fecha);
+			}
+		}	
+		console.log(dates);
+	}
+
 	useEffect(() => {
 		try{
-			getSucursalesFunc()
+			getSucursalesFunc();
+			getFeriadosFunc();
 		} catch(err){
-			setError(err)
+			setError(err);
 		}
-	}, [])
+	}, []);
 
 	return (
 		<form onSubmit={formik.handleSubmit}>
@@ -77,6 +98,8 @@ const FormTurnos = () => {
 					minTime={getBreakTimesMinMax(formik.values.sucursal, true, false)}
 					maxTime={getBreakTimesMinMax(formik.values.sucursal, false, true)}
 					dateFormat="MMMM d, yyyy h:mm aa"	 
+					filterDate={isWeekday}
+					//excludeDates={populateFeriados}
 				/>			
 			<Button 
 				type="submit" 
