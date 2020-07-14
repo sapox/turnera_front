@@ -1,26 +1,30 @@
-import React, { Component } from 'react';
+import React from 'react';
 import DatePicker, { registerLocale } from "react-datepicker";
 import es from "date-fns/locale/es";
 import "react-datepicker/dist/react-datepicker.css";
-import { setHours, setMinutes, getDay, addMonths, setDate, addDays } from "date-fns";
+import { addDays, setMinutes } from "date-fns";
 
 
 registerLocale("es", es);
 
-const CustomDatePicker = ({ minDate, maxDate, showTimeSelect, showDisabledMonthNavigation, showTimeSelectOnly, interval, excludeDates, excludedTimes, minTime, maxTime, dateFormat, filterDate, inline }) => {
-
-	const [ startDate, setStartDate ] = React.useState(addDays(new Date(), 1))
+const CustomDatePicker = ({ name, value, onChange, minDate, maxDate, showTimeSelect, showDisabledMonthNavigation, showTimeSelectOnly, interval, excludeDates, excludedTimes, minTime, maxTime, dateFormat, filterDate, inline }) => {
+	//startDate is set to tomorrow starting at minute 30
+	const [ startDate, setStartDate ] = React.useState(setMinutes(addDays(new Date(), 1), 30));
  
   const handleChange = date => {
 		setStartDate(date);
-  };
+	};
+	
+	console.log(value);
 	
 	return (
 		<DatePicker
 			locale="es"
 			timeCaption="Horario"
-			selected={startDate}
-			onChange={handleChange}
+			selected={(value && new Date(value)) || null}
+			onChange={val => {
+        onChange(name, val);
+      }}
 			showTimeSelect={showTimeSelect}
 			showTimeSelectOnly={showTimeSelectOnly}
 			showDisabledMonthNavigation={showDisabledMonthNavigation}
@@ -35,8 +39,7 @@ const CustomDatePicker = ({ minDate, maxDate, showTimeSelect, showDisabledMonthN
 			maxTime={maxTime}
 			inline={inline}
 		/>
-	);
-  
+	); 
 }
 
 export default CustomDatePicker;

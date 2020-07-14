@@ -2,15 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { MenuItem, Select, FormControl, InputLabel, Button } from "@material-ui/core";
 import { setHours, setMinutes, getDay, addDays } from "date-fns";
-import CustomDatePicker from './DatePicker'
+//import CustomDatePicker from './DatePicker'
+import DatePicker, { registerLocale } from "react-datepicker";
+import es from "date-fns/locale/es";
+import "react-datepicker/dist/react-datepicker.css";
 import { getSucursales, getFeriados } from '../api';
 
+registerLocale("es", es);
 
 const FormTurnos = () => {
 
 	const [ sucursales, setSucursales ] = useState([]);
 	const [ feriados, setFeriados ] = useState([]);
 	const [ error, setError ] = useState("");
+	const [ startDate, setStartDate ] = React.useState(setMinutes(addDays(new Date(), 1), 30));
 	
 	const isWeekday = date => {
     const day = getDay(date);
@@ -24,7 +29,7 @@ const FormTurnos = () => {
 			hora: '',
 		},
 		onSubmit: values => {
-			alert(JSON.stringify(values, null, 2));
+			console.log(values);
 		}
 	});
 
@@ -94,20 +99,30 @@ const FormTurnos = () => {
 						))}
 					</Select>
 				</FormControl>
-				<CustomDatePicker 
+				<DatePicker 
+					id="dia"
+					locale="es"
+					selected={formik.values.dia}
+					name="dia"
+					onChange={date => formik.setFieldValue('dia', date)}
 					dateFormat="MMMM d, yyyy"	 
 					filterDate={isWeekday}
-					minDate={addDays(new Date(), 1)}
+					minDate={setMinutes(addDays(new Date(), 1), 30)}
 					showDisabledMonthNavigation
 					inline
 					excludeDates={populateFeriados(feriados)}
 				/>		
-				<CustomDatePicker 
+				<DatePicker 
+					id="hora"
+					name="hora"
+					timeCaption="Horario"
+					selected={formik.values.hora}
+					onChange={date => formik.setFieldValue('hora', date)}
+					dateFormat="h:mm"
 					interval={30}
 					excludedTimes={getBreakTimesMinMax(formik.values.sucursal, false, false)}
 					minTime={getBreakTimesMinMax(formik.values.sucursal, true, false)}
-					maxTime={getBreakTimesMinMax(formik.values.sucursal, false, true)}
-					dateFormat="h:mm aa"	 
+					maxTime={getBreakTimesMinMax(formik.values.sucursal, false, true)}		 
 					showTimeSelect
 					showTimeSelectOnly
 				/>	
