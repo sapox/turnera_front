@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { MenuItem, Select, FormControl, InputLabel, Button } from "@material-ui/core";
-import { setHours, setMinutes, getDay } from "date-fns";
+import { setHours, setMinutes, getDay, addDays } from "date-fns";
 import CustomDatePicker from './DatePicker'
 import { getSucursales, getFeriados } from '../api';
 
@@ -11,7 +11,7 @@ const FormTurnos = () => {
 	const [ sucursales, setSucursales ] = useState([]);
 	const [ feriados, setFeriados ] = useState([]);
 	const [ error, setError ] = useState("");
-
+	
 	const isWeekday = date => {
     const day = getDay(date);
     return day !== 0 && day !== 6;
@@ -54,14 +54,16 @@ const FormTurnos = () => {
 		}
 	}
 
-	function populateFeriados(){
-		const dates = [];
-		if(feriados.length > 0){
+	
+	function populateFeriados(feriados){
+		const feriadoData = [];
+		if(feriados){
 			for(let a=0; a < feriados.length; a++){
-				dates.push(feriados[a].fecha);
+				const day = (feriados[a].fecha).replace(/-/g,'/');
+				feriadoData.push(new Date(day));
 			}
 		}	
-		console.log(dates);
+		return feriadoData;
 	}
 
 	useEffect(() => {
@@ -93,14 +95,22 @@ const FormTurnos = () => {
 					</Select>
 				</FormControl>
 				<CustomDatePicker 
+					dateFormat="MMMM d, yyyy"	 
+					filterDate={isWeekday}
+					minDate={addDays(new Date(), 1)}
+					showDisabledMonthNavigation
+					inline
+					excludeDates={populateFeriados(feriados)}
+				/>		
+				<CustomDatePicker 
 					interval={30}
 					excludedTimes={getBreakTimesMinMax(formik.values.sucursal, false, false)}
 					minTime={getBreakTimesMinMax(formik.values.sucursal, true, false)}
 					maxTime={getBreakTimesMinMax(formik.values.sucursal, false, true)}
-					dateFormat="MMMM d, yyyy h:mm aa"	 
-					filterDate={isWeekday}
-					//excludeDates={populateFeriados}
-				/>			
+					dateFormat="h:mm aa"	 
+					showTimeSelect
+					showTimeSelectOnly
+				/>	
 			<Button 
 				type="submit" 
 				variant="contained" 
