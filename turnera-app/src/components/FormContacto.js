@@ -1,12 +1,33 @@
 import React from 'react';
 import { useFormik } from 'formik';
-import { MenuItem, Select, FormControl, InputLabel, TextField, Button } from "@material-ui/core";
+import * as Yup from 'yup';
+import { FormControl, TextField, Button } from "@material-ui/core";
+
+const validation = Yup.object({
+	dni: Yup.string('Ingrese dni')
+		.max(9, "debe contener 9 caracteres o menos")
+		.required("requerido"),
+	nombre: Yup.string()
+		.max(20, "Debe contener 20 caracteres o menos")
+		.required("requerido"),
+	apellido: Yup.string()
+		.max(20, "Debe contener 20 caracteres o menos")
+		.required("requerido"),
+	email: Yup.string()
+		.email("Coloque un email válido")
+		.required("requerido"),
+	telefono: Yup.number()
+		.max(10, "debe contener 10 caracteres o menos")
+		.required("requerido"),
+	cuenta: Yup.string()
+		.max(20, "Debe contener 20 caracteres o menos")
+		.notRequired()
+});
 
 const FormContacto = () => {
 	
 	const formik = useFormik({
 		initialValues: {
-			tipoDni: '',
 			dni: '',
 			nombre: '',
 			apellido: '',
@@ -14,6 +35,7 @@ const FormContacto = () => {
 			telefono: '',
 			cuenta: '',
 		},
+		validationSchema: validation,
 		onSubmit: values => {
 			alert(JSON.stringify(values, null, 2));
 		},
@@ -30,6 +52,8 @@ const FormContacto = () => {
 					helperText="Ingrese el nro sin puntos"
 					onChange={formik.handleChange}
 					value={formik.values.dni}
+					helperText={formik.errors.dni}
+					error={formik.errors.dni}
 				/>
 				<TextField 
 					placeholder="Nombre" 
@@ -38,6 +62,8 @@ const FormContacto = () => {
 					name="nombre"
 					onChange={formik.handleChange}
 					value={formik.values.nombre} 
+					helperText={formik.errors.nombre}
+					error={formik.errors.nombre}
 				/>
 				<TextField 
 					placeholder="Apellido" 
@@ -46,6 +72,8 @@ const FormContacto = () => {
 					name="apellido"
 					onChange={formik.handleChange}
 					value={formik.values.apellido}  
+					helperText={formik.errors.apellido}
+					error={formik.errors.apellido}
 				/>
 				<TextField 
 					placeholder="Email" 
@@ -54,6 +82,8 @@ const FormContacto = () => {
 					name="email"
 					onChange={formik.handleChange}
 					value={formik.values.email} 
+					helperText={formik.errors.email}
+					error={formik.errors.email}
 				/>
 				<TextField 
 					type="number"
@@ -63,6 +93,8 @@ const FormContacto = () => {
 					name="telefono"
 					onChange={formik.handleChange}
 					value={formik.values.telefono}  
+					helperText={formik.errors.telefono}
+					error={formik.errors.telefono}
 				/>
 				<TextField 
 					placeholder="Cuenta" 
@@ -70,7 +102,9 @@ const FormContacto = () => {
 					id="cuenta"
 					name="cuenta"
 					onChange={formik.handleChange}
-					value={formik.values.cuenta}  
+					value={formik.values.cuenta} 
+					helperText={formik.errors.cuenta}
+					error={formik.errors.cuenta} 
 				/>
 				<Button 
 					type="submit" 
