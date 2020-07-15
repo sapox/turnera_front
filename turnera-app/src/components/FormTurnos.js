@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { MenuItem, Select, FormControl, InputLabel, Button } from "@material-ui/core";
-import { setHours, setMinutes, getDay, addDays } from "date-fns";
+import { setHours, setMinutes, getDay, addDays, formatISO } from "date-fns";
 //import CustomDatePicker from './DatePicker'
 import DatePicker, { registerLocale } from "react-datepicker";
 import es from "date-fns/locale/es";
@@ -29,7 +29,10 @@ const FormTurnos = () => {
 			hora: '',
 		},
 		onSubmit: values => {
-			console.log(values);
+			const { sucursal, dia, hora } = values;
+			const auxDia = formatISO(new Date(`${dia}`), {representation: 'date' });
+			const auxHora = formatISO(new Date(`${hora}`), { representation: 'time' });
+			console.log(sucursal, `${auxDia}`, `${auxHora.split('-')[0]}`);
 		}
 	});
 
