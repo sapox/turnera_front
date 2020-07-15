@@ -1,14 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import { Stepper, Step, StepLabel, StepContent, CardContent, Typography } from "@material-ui/core";
+import { MenuItem, Select, FormControl, InputLabel, Button, Paper, Card} from "@material-ui/core";
 import FormContacto from './components/FormContacto';
 import FormTurnos from './components/FormTurnos';
-import { makeStyles } from "@material-ui/core/styles";
-import { Stepper, Step, StepLabel, StepContent } from "@material-ui/core";
-import { Card, TextField } from "@material-ui/core";
-import { MenuItem, Select, FormControl, InputLabel } from "@material-ui/core";
-import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
+import { getTipoCaja } from './api';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -37,10 +33,6 @@ function getSteps() {
   return ["Tipo de tramite", "Sucursal", "Datos de contacto", "Confirmar turno"];
 }
 
-function getType() {
-  return ["Tipo A", "Tipo B"];
-}
-
 function getStepContent(step) {
   switch (step) {
     case 0:
@@ -56,47 +48,36 @@ function getStepContent(step) {
   }
 }
 
-const FormSucursal = () => {
-  const [tipoDni, setTipoDni] = React.useState("");
-
-  const handleChange = event => {
-    setTipoDni(event.target.value);
-  };
-
-  return (
-    <FormControl>
-      <FormControl style={{ maxWidth: 200 }}>
-        <InputLabel>Tipo de Dni</InputLabel>
-        <Select value={tipoDni} onChange={handleChange}>
-          <MenuItem value="LE">LE</MenuItem>
-          <MenuItem value="DNI">DNI</MenuItem>
-        </Select>
-        <TextField
-          label="Nro Documento"
-          type="number"
-          helperText="Ingrese el nro sin puntos"
-        />
-      </FormControl>
-      <TextField placeholder="Nombre" label="Nombre" />
-      <TextField placeholder="Apellido" label="Apellido" />
-    </FormControl>
-  );
-};
 
 const SelectTipo = () => {
-  const [tipo, setTipo] = React.useState("");
-  const tipos = getType();
+  const [ tipo, setTipo ] = React.useState("");
+  const [ tipoDecajas, setTipoDecajas] = useState([]);
+  const [ error, setError ] = useState('');
+  
 
   const handleChange = event => {
     setTipo(event.target.value);
   };
 
+  async function getTipoCajaFunc() {
+    const res = await getTipoCaja();
+    setTipoDecajas(res.data);
+  }
+
+  useEffect(() => {
+		try{
+			getTipoCajaFunc();
+		} catch(err){
+			setError(err);
+		}
+  }, []);
+
   return (
     <FormControl>
       <InputLabel>Seleccionar</InputLabel>
       <Select value={tipo} onChange={handleChange} style={{ minWidth: 150 }}>
-        {tipos.map(tipo => (
-          <MenuItem key={`tipo_${tipo}`} value={tipo}>{tipo}</MenuItem>
+        {tipoDecajas && tipoDecajas.map(tipo => (
+          <MenuItem key={`tipo_${tipo.id}`} value={tipo.id}>{tipo.nombre}</MenuItem>
         ))}
       </Select>
     </FormControl>

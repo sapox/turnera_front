@@ -12,6 +12,11 @@ export const getFeriados = async () => {
 	return await axios.get(url)
 }
 
+export const getTipoCaja = async () => {
+	const url = `${urlBase}tiposCaja/findAll`
+	return await axios.get(url)
+}
+
 export const getTurnosDisponibles = async (fecha, sucursalId, tipoCajaId) => {
 	const url = `${urlBase}turnos/disponibles?fecha=${fecha}&sucursalId=${sucursalId}&tipoCajaId=${tipoCajaId}`
 	return await axios.get(url)

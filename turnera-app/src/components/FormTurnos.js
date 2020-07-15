@@ -15,7 +15,6 @@ const FormTurnos = () => {
 	const [ sucursales, setSucursales ] = useState([]);
 	const [ feriados, setFeriados ] = useState([]);
 	const [ error, setError ] = useState("");
-	const [ startDate, setStartDate ] = React.useState(setMinutes(addDays(new Date(), 1), 30));
 	
 	const isWeekday = date => {
     const day = getDay(date);

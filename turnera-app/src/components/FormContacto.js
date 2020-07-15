@@ -5,7 +5,7 @@ import { FormControl, TextField, Button } from "@material-ui/core";
 
 const validation = Yup.object({
 	dni: Yup.string('Ingrese dni')
-		.max(9, "debe contener 9 caracteres o menos")
+		.max(9, "Debe contener 9 caracteres o menos")
 		.required("requerido"),
 	nombre: Yup.string()
 		.max(20, "Debe contener 20 caracteres o menos")
@@ -17,7 +17,7 @@ const validation = Yup.object({
 		.email("Coloque un email válido")
 		.required("requerido"),
 	telefono: Yup.number()
-		.max(10, "debe contener 10 caracteres o menos")
+		.max(10, "Debe contener 10 caracteres o menos")
 		.required("requerido"),
 	cuenta: Yup.string()
 		.max(20, "Debe contener 20 caracteres o menos")
@@ -49,10 +49,9 @@ const FormContacto = () => {
 					id="dni"
 					name="dni"
 					type="number"
-					helperText="Ingrese el nro sin puntos"
 					onChange={formik.handleChange}
 					value={formik.values.dni}
-					helperText={formik.errors.dni}
+					helperText={formik.errors.dni || "Ingrese el nro sin puntos"}
 					error={formik.errors.dni}
 				/>
 				<TextField 
