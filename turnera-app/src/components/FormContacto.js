@@ -2,6 +2,8 @@ import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { FormControl, TextField, Button } from "@material-ui/core";
+import { useSelector, useDispatch } from 'react-redux';
+import { setUserValues } from './features/contacto/userSlice';
 
 const validation = Yup.object({
 	dni: Yup.string('Ingrese dni')
@@ -16,7 +18,7 @@ const validation = Yup.object({
 	email: Yup.string()
 		.email("Coloque un email válido")
 		.required("requerido"),
-	telefono: Yup.number()
+	telefono: Yup.string()
 		.max(10, "Debe contener 10 caracteres o menos")
 		.required("requerido"),
 	cuenta: Yup.string()
@@ -25,6 +27,8 @@ const validation = Yup.object({
 });
 
 const FormContacto = () => {
+
+	const dispatch = useDispatch();
 	
 	const formik = useFormik({
 		initialValues: {
@@ -37,9 +41,13 @@ const FormContacto = () => {
 		},
 		validationSchema: validation,
 		onSubmit: values => {
-			alert(JSON.stringify(values, null, 2));
+			dispatch(setUserValues(values));
 		},
 	});
+
+	//get value from state
+	//const test = useSelector((state) => state.user.dni);
+	//console.log(test);
 
 	return (
 		<form onSubmit={formik.handleSubmit}>
