@@ -5,6 +5,8 @@ import { MenuItem, Select, FormControl, InputLabel, Button, Paper, Card} from "@
 import FormContacto from './components/FormContacto';
 import FormTurnos from './components/FormTurnos';
 import { getTipoCaja } from './api';
+import { useSelector, useDispatch } from 'react-redux';
+import { setCajaValues } from './components/features/contacto/cajaSlice';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -54,9 +56,10 @@ const SelectTipo = () => {
   const [ tipoDecajas, setTipoDecajas] = useState([]);
   const [ error, setError ] = useState('');
   
-
+  const dispatch = useDispatch();
   const handleChange = event => {
     setTipo(event.target.value);
+    dispatch(setCajaValues(event.target.value));
   };
 
   async function getTipoCajaFunc() {

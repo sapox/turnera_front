@@ -1,28 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export const userSlice = createSlice({
-  name: 'user',
+export const cajaSlice = createSlice({
+  name: 'caja',
   initialState: {
-    dni: '',
-		nombre: '',
-		apellido: '',
-		email: '',
-		telefono: '',
-		cuenta: '',
+    tipo: 0
   },
   reducers: {
-    setUserValues: (state, action) => {
-      state.dni = action.payload.dni;
-      state.nombre = action.payload.nombre;
-      state.apellido = action.payload.apellido;
-      state.email = action.payload.email;
-      state.telefono = action.payload.telefono;
-      state.cuenta = action.payload.cuenta;
+    setCajaValues: (state, action) => {
+      state.tipo = action.payload;
     },
   },
 });
 
-export const { setUserValues } = userSlice.actions;
+export const { setCajaValues } = cajaSlice.actions;
 
 // The function below is called a thunk and allows us to perform async logic. It
 // can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This
@@ -37,6 +27,5 @@ export const { setUserValues } = userSlice.actions;
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state) => state.counter.value)`
-export const selectUser = state => state.user;
 
-export default userSlice.reducer;
+export default cajaSlice.reducer;
