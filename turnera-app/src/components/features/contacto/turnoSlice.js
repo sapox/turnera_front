@@ -1,29 +1,27 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { formatISO } from 'date-fns';
 
-export const userSlice = createSlice({
-  name: 'user',
+export const turnoSlice = createSlice({
+  name: 'turno',
   initialState: {
-    dni: '',
-		nombre: '',
-		apellido: '',
-		email: '',
-		telefono: '',
-		cuentaContrato: '',
+    sucursalId: '',
+    fecha: '',
+    hora: '',
+    cajaId: '',
   },
   reducers: {
-    setUserValues: (state, action) => {
-      const { dni, nombre, apellido, email, telefono, cuentaContrato } = action.payload;
-      state.dni = dni;
-      state.nombre = nombre;
-      state.apellido = apellido;
-      state.email = email;
-      state.telefono = telefono;
-      state.cuentaContrato = cuentaContrato;
+    setTurnoValues: (state, action) => {
+      const { fecha, hora, sucursalId, cajaId } = action.payload;
+      const auxFecha = formatISO(new Date(`${fecha}`), {representation: 'date' });
+      state.sucursalId = sucursalId;
+      state.fecha = auxFecha;
+      state.hora = hora;
+      state.cajaId= cajaId;
     },
   },
 });
 
-export const { setUserValues } = userSlice.actions;
+export const { setTurnoValues } = turnoSlice.actions;
 
 // The function below is called a thunk and allows us to perform async logic. It
 // can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This
@@ -38,6 +36,6 @@ export const { setUserValues } = userSlice.actions;
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state) => state.counter.value)`
-export const selectUser = state => state.user;
+//export const selectUser = state => state.user;
 
-export default userSlice.reducer;
+export default turnoSlice.reducer;

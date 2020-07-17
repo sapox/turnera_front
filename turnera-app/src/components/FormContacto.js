@@ -37,7 +37,7 @@ const FormContacto = () => {
 			apellido: '',
 			email: '',
 			telefono: '',
-			cuenta: '',
+			cuentaContrato: '',
 		},
 		validationSchema: validation,
 		onSubmit: values => {
@@ -104,14 +104,14 @@ const FormContacto = () => {
 					error={formik.errors.telefono}
 				/>
 				<TextField 
-					placeholder="Cuenta" 
-					label="Cuenta"
-					id="cuenta"
-					name="cuenta"
+					placeholder="Cuenta Contrato" 
+					label="Cuenta Contrato"
+					id="cuentaContrato"
+					name="cuentaContrato"
 					onChange={formik.handleChange}
-					value={formik.values.cuenta} 
-					helperText={formik.errors.cuenta}
-					error={formik.errors.cuenta} 
+					value={formik.values.cuentaContrato} 
+					helperText={formik.errors.cuentaContrato}
+					error={formik.errors.cuentaContrato} 
 				/>
 				<Button 
 					type="submit" 

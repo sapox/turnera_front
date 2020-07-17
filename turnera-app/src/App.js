@@ -32,17 +32,17 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function getSteps() {
-  return ["Tipo de tramite", "Sucursal", "Datos de contacto", "Confirmar turno"];
+  return ["Datos de contacto","Tipo de tramite", "Oficina Comercial", "Confirmar turno"];
 }
 
 function getStepContent(step) {
   switch (step) {
     case 0:
-      return <SelectTipo />;
-    case 1:
-      return <FormTurnos />;
-    case 2:
       return <FormContacto />;
+    case 1:
+      return <SelectTipo />;
+    case 2:
+      return <FormTurnos />;
     case 3:
       return 'Presentar información del turno';
     default:

@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { MenuItem, Select, FormControl, InputLabel, Button } from "@material-ui/core";
 import { setHours, setMinutes, getDay, addDays, formatISO } from "date-fns";
-//import CustomDatePicker from './DatePicker'
+import { useSelector, useDispatch } from 'react-redux';
 import DatePicker, { registerLocale } from "react-datepicker";
 import es from "date-fns/locale/es";
 import "react-datepicker/dist/react-datepicker.css";
-import { getSucursales, getFeriados } from '../api';
+import { getSucursales, getFeriados, getTurnosDisponibles, createTurno } from '../api';
+import { setTurnoValues } from './features/contacto/turnoSlice';
 
 registerLocale("es", es);
 
@@ -14,26 +15,45 @@ const FormTurnos = () => {
 
 	const [ sucursales, setSucursales ] = useState([]);
 	const [ feriados, setFeriados ] = useState([]);
+	const [ turnos, setTurnos ] = useState([]);
 	const [ error, setError ] = useState("");
+	const tipoCaja = useSelector((state) => state.caja.tipo);
+	const dniUser = useSelector((state) => state.user.dni);
+	const nombreUser = useSelector((state) => state.user.nombre);
+	const apellidoUser = useSelector((state) => state.user.apellido);
+	const telefonoUser = useSelector((state) => state.user.telefono);
+	const emailUser = useSelector((state) => state.user.email);
+	const cuentaUser = useSelector((state) => state.user.cuentaContrato);
 	
 	const isWeekday = date => {
     const day = getDay(date);
     return day !== 0 && day !== 6;
 	};
+
+	const dispatch = useDispatch();
 	
 	const formik = useFormik({
 		initialValues: {
-			sucursal: '',
-			dia: '',
+			sucursalId: '',
+			fecha: '',
 			hora: '',
 		},
-		onSubmit: values => {
-			const { sucursal, dia, hora } = values;
-			const auxDia = formatISO(new Date(`${dia}`), {representation: 'date' });
-			const auxHora = formatISO(new Date(`${hora}`), { representation: 'time' });
-			console.log(sucursal, `${auxDia}`, `${auxHora.split('-')[0]}`);
-		}
+		onSubmit: values => {	
+			const { hora, sucursalId, fecha } = values;
+			const auxHora = hora.split('_')[0];
+			const auxCaja = hora.split('_')[1];
+			const obj = { hora: auxHora, cajaId: auxCaja, sucursalId: sucursalId, fecha: fecha }; 
+			const objTurno = { dni: dniUser, nombre: nombreUser, apellido: apellidoUser, email: emailUser, telefono: telefonoUser, cuentaContrato: cuentaUser, ...obj };
+			dispatch(setTurnoValues(obj));
+			createTurno(objTurno);
+		}	
 	});
+
+	async function getTurnosDisponiblesFunc(fecha, sucursal, tipoCaja){
+		const auxFecha = formatISO(new Date(`${fecha}`), {representation: 'date' });
+		const res = await getTurnosDisponibles(auxFecha, sucursal, tipoCaja);
+		setTurnos(res.data);
+	}
 
 	async function getSucursalesFunc() {
 		const res = await getSucursales();
@@ -45,23 +65,6 @@ const FormTurnos = () => {
 		setFeriados(res.data);
 	}
 
-	function getBreakTimesMinMax (sucursal, min, max) {
-		const times = sucursales.find(x => x.id === sucursal);
-		if(times !== undefined){
-			const { horaDeApertura, horaDeCierre, horaDeFinDeBreak, horaDeInicioDeBreak } = times;
-			const resultTimesArr = [];
-			if(!min && !max){
-				resultTimesArr.push(setHours(setMinutes(new Date(), horaDeInicioDeBreak.split(":")[1]), horaDeInicioDeBreak.split(":")[0]), setHours(setMinutes(new Date(), horaDeFinDeBreak.split(":")[1]), horaDeFinDeBreak.split(":")[0]));
-				return resultTimesArr;
-			} else if(min && !max){
-				return setHours(setMinutes(new Date(), horaDeApertura.split(":")[1]), horaDeApertura.split(":")[0]);
-			} else if(!min && max){
-				return setHours(setMinutes(new Date(), horaDeCierre.split(":")[1]), horaDeCierre.split(":")[0]);
-			}
-		}
-	}
-
-	
 	function populateFeriados(feriados){
 		const feriadoData = [];
 		if(feriados){
@@ -71,6 +74,12 @@ const FormTurnos = () => {
 			}
 		}	
 		return feriadoData;
+	}
+
+	function handleDateChange(date){
+		const { sucursalId } = formik.values;
+		formik.setFieldValue('fecha', date);
+		getTurnosDisponiblesFunc(date, sucursalId, tipoCaja);
 	}
 
 	useEffect(() => {
@@ -86,12 +95,12 @@ const FormTurnos = () => {
 		<form onSubmit={formik.handleSubmit}>
 			<FormControl>
 				<FormControl style={{ maxWidth: 200 }}>
-					<InputLabel>Sucursal</InputLabel>
+					<InputLabel>Oficina Comercial</InputLabel>
 					<Select 
-						id="sucursal"
-						name="sucursal"
+						id="sucursalId"
+						name="sucursalId"
 						onChange={formik.handleChange}
-						value={formik.values.sucursal}>
+						value={formik.values.sucursalId}>
 						{sucursales && sucursales.map(sucursal => (
 							<MenuItem 
 								key={`sucursal_${sucursal.id}`} 
@@ -102,32 +111,36 @@ const FormTurnos = () => {
 					</Select>
 				</FormControl>
 				<DatePicker 
-					id="dia"
+					id="fecha"
 					locale="es"
-					selected={formik.values.dia}
-					name="dia"
-					onChange={date => formik.setFieldValue('dia', date)}
+					selected={formik.values.fecha}
+					name="fecha"
+					onChange={date => handleDateChange(date)}
 					dateFormat="MMMM d, yyyy"	 
 					filterDate={isWeekday}
 					minDate={setMinutes(addDays(new Date(), 1), 30)}
 					showDisabledMonthNavigation
 					inline
 					excludeDates={populateFeriados(feriados)}
-				/>		
-				<DatePicker 
-					id="hora"
-					name="hora"
-					timeCaption="Horario"
-					selected={formik.values.hora}
-					onChange={date => formik.setFieldValue('hora', date)}
-					dateFormat="h:mm"
-					interval={30}
-					excludedTimes={getBreakTimesMinMax(formik.values.sucursal, false, false)}
-					minTime={getBreakTimesMinMax(formik.values.sucursal, true, false)}
-					maxTime={getBreakTimesMinMax(formik.values.sucursal, false, true)}		 
-					showTimeSelect
-					showTimeSelectOnly
-				/>	
+				/>
+				{turnos.length > 0 &&
+					<FormControl style={{ maxWidth: 200 }}>
+						<InputLabel>Horario</InputLabel>
+						<Select 
+							id="hora"
+							name="hora"
+							onChange={formik.handleChange}
+							value={formik.values.hora}>
+							{turnos.map(turno => (
+								<MenuItem 
+									key={`turno_${turno.idCaja}`} 
+									value={`${turno.hora}_${turno.idCaja}`}>
+										{turno.hora}
+								</MenuItem>
+							))}
+						</Select>
+					</FormControl>
+				}			
 			<Button 
 				type="submit" 
 				variant="contained" 
