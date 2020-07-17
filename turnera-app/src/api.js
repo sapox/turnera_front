@@ -22,6 +22,22 @@ export const getTurnosDisponibles = async (fecha, sucursalId, tipoCajaId) => {
 	return await axios.get(url)
 }
 
+export const createTurno = async (values) => {
+	const url = `${urlBase}turnos/create`;
+	const request = { 
+										fecha: values.fecha,
+										hora: values.hora,
+										cajaId: values.cajaId,
+										dni: values.dni,
+										nombre: values.nombre,
+										apellido: values.apellido,
+										telefono: values.telefono,
+										email: values.email,
+										cuentaContrato: values.cuentaContrato,
+									}
+	return await axios.post(url, request);
+}
+
 export const getCajaById = async (cajaId) => {
 	const url = `${urlBase}cajas/${cajaId}`
 	return await axios.get(url)
