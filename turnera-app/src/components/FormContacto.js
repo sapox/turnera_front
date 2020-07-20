@@ -23,7 +23,10 @@ const validation = Yup.object({
 		.required("requerido"),
 	cuenta: Yup.string()
 		.max(20, "Debe contener 20 caracteres o menos")
-		.notRequired()
+		.notRequired(),
+	titularCuenta: Yup.string()
+		.max(20, "Debe contener 20 caracteres o menos")
+		.notRequired()	
 });
 
 const FormContacto = () => {
@@ -38,16 +41,13 @@ const FormContacto = () => {
 			email: '',
 			telefono: '',
 			cuentaContrato: '',
+			titularCuenta: ''
 		},
 		validationSchema: validation,
 		onSubmit: values => {
 			dispatch(setUserValues(values));
 		},
 	});
-
-	//get value from state
-	//const test = useSelector((state) => state.user.dni);
-	//console.log(test);
 
 	return (
 		<form onSubmit={formik.handleSubmit}>
@@ -112,6 +112,16 @@ const FormContacto = () => {
 					value={formik.values.cuentaContrato} 
 					helperText={formik.errors.cuentaContrato}
 					error={formik.errors.cuentaContrato} 
+				/>
+				<TextField 
+					placeholder="Titular de la Cuenta" 
+					label="Titular de la Cuenta"
+					id="titularCuenta"
+					name="titularCuenta"
+					onChange={formik.handleChange}
+					value={formik.values.titularCuenta} 
+					helperText={formik.errors.titularCuenta}
+					error={formik.errors.titularCuenta} 
 				/>
 				<Button 
 					type="submit" 

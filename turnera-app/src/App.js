@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Stepper, Step, StepLabel, StepContent, CardContent, Typography } from "@material-ui/core";
 import { MenuItem, Select, FormControl, InputLabel, Button, Paper, Card } from "@material-ui/core";
 import FormContacto from './components/FormContacto';
 import FormTurnos from './components/FormTurnos';
 import TurnoConfirmado from './components/TurnoConfirmado';
+import Disclaimer from './components/Disclaimer';
 import { getTipoCaja } from './api';
 import { setCajaValues } from './components/features/contacto/cajaSlice';
 
@@ -33,24 +34,25 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function getSteps() {
-  return ["Datos de contacto","Tipo de tramite", "Oficina Comercial", "Confirmar turno"];
+  return ["Datos de contacto", "Tipo de tramite", "Confirmar Terminos", "Oficina Comercial", "Confirmar Turno"];
 }
 
-function getStepContent(step) {
+function getStepContent(step, disclaimer, userStep) {
   switch (step) {
     case 0:
       return <FormContacto />;
     case 1:
-      return <SelectTipo />;
+      return (userStep && <SelectTipo />) || "Complete información de contacto";
     case 2:
-      return <FormTurnos />;
+      return (userStep && <Disclaimer />)  || "Complete el paso anterior";
     case 3:
+      return (disclaimer && <FormTurnos />)  || "Confirme los términos";
+    case 4:
       return <TurnoConfirmado />;
     default:
       return "Unknown step";
   }
 }
-
 
 const SelectTipo = () => {
   const [ tipo, setTipo ] = React.useState("");
@@ -93,6 +95,11 @@ export default function VerticalLinearStepper() {
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
 
+  const disclaimerStep = useSelector((state) => state.disclaimer.isConfirmed);
+  const userStep = useSelector((state) => state.user.submitted);
+  const tipoCajaStep = useSelector((state) => state.caja.submitted);
+  const turnoConfirmado = useSelector((state) => state.turnoConfirmado.submitted);
+
   const handleNext = () => {
     setActiveStep(prevActiveStep => prevActiveStep + 1);
   };
@@ -104,6 +111,22 @@ export default function VerticalLinearStepper() {
   const handleReset = () => {
     setActiveStep(0);
   };
+
+  const checkStep = (step) => {
+    if(step === 0 && !userStep){
+      return true;
+    } else if (step === 1 && !tipoCajaStep){
+      return true;
+    } else if (step === 2 && !disclaimerStep){
+      return true;
+    } else if (step === 3 && !turnoConfirmado){
+      return true;
+    } else if (step === 4 && !turnoConfirmado){
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   return (
     <div style={{display: 'flex', justifyContent: 'center'}}>
@@ -122,7 +145,7 @@ export default function VerticalLinearStepper() {
               <Step key={label}>
                 <StepLabel>{label}</StepLabel>
                 <StepContent>
-                  <div>{getStepContent(index)}</div>
+                  <div>{getStepContent(index, disclaimerStep, userStep)}</div>
                   <div className={classes.actionsContainer}>
                     <div>
                       <Button
@@ -137,6 +160,7 @@ export default function VerticalLinearStepper() {
                         color="primary"
                         onClick={handleNext}
                         className={classes.button}
+                        disabled={checkStep(activeStep)}
                       >
                         {activeStep === steps.length - 1
                           ? "Finish"

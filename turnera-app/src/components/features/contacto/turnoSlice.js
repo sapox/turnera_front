@@ -7,6 +7,7 @@ export const turnoSlice = createSlice({
     fecha: '',
     hora: '',
     cajaId: '',
+    submitted: false,
   },
   reducers: {
     setTurnoValues: (state, action) => {
@@ -15,6 +16,7 @@ export const turnoSlice = createSlice({
       state.fecha = fecha;
       state.hora = hora;
       state.cajaId = cajaId;
+      state.submitted = !state.submitted;
     },
   },
 });

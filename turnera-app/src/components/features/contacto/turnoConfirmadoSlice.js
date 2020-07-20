@@ -3,11 +3,14 @@ import { createSlice } from '@reduxjs/toolkit';
 export const turnoConfirmadoSlice = createSlice({
   name: 'turnoConfirmado',
   initialState: {
-    idTurno: ''
+    idTurno: '',
+    submitted: false,
+
   },
   reducers: {
     setTurnoConfirmado: (state, action) => {
       state.idTurno = action.payload;
+      state.submitted = !state.submitted;
     },
   },
 });

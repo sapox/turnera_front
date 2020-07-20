@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { MenuItem, Select, FormControl, InputLabel, Button } from "@material-ui/core";
+import Alert from '@material-ui/lab/Alert';
 import { setHours, setMinutes, getDay, addDays, formatISO } from "date-fns";
 import { useSelector, useDispatch } from 'react-redux';
 import DatePicker, { registerLocale } from "react-datepicker";
@@ -26,6 +27,7 @@ const FormTurnos = () => {
 	const telefonoUser = useSelector((state) => state.user.telefono);
 	const emailUser = useSelector((state) => state.user.email);
 	const cuentaUser = useSelector((state) => state.user.cuentaContrato);
+	const disclaimerStep = useSelector((state) => state.disclaimer.isConfirmed);
 	
 	const isWeekday = date => {
     const day = getDay(date);
@@ -53,10 +55,19 @@ const FormTurnos = () => {
 	});
 
 	async function createTurnoFunc(obj){
-		const res = await createTurno(obj);
-		setResultadoTurno(res.data);
-		const { id } = res.data;
-		dispatch(setTurnoConfirmado(id));
+		if(disclaimerStep){
+			try{
+				const res = await createTurno(obj);
+				const { id } = res.data;
+				dispatch(setTurnoConfirmado(id));
+			} catch (e){
+				console.log(e);
+			}
+		} else {
+			return (
+				<Alert severity="error">This is an error alert — check it out!</Alert>
+			)
+		}
 	}
 
 	async function getTurnosDisponiblesFunc(fecha, sucursal, tipoCaja){
@@ -130,8 +141,9 @@ const FormTurnos = () => {
 					filterDate={isWeekday}
 					minDate={setMinutes(addDays(new Date(), 1), 30)}
 					showDisabledMonthNavigation
-					inline
+					inline={formik.values.sucursalId !== ''}
 					excludeDates={populateFeriados(feriados)}
+					disabled={formik.values.sucursalId === ''}
 				/>
 				{turnos.length > 0 &&
 					<FormControl style={{ maxWidth: 200 }}>

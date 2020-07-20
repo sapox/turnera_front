@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { Card, CardContent } from "@material-ui/core";
+import { QRCode } from "react-qr-svg";
 import { getTurnoConfirmado } from './../api';
 
 const TurnoConfirmado = () => {
@@ -26,20 +28,25 @@ const TurnoConfirmado = () => {
   const { cliente, caja, fecha, hora } = turnoConfirmado;
 
   return (
-   <div>
-     <h1>Turno Confirmado</h1>
-     <div>
+    <Card>
+      <CardContent>
+      <h2>Turno Confirmado</h2>
+        <QRCode 
+          bgColor="#FFFFFF"
+          fgColor="#000000"
+          level="Q"
+          style={{ maxWidth: 256 }}
+          value="https://aysa.com.ar/"
+        />
       {turnoConfirmado.cliente && 
-        <div>
-          <p>{`${cliente.nombre} ${cliente.apellido}, con documento ${cliente.dni}`}</p>
-          <p>{`Turno: ${fecha}, horario: ${hora}`}</p>
-          Tipo de caja: {caja.tipo.nombre}
-        </div>
-         
+          <Fragment>
+            <p>{`${cliente.nombre} ${cliente.apellido}, con documento ${cliente.dni}`}</p>
+            <p>{`Turno: ${fecha}, horario: ${hora}`}</p>
+            Tipo de caja: {caja.tipo.nombre}
+          </Fragment>   
       }
-       
-    </div>
-   </div> 
+      </CardContent>
+    </Card>
   );
 };
 

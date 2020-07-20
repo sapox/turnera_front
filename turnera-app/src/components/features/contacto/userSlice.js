@@ -8,17 +8,21 @@ export const userSlice = createSlice({
 		apellido: '',
 		email: '',
 		telefono: '',
-		cuentaContrato: '',
+    cuentaContrato: '',
+    titularCuenta: '',
+    submitted: false,
   },
   reducers: {
     setUserValues: (state, action) => {
-      const { dni, nombre, apellido, email, telefono, cuentaContrato } = action.payload;
+      const { dni, nombre, apellido, email, telefono, cuentaContrato, titularCuenta } = action.payload;
       state.dni = dni;
       state.nombre = nombre;
       state.apellido = apellido;
       state.email = email;
       state.telefono = telefono;
       state.cuentaContrato = cuentaContrato;
+      state.titularCuenta = titularCuenta;
+      state.submitted = !state.submitted;
     },
   },
 });

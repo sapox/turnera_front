@@ -3,11 +3,13 @@ import { createSlice } from '@reduxjs/toolkit';
 export const cajaSlice = createSlice({
   name: 'caja',
   initialState: {
-    tipo: 0
+    tipo: 0,
+    submitted: false,
   },
   reducers: {
     setCajaValues: (state, action) => {
       state.tipo = action.payload;
+      state.submitted = !state.submitted;
     },
   },
 });
