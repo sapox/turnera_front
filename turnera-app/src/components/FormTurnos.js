@@ -8,6 +8,7 @@ import es from "date-fns/locale/es";
 import "react-datepicker/dist/react-datepicker.css";
 import { getSucursales, getFeriados, getTurnosDisponibles, createTurno } from '../api';
 import { setTurnoValues } from './features/contacto/turnoSlice';
+import { setTurnoConfirmado } from './features/contacto/turnoConfirmadoSlice';
 
 registerLocale("es", es);
 
@@ -16,6 +17,7 @@ const FormTurnos = () => {
 	const [ sucursales, setSucursales ] = useState([]);
 	const [ feriados, setFeriados ] = useState([]);
 	const [ turnos, setTurnos ] = useState([]);
+	const [ resultadoTurno, setResultadoTurno ] = useState([]);
 	const [ error, setError ] = useState("");
 	const tipoCaja = useSelector((state) => state.caja.tipo);
 	const dniUser = useSelector((state) => state.user.dni);
@@ -42,12 +44,20 @@ const FormTurnos = () => {
 			const { hora, sucursalId, fecha } = values;
 			const auxHora = hora.split('_')[0];
 			const auxCaja = hora.split('_')[1];
-			const obj = { hora: auxHora, cajaId: auxCaja, sucursalId: sucursalId, fecha: fecha }; 
+			const fechaAux = formatISO(new Date(`${fecha}`), {representation: 'date' });
+			const obj = { hora: auxHora, cajaId: auxCaja, sucursalId: sucursalId, fecha: fechaAux }; 
 			const objTurno = { dni: dniUser, nombre: nombreUser, apellido: apellidoUser, email: emailUser, telefono: telefonoUser, cuentaContrato: cuentaUser, ...obj };
 			dispatch(setTurnoValues(obj));
-			createTurno(objTurno);
+			createTurnoFunc(objTurno);
 		}	
 	});
+
+	async function createTurnoFunc(obj){
+		const res = await createTurno(obj);
+		setResultadoTurno(res.data);
+		const { id } = res.data;
+		dispatch(setTurnoConfirmado(id));
+	}
 
 	async function getTurnosDisponiblesFunc(fecha, sucursal, tipoCaja){
 		const auxFecha = formatISO(new Date(`${fecha}`), {representation: 'date' });
@@ -133,7 +143,7 @@ const FormTurnos = () => {
 							value={formik.values.hora}>
 							{turnos.map(turno => (
 								<MenuItem 
-									key={`turno_${turno.idCaja}`} 
+									key={`tur_${turno.idCaja}`} 
 									value={`${turno.hora}_${turno.idCaja}`}>
 										{turno.hora}
 								</MenuItem>

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { useDispatch } from 'react-redux';
 import { Stepper, Step, StepLabel, StepContent, CardContent, Typography } from "@material-ui/core";
-import { MenuItem, Select, FormControl, InputLabel, Button, Paper, Card} from "@material-ui/core";
+import { MenuItem, Select, FormControl, InputLabel, Button, Paper, Card } from "@material-ui/core";
 import FormContacto from './components/FormContacto';
 import FormTurnos from './components/FormTurnos';
+import TurnoConfirmado from './components/TurnoConfirmado';
 import { getTipoCaja } from './api';
-import { useSelector, useDispatch } from 'react-redux';
 import { setCajaValues } from './components/features/contacto/cajaSlice';
 
 const useStyles = makeStyles(theme => ({
@@ -44,7 +45,7 @@ function getStepContent(step) {
     case 2:
       return <FormTurnos />;
     case 3:
-      return 'Presentar información del turno';
+      return <TurnoConfirmado />;
     default:
       return "Unknown step";
   }
@@ -151,9 +152,7 @@ export default function VerticalLinearStepper() {
 
         {activeStep === steps.length && (
           <Paper square elevation={0} className={classes.resetContainer}>
-            <Typography>
-              Todos los pasos completados, este es tu turno
-            </Typography>
+            <TurnoConfirmado />
             <Button onClick={handleReset} className={classes.button}>
               Reset
             </Button>

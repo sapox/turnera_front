@@ -1,29 +1,35 @@
 import axios from 'axios';
 
-const urlBase = 'http://localhost:8080/api/v1/'
+//const urlBase = 'http://localhost:8080/api/v1/'
+export const api = axios.create({
+	baseURL: 'http://localhost:8080/api/v1/',
+	headers: {
+			'Content-Type': 'application/json'
+	},
+})
 
 export const getSucursales = async () => {
-	const url = `${urlBase}sucursales/findAll`
-	return await axios.get(url)
+	const url = `sucursales/findAll`
+	return await api.get(url)
 }
 
 export const getFeriados = async () => {
-	const url = `${urlBase}feriados/findAll`
-	return await axios.get(url)
+	const url = `feriados/findAll`
+	return await api.get(url)
 }
 
 export const getTipoCaja = async () => {
-	const url = `${urlBase}tiposCaja/findAll`
-	return await axios.get(url)
+	const url = `tiposCaja/findAll`
+	return await api.get(url)
 }
 
 export const getTurnosDisponibles = async (fecha, sucursalId, tipoCajaId) => {
-	const url = `${urlBase}turnos/disponibles?fecha=${fecha}&sucursalId=${sucursalId}&tipoCajaId=${tipoCajaId}`
-	return await axios.get(url)
+	const url = `turnos/disponibles?fecha=${fecha}&sucursalId=${sucursalId}&tipoCajaId=${tipoCajaId}`
+	return await api.get(url)
 }
 
 export const createTurno = async (values) => {
-	const url = `${urlBase}turnos/create`;
+	const url = `turnos/create`;
 	const request = { 
 										fecha: values.fecha,
 										hora: values.hora,
@@ -35,10 +41,15 @@ export const createTurno = async (values) => {
 										email: values.email,
 										cuentaContrato: values.cuentaContrato,
 									}
-	return await axios.post(url, request);
+	return await api.post(url, request);
+}
+
+export const getTurnoConfirmado = async (dni, turnoId) => {
+	const url = `turnos/consulta?dni=${dni}&turnoId=${turnoId}`;
+	return await api.get(url);
 }
 
 export const getCajaById = async (cajaId) => {
-	const url = `${urlBase}cajas/${cajaId}`
-	return await axios.get(url)
+	const url = `cajas/${cajaId}`
+	return await api.get(url)
 }
