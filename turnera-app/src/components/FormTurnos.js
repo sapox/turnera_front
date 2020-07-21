@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { MenuItem, Select, FormControl, InputLabel, Button } from "@material-ui/core";
 import Alert from '@material-ui/lab/Alert';
-import { setHours, setMinutes, getDay, addDays, formatISO } from "date-fns";
+import { setMinutes, getDay, addDays, formatISO } from "date-fns";
 import { useSelector, useDispatch } from 'react-redux';
 import DatePicker, { registerLocale } from "react-datepicker";
-import es from "date-fns/locale/es";
 import "react-datepicker/dist/react-datepicker.css";
+import es from "date-fns/locale/es";
 import { getSucursales, getFeriados, getTurnosDisponibles, createTurno } from '../api';
 import { setTurnoValues } from './features/contacto/turnoSlice';
 import { setTurnoConfirmado } from './features/contacto/turnoConfirmadoSlice';
@@ -20,6 +20,7 @@ const FormTurnos = () => {
 	const [ turnos, setTurnos ] = useState([]);
 	const [ resultadoTurno, setResultadoTurno ] = useState([]);
 	const [ error, setError ] = useState("");
+	//values from store
 	const tipoCaja = useSelector((state) => state.caja.tipo);
 	const dniUser = useSelector((state) => state.user.dni);
 	const nombreUser = useSelector((state) => state.user.nombre);
@@ -27,6 +28,7 @@ const FormTurnos = () => {
 	const telefonoUser = useSelector((state) => state.user.telefono);
 	const emailUser = useSelector((state) => state.user.email);
 	const cuentaUser = useSelector((state) => state.user.cuentaContrato);
+	const titularUser = useSelector((state) => state.user.titularCuenta);
 	const disclaimerStep = useSelector((state) => state.disclaimer.isConfirmed);
 	
 	const isWeekday = date => {
@@ -48,7 +50,16 @@ const FormTurnos = () => {
 			const auxCaja = hora.split('_')[1];
 			const fechaAux = formatISO(new Date(`${fecha}`), {representation: 'date' });
 			const obj = { hora: auxHora, cajaId: auxCaja, sucursalId: sucursalId, fecha: fechaAux }; 
-			const objTurno = { dni: dniUser, nombre: nombreUser, apellido: apellidoUser, email: emailUser, telefono: telefonoUser, cuentaContrato: cuentaUser, ...obj };
+			const objTurno = 
+				{ dni: dniUser, 
+					nombre: nombreUser, 
+					apellido: apellidoUser, 
+					email: emailUser, 
+					telefono: telefonoUser, 
+					cuentaContrato: cuentaUser, 
+					titularCuenta: titularUser,  
+					...obj 
+				};
 			dispatch(setTurnoValues(obj));
 			createTurnoFunc(objTurno);
 		}	

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from 'react-redux';
-import { Stepper, Step, StepLabel, StepContent, CardContent, Typography } from "@material-ui/core";
+import { Stepper, Step, StepLabel, StepContent, CardContent } from "@material-ui/core";
 import { MenuItem, Select, FormControl, InputLabel, Button, Paper, Card } from "@material-ui/core";
 import FormContacto from './components/FormContacto';
 import FormTurnos from './components/FormTurnos';

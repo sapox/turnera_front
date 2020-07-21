@@ -40,6 +40,7 @@ export const createTurno = async (values) => {
 										telefono: values.telefono,
 										email: values.email,
 										cuentaContrato: values.cuentaContrato,
+										titularCuenta: values.titularCuenta,
 									}
 	return await api.post(url, request);
 }
