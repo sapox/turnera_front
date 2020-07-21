@@ -22,7 +22,7 @@ const validation = Yup.object({
 		.max(10, "Debe contener 10 caracteres o menos")
 		.required("requerido"),
 	cuenta: Yup.string()
-		.max(20, "Debe contener 20 caracteres o menos")
+		.max(13, "Debe contener 13 caracteres o menos")
 		.notRequired(),
 	titularCuenta: Yup.string()
 		.max(20, "Debe contener 20 caracteres o menos")
@@ -59,7 +59,7 @@ const FormContacto = () => {
 					type="number"
 					onChange={formik.handleChange}
 					value={formik.values.dni}
-					helperText={formik.errors.dni || "Ingrese el nro sin puntos"}
+					helperText={formik.errors.dni || "Ingrese el nro sin puntos, *campo requerido"}
 					error={formik.errors.dni}
 				/>
 				<TextField 
@@ -69,7 +69,7 @@ const FormContacto = () => {
 					name="nombre"
 					onChange={formik.handleChange}
 					value={formik.values.nombre} 
-					helperText={formik.errors.nombre}
+					helperText={formik.errors.nombre || "*Campo requerido"}
 					error={formik.errors.nombre}
 				/>
 				<TextField 
@@ -79,7 +79,7 @@ const FormContacto = () => {
 					name="apellido"
 					onChange={formik.handleChange}
 					value={formik.values.apellido}  
-					helperText={formik.errors.apellido}
+					helperText={formik.errors.apellido || "*Campo requerido"}
 					error={formik.errors.apellido}
 				/>
 				<TextField 
@@ -89,7 +89,7 @@ const FormContacto = () => {
 					name="email"
 					onChange={formik.handleChange}
 					value={formik.values.email} 
-					helperText={formik.errors.email}
+					helperText={formik.errors.email || "*Campo requerido"}
 					error={formik.errors.email}
 				/>
 				<TextField 
@@ -100,7 +100,7 @@ const FormContacto = () => {
 					name="telefono"
 					onChange={formik.handleChange}
 					value={formik.values.telefono}  
-					helperText={formik.errors.telefono}
+					helperText={formik.errors.telefono || "*Campo requerido"}
 					error={formik.errors.telefono}
 				/>
 				<TextField 
