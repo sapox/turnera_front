@@ -2,12 +2,12 @@ import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { FormControl, TextField, Button } from "@material-ui/core";
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setUserValues } from './features/contacto/userSlice';
 
 const validation = Yup.object({
 	dni: Yup.string('Ingrese dni')
-		.max(9, "Debe contener 9 caracteres o menos")
+		.min(8, "Debe contener 8 caracteres o más" )
 		.required("requerido"),
 	nombre: Yup.string()
 		.max(20, "Debe contener 20 caracteres o menos")
@@ -19,7 +19,8 @@ const validation = Yup.object({
 		.email("Coloque un email válido")
 		.required("requerido"),
 	telefono: Yup.string()
-		.max(10, "Debe contener 10 caracteres o menos")
+		.min(8, "Debe contener 8 caracteres o más")
+		.max(13, "Debe contener 13 caracteres o menos")
 		.required("requerido"),
 	cuenta: Yup.string()
 		.max(13, "Debe contener 13 caracteres o menos")
@@ -59,7 +60,7 @@ const FormContacto = () => {
 					type="number"
 					onChange={formik.handleChange}
 					value={formik.values.dni}
-					helperText={formik.errors.dni || "Ingrese el nro sin puntos, *campo requerido"}
+					helperText={formik.errors.dni || "*Campo requerido"}
 					error={formik.errors.dni}
 				/>
 				<TextField 

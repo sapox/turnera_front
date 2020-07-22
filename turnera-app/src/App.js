@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Component, useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from 'react-redux';
@@ -91,7 +91,7 @@ const SelectTipo = () => {
   );
 };
 
-export default function VerticalLinearStepper() {
+function Home(){
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
@@ -130,62 +130,79 @@ export default function VerticalLinearStepper() {
   }
 
   return (
-    <div style={{display: 'flex', justifyContent: 'center'}}>
-      <Card className={classes.cardContainer} style={{ marginTop:'30px' }}>
-      <div className={classes.root}>
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <img
-            src="https://www.aysa.com.ar/assets/Menu/img/logo.png"
-            alt="aysa logo"
-          />
-        </div>
-
-        <CardContent>
-          <Stepper activeStep={activeStep} orientation="vertical">
-            {steps.map((label, index) => (
-              <Step key={label}>
-                <StepLabel>{label}</StepLabel>
-                <StepContent>
-                  <div>{getStepContent(index, disclaimerStep, userStep)}</div>
-                  <div className={classes.actionsContainer}>
-                    <div>
-                      <Button
-                        disabled={activeStep === 0}
-                        onClick={handleBack}
-                        className={classes.button}
-                      >
-                        Volver
-                      </Button>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleNext}
-                        className={classes.button}
-                        disabled={checkStep(activeStep)}
-                      >
-                        {activeStep === steps.length - 1
-                          ? "Finish"
-                          : "Siguiente"}
-                      </Button>
-                    </div>
-                  </div>
-                </StepContent>
-              </Step>
-            ))}
-          </Stepper>
-        </CardContent>
-
-        {activeStep === steps.length && (
-          <Paper square elevation={0} className={classes.resetContainer}>
-            <TurnoConfirmado />
-            <Button onClick={handleReset} className={classes.button}>
-              Reset
-            </Button>
-          </Paper>
-        )}
-      </div>
-    </Card>
+  <div style={{display: 'flex', justifyContent: 'center'}}>
+  <Card className={classes.cardContainer} style={{ marginTop:'30px' }}>
+  <div className={classes.root}>
+    <div style={{ display: "flex", justifyContent: "center" }}>
+      <img
+        src="https://www.aysa.com.ar/assets/Menu/img/logo.png"
+        alt="aysa logo"
+      />
     </div>
-    
-  );
+
+    <CardContent>
+      <Stepper activeStep={activeStep} orientation="vertical">
+        {steps.map((label, index) => (
+          <Step key={label}>
+            <StepLabel>{label}</StepLabel>
+            <StepContent>
+              <div>{getStepContent(index, disclaimerStep, userStep)}</div>
+              <div className={classes.actionsContainer}>
+                <div>
+                  <Button
+                    disabled={activeStep === 0}
+                    onClick={handleBack}
+                    className={classes.button}
+                  >
+                    Volver
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleNext}
+                    className={classes.button}
+                    disabled={checkStep(activeStep)}
+                  >
+                    {activeStep === steps.length - 1
+                      ? "Finish"
+                      : "Siguiente"}
+                  </Button>
+                </div>
+              </div>
+            </StepContent>
+          </Step>
+        ))}
+      </Stepper>
+    </CardContent>
+
+    {activeStep === steps.length && (
+      <Paper square elevation={0} className={classes.resetContainer}>
+        <TurnoConfirmado />
+        <Button onClick={handleReset} className={classes.button}>
+          Reset
+        </Button>
+      </Paper>
+    )}
+  </div>
+</Card>
+</div>
+)}
+
+class App extends Component {
+  render() {
+    return (
+    <Router>
+      <Switch>
+        <Route path="/" exact component={Home}>
+          <Home />
+        </Route>
+        <Route path="/turno_confirmado/" exact component={TurnoConfirmado}>
+          <TurnoConfirmado />
+        </Route>
+      </Switch>
+    </Router>
+    );
+  }
 }
+
+export default App;
