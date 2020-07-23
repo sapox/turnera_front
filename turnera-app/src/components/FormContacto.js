@@ -18,13 +18,17 @@ const validation = Yup.object({
 	email: Yup.string()
 		.email("Coloque un email válido")
 		.required("requerido"),
+	codArea: Yup.string()
+		.min(2, "Debe contener 2 caracteres")
+		.max(4, "Debe contener 4 caracteres")
+		.required("requerido"),
 	telefono: Yup.string()
-		.min(8, "Debe contener 8 caracteres o más")
-		.max(13, "Debe contener 13 caracteres o menos")
+		.min(8, "Debe contener 8 caracteres")
+		.max(8, "Debe contener 8 caracteres")
 		.required("requerido"),
 	cuenta: Yup.string()
 		.max(13, "Debe contener 13 caracteres o menos")
-		.notRequired(),
+		.notRequired("no requerido"),
 	titularCuenta: Yup.string()
 		.max(20, "Debe contener 20 caracteres o menos")
 		.notRequired()	
@@ -40,6 +44,7 @@ const FormContacto = () => {
 			nombre: '',
 			apellido: '',
 			email: '',
+			codArea: '',
 			telefono: '',
 			cuentaContrato: '',
 			titularCuenta: ''
@@ -49,6 +54,8 @@ const FormContacto = () => {
 			dispatch(setUserValues(values));
 		},
 	});
+
+	
 
 	return (
 		<form onSubmit={formik.handleSubmit}>
@@ -93,7 +100,18 @@ const FormContacto = () => {
 					helperText={formik.errors.email || "*Campo requerido"}
 					error={formik.errors.email}
 				/>
-				<TextField 
+				<TextField
+					type="codArea"
+					placeholder="codArea" 
+					label="Cod. área"
+					id="codArea"
+					name="codArea"
+					onChange={formik.handleChange}
+					value={formik.values.codArea}  
+					helperText={formik.errors.codArea || "*Campo requerido"}
+					error={formik.errors.codArea} 
+				/>
+				<TextField
 					type="number"
 					placeholder="Telefono" 
 					label="Telefono"
@@ -101,12 +119,12 @@ const FormContacto = () => {
 					name="telefono"
 					onChange={formik.handleChange}
 					value={formik.values.telefono}  
-					helperText={formik.errors.telefono || "*Campo requerido"}
+					helperText={formik.errors.telefono || "*Ingrese el numero sin el 15"}
 					error={formik.errors.telefono}
 				/>
 				<TextField 
 					placeholder="Cuenta Contrato" 
-					label="Cuenta Contrato"
+					label="Cuenta de Servicios"
 					id="cuentaContrato"
 					name="cuentaContrato"
 					onChange={formik.handleChange}
