@@ -18,7 +18,6 @@ const FormTurnos = () => {
 	const [ sucursales, setSucursales ] = useState([]);
 	const [ feriados, setFeriados ] = useState([]);
 	const [ turnos, setTurnos ] = useState([]);
-	const [ resultadoTurno, setResultadoTurno ] = useState([]);
 	const [ error, setError ] = useState("");
 	//values from store
 	const tipoCaja = useSelector((state) => state.caja.tipo);

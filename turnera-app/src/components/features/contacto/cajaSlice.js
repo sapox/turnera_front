@@ -1,20 +1,25 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+const initialState = {
+  tipo: 0,
+  submitted: false,
+}
+
 export const cajaSlice = createSlice({
   name: 'caja',
-  initialState: {
-    tipo: 0,
-    submitted: false,
-  },
+  initialState: initialState,
   reducers: {
     setCajaValues: (state, action) => {
       state.tipo = action.payload;
       state.submitted = !state.submitted;
     },
+    resetCajaValues: (state) => {
+      Object.assign(state, initialState);
+    }
   },
 });
 
-export const { setCajaValues } = cajaSlice.actions;
+export const { setCajaValues, resetCajaValues } = cajaSlice.actions;
 
 // The function below is called a thunk and allows us to perform async logic. It
 // can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This

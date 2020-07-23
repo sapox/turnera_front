@@ -1,21 +1,25 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
+
+const initialState = {
+  idTurno: "",
+  submitted: false,
+};
 
 export const turnoConfirmadoSlice = createSlice({
-  name: 'turnoConfirmado',
-  initialState: {
-    idTurno: '',
-    submitted: false,
-
-  },
+  name: "turnoConfirmado",
+  initialState: initialState,
   reducers: {
     setTurnoConfirmado: (state, action) => {
       state.idTurno = action.payload;
       state.submitted = !state.submitted;
     },
+    resetTurnoConfirmadoValues: (state) => {
+      Object.assign(state, initialState);
+    },
   },
 });
 
-export const { setTurnoConfirmado } = turnoConfirmadoSlice.actions;
+export const { setTurnoConfirmado, resetTurnoConfirmadoValues } = turnoConfirmadoSlice.actions;
 
 // The function below is called a thunk and allows us to perform async logic. It
 // can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This

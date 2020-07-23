@@ -34,15 +34,15 @@ const TurnoConfirmado = () => {
   });
 
   useEffect(() => {
-    const params = QueryString.parse(window.location.search) || "";
+    const params = QueryString.parse(window.location.search);
     const { userDni: userDniParams, turnoId: turnoIdParams } = params;
-    if(params === ""){
+    if(JSON.stringify(params) === "{}"){
       getTurnoConfirmadoFunc(userDni, turnoId);
     } else {
       getTurnoConfirmadoFunc(userDniParams, turnoIdParams);
     }
     
-  }, []);
+  }, [userDni, turnoId]);
 
   const { cliente, caja, fecha, hora, sucursal } = turnoConfirmado;
   
@@ -73,22 +73,23 @@ const TurnoConfirmado = () => {
               </Link>
               {cliente && 
                 <Fragment>
-                  <p>{`${cliente.nombre} ${cliente.apellido}, con documento ${cliente.dni}`}</p>
-                  <p>{`Turno: ${fecha}, horario: ${hora}`}</p>
-                  Tipo de caja: {caja.tipo.nombre}
-                  <p>Oficina Comercial: {sucursal.nombre}</p>
-                </Fragment>   
+                <p>{`${cliente.nombre} ${cliente.apellido}, con documento ${cliente.dni}`}</p>
+                <p>{`Turno: ${fecha}, horario: ${hora}`}</p>
+                Tipo de caja: {caja.tipo.nombre}
+                <p>Oficina Comercial: {sucursal.nombre}</p>
+                <div  style={{ display: 'flex', justifyContent: 'center'}}>
+                  <Button 
+                    variant="contained" 
+                    color="primary"
+                    onClick={handlePrint}
+                    startIcon={<PrintIcon />}
+                    >
+                      Imprimir turno
+                  </Button>
+                </div>
+              </Fragment> 
               }
-              <div  style={{ display: 'flex', justifyContent: 'center'}}>
-                <Button 
-                  variant="contained" 
-                  color="primary"
-                  onClick={handlePrint}
-                  startIcon={<PrintIcon />}
-                  >
-                    Imprimir turno
-                </Button>
-              </div>
+              
             </Fragment>
           ) : (
             <Fragment>

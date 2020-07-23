@@ -10,6 +10,11 @@ import TurnoConfirmado from './components/TurnoConfirmado';
 import Disclaimer from './components/Disclaimer';
 import { getTipoCaja } from './api';
 import { setCajaValues } from './components/features/contacto/cajaSlice';
+import { resetUserValues } from './components/features/contacto/userSlice';
+import { resetTurnoValues } from './components/features/contacto/turnoSlice';
+import { resetTurnoConfirmadoValues } from './components/features/contacto/turnoConfirmadoSlice';
+import { resetCajaValues } from './components/features/contacto/cajaSlice';
+import { resetDisclaimer } from './components/features/contacto/disclaimerSlice';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -95,6 +100,7 @@ function Home(){
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
+  const dispatch = useDispatch();
 
   const disclaimerStep = useSelector((state) => state.disclaimer.isConfirmed);
   const userStep = useSelector((state) => state.user.submitted);
@@ -111,6 +117,11 @@ function Home(){
 
   const handleReset = () => {
     setActiveStep(0);
+    dispatch(resetUserValues());
+    dispatch(resetCajaValues());
+    dispatch(resetDisclaimer());
+    dispatch(resetTurnoValues());
+    dispatch(resetTurnoConfirmadoValues());
   };
 
   const checkStep = (step) => {
