@@ -21,6 +21,7 @@ export const userSlice = createSlice({
         nombre,
         apellido,
         email,
+        codArea,
         telefono,
         cuentaContrato,
         titularCuenta,
@@ -29,7 +30,7 @@ export const userSlice = createSlice({
       state.nombre = nombre;
       state.apellido = apellido;
       state.email = email;
-      state.telefono = telefono;
+      state.telefono = codArea+telefono;
       state.cuentaContrato = cuentaContrato;
       state.titularCuenta = titularCuenta;
       state.submitted = !state.submitted;
