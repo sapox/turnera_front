@@ -40,15 +40,16 @@ const FormTurnos = () => {
 	const formik = useFormik({
 		initialValues: {
 			sucursalId: '',
+			direccion: '',
 			fecha: '',
 			hora: '',
 		},
 		onSubmit: values => {	
-			const { hora, sucursalId, fecha } = values;
+			const { hora, sucursalId, direccion, fecha } = values;
 			const auxHora = hora.split('_')[0];
 			const auxCaja = hora.split('_')[1];
 			const fechaAux = formatISO(new Date(`${fecha}`), {representation: 'date' });
-			const obj = { hora: auxHora, cajaId: auxCaja, sucursalId: sucursalId, fecha: fechaAux }; 
+			const obj = { hora: auxHora, cajaId: auxCaja, sucursalId: sucursalId, direccion: direccion, fecha: fechaAux }; 
 			const objTurno = 
 				{ dni: dniUser, 
 					nombre: nombreUser, 
@@ -136,7 +137,7 @@ const FormTurnos = () => {
 							<MenuItem 
 								key={`sucursal_${sucursal.id}`} 
 								value={sucursal.id}>
-									{sucursal.nombre}
+									{sucursal.nombre} - {sucursal.direccion}
 							</MenuItem>
 						))}
 					</Select>

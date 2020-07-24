@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   sucursalId: '',
+  direccion: '',
   fecha: '',
   hora: '',
   cajaId: '',
@@ -13,8 +14,9 @@ export const turnoSlice = createSlice({
   initialState: initialState,
   reducers: {
     setTurnoValues: (state, action) => {
-      const { fecha, hora, sucursalId, cajaId } = action.payload;
+      const { fecha, hora, sucursalId, direccion, cajaId } = action.payload;
       state.sucursalId = sucursalId;
+      state.direccion = direccion;
       state.fecha = fecha;
       state.hora = hora;
       state.cajaId = cajaId;
