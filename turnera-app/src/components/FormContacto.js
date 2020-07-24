@@ -8,7 +8,7 @@ import $ from "jquery"
 
 const validation = Yup.object({
 	dni: Yup.string('Ingrese dni')
-		.min(8, "Debe contener 8 caracteres o más" )
+		.min(8, "Debe contener 8 caracteres o más")
 		.required("requerido"),
 	nombre: Yup.string()
 		.max(20, "Debe contener 20 caracteres o menos")
@@ -22,21 +22,15 @@ const validation = Yup.object({
 	confirmarEmail: Yup.string()
 		.oneOf([Yup.ref('email'), null], 'debe coincidir con el email ingresado')
 		.email("Coloque un email válido")
-        .required("requerido"),	
-	telefono: Yup.string()
-		.min(8, "Debe contener 8 caracteres o más")
-		.max(13, "Debe contener 13 caracteres o menos")
-		.required("requerido"),
+        .required("requerido"),
 	cuenta: Yup.string()
 		.max(13, "Debe contener 13 caracteres o menos")
-		.notRequired(),
+		.notRequired("no requerido"),
 	titularCuenta: Yup.string()
 		.max(20, "Debe contener 20 caracteres o menos")
 		.notRequired(),
 	
 });
-
-
 const FormContacto = () => {
 
 	const dispatch = useDispatch();
@@ -48,7 +42,6 @@ const FormContacto = () => {
 			apellido: '',
 			email: '',
 			confirmarEmail: '',
-			telefono: '',
 			cuentaContrato: '',
 			titularCuenta: ''
 		},
@@ -57,7 +50,6 @@ const FormContacto = () => {
 			dispatch(setUserValues(values));
 		},
 	});
-
 	$("#confirmarEmail").bind("paste",function(){return false;});
 
 	return (
@@ -103,6 +95,7 @@ const FormContacto = () => {
 					helperText={formik.errors.email || "*Campo requerido"}
 					error={formik.errors.email}
 				/>
+
 				<TextField 
 					placeholder="confirmar Email" 
 					label="Confirmar Email"
@@ -114,19 +107,8 @@ const FormContacto = () => {
 					error={formik.errors.confirmarEmail}
 				/>
 				<TextField 
-					type="number"
-					placeholder="Telefono" 
-					label="Telefono"
-					id="telefono"
-					name="telefono"
-					onChange={formik.handleChange}
-					value={formik.values.telefono}  
-					helperText={formik.errors.telefono || "*Campo requerido"}
-					error={formik.errors.telefono}
-				/>
-				<TextField 
 					placeholder="Cuenta Contrato" 
-					label="Cuenta Contrato"
+					label="Cuenta de Servicios"
 					id="cuentaContrato"
 					name="cuentaContrato"
 					onChange={formik.handleChange}
