@@ -148,7 +148,7 @@ function Home(){
       <img
         src="https://www.aysa.com.ar/assets/Menu/img/logo.png"
         alt="aysa logo"
-      />
+      />  
     </div>
 
     <CardContent>

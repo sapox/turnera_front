@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import { FormControl, TextField, Button } from "@material-ui/core";
 import { useDispatch } from 'react-redux';
 import { setUserValues } from './features/contacto/userSlice';
+import $ from "jquery"
 
 const validation = Yup.object({
 	dni: Yup.string('Ingrese dni')
@@ -18,6 +19,10 @@ const validation = Yup.object({
 	email: Yup.string()
 		.email("Coloque un email válido")
 		.required("requerido"),
+	confirmarEmail: Yup.string()
+		.oneOf([Yup.ref('email'), null], 'debe coincidir con el email ingresado')
+		.email("Coloque un email válido")
+        .required("requerido"),	
 	telefono: Yup.string()
 		.min(8, "Debe contener 8 caracteres o más")
 		.max(13, "Debe contener 13 caracteres o menos")
@@ -27,8 +32,10 @@ const validation = Yup.object({
 		.notRequired(),
 	titularCuenta: Yup.string()
 		.max(20, "Debe contener 20 caracteres o menos")
-		.notRequired()	
+		.notRequired(),
+	
 });
+
 
 const FormContacto = () => {
 
@@ -40,6 +47,7 @@ const FormContacto = () => {
 			nombre: '',
 			apellido: '',
 			email: '',
+			confirmarEmail: '',
 			telefono: '',
 			cuentaContrato: '',
 			titularCuenta: ''
@@ -49,6 +57,8 @@ const FormContacto = () => {
 			dispatch(setUserValues(values));
 		},
 	});
+
+	$("#confirmarEmail").bind("paste",function(){return false;});
 
 	return (
 		<form onSubmit={formik.handleSubmit}>
@@ -92,6 +102,16 @@ const FormContacto = () => {
 					value={formik.values.email} 
 					helperText={formik.errors.email || "*Campo requerido"}
 					error={formik.errors.email}
+				/>
+				<TextField 
+					placeholder="confirmar Email" 
+					label="Confirmar Email"
+					id="confirmarEmail"
+					name="confirmarEmail"
+					onChange={formik.handleChange}
+					value={formik.values.confirmarEmail} 
+					helperText={formik.errors.confirmarEmail || "*Campo requerido"}
+					error={formik.errors.confirmarEmail}
 				/>
 				<TextField 
 					type="number"
