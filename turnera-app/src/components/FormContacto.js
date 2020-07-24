@@ -7,7 +7,7 @@ import { setUserValues } from './features/contacto/userSlice';
 
 const validation = Yup.object({
 	dni: Yup.string('Ingrese dni')
-		.min(8, "Debe contener 8 caracteres o más" )
+		.min(8, "Debe contener 8 caracteres o más")
 		.required("requerido"),
 	nombre: Yup.string()
 		.max(20, "Debe contener 20 caracteres o menos")
@@ -19,12 +19,12 @@ const validation = Yup.object({
 		.email("Coloque un email válido")
 		.required("requerido"),
 	codArea: Yup.string()
-		.min(2, "Debe contener 2 caracteres")
-		.max(4, "Debe contener 4 caracteres")
+		.min(2, "Debe contener 2 caracteres o mas")
+		.max(4, "Debe contener 4 caracteres o menos")
 		.required("requerido"),
 	telefono: Yup.string()
-		.min(8, "Debe contener 8 caracteres")
-		.max(8, "Debe contener 8 caracteres")
+		.min(5, "Debe contener 5 caracteres o mas")
+		.max(8, "Debe contener 8 caracteres o menos")
 		.required("requerido"),
 	cuenta: Yup.string()
 		.max(13, "Debe contener 13 caracteres o menos")
@@ -108,7 +108,7 @@ const FormContacto = () => {
 					name="codArea"
 					onChange={formik.handleChange}
 					value={formik.values.codArea}  
-					helperText={formik.errors.codArea || "*Campo requerido"}
+					helperText={formik.errors.codArea || "*Ingrese Cod. Area sin el 0"}
 					error={formik.errors.codArea} 
 				/>
 				<TextField
