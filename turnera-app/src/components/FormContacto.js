@@ -1,4 +1,4 @@
-import React from 'react';
+import React , { useState, useEffect, } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { FormControl, TextField, Button } from "@material-ui/core";
@@ -42,7 +42,7 @@ const validation = Yup.object({
 const FormContacto = () => {
 
 	const dispatch = useDispatch();
-	
+	const [error,setError]= useState(''); 
 	const formik = useFormik({
 		initialValues: {
 			dni: '',
@@ -60,10 +60,13 @@ const FormContacto = () => {
 			dispatch(setUserValues(values));
 		},
 	});
-	$("#confirmarEmail").bind("paste",function(){return false;});
 
-	
+	const disablePaste = id => $(id).bind("paste", function(){return false;});
 
+	useEffect(() => { 
+		try{ disablePaste("#confirmarEmail"); }
+		 catch(err){ setError(err); } }, []);
+		 
 	return (
 		<form onSubmit={formik.handleSubmit}>
 			<FormControl>
@@ -116,7 +119,7 @@ const FormContacto = () => {
 					value={formik.values.confirmarEmail} 
 					helperText={formik.errors.confirmarEmail || "*Campo requerido"}
 					error={formik.errors.confirmarEmail}
-        />
+       			/>
 				<TextField
 					type="codArea"
 					placeholder="codArea" 
