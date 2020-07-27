@@ -15,6 +15,7 @@ import { resetTurnoValues } from './components/features/contacto/turnoSlice';
 import { resetTurnoConfirmadoValues } from './components/features/contacto/turnoConfirmadoSlice';
 import { resetCajaValues } from './components/features/contacto/cajaSlice';
 import { resetDisclaimer } from './components/features/contacto/disclaimerSlice';
+import FormLogin from './components/FormLogin'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -209,6 +210,9 @@ class App extends Component {
         </Route>
         <Route path="/turno_confirmado/" exact component={TurnoConfirmado}>
           <TurnoConfirmado />
+        </Route>
+        <Route path="/login" exact component={FormLogin}>
+          <FormLogin />
         </Route>
       </Switch>
     </Router>
