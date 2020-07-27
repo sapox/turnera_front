@@ -9,7 +9,7 @@ export const api = axios.create({
 })
 
 export const login = (user) => {
-	return axios.post('/api/v1/login', {}, { auth: user });
+	return axios.post(`/api/v1/login`, {}, { auth: user });
 };
 
 export const setAuthorizationHeader = ({ username, password, isLoggedIn }) => {

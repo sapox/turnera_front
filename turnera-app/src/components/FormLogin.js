@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { TextField, Button } from "@material-ui/core";
+import {TextField, Button, Input} from "@material-ui/core";
 import img from "./features/contacto/img.jpg";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -170,7 +170,7 @@ export const FormLogin = (props) => {
                       type="password"
                       id="password"
                       autoComplete="current-password"
-                      onChange={(event) => setPassword(event.target.value)}
+                      onChange={formik.handleChange}
                       value={formik.values.password}
                       helperText={formik.errors.password}
                       error={formik.errors.password}
@@ -184,6 +184,7 @@ export const FormLogin = (props) => {
                       fullWidth
                       variant="contained"
                       color="primary"
+                      onClick={apiLogIn}
                     >
                       Sign In
                     </Button>
