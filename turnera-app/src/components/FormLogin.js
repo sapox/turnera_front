@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { TextField, Button } from "@material-ui/core";
@@ -11,23 +11,40 @@ import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
+import { connect } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import * as authActions from "../redux/authActions";
 
+export const FormLogin = (props) => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
+  const validation = Yup.object({
+    email: Yup.string().email("Coloque un email válido").required(" requerido"),
+    password: Yup.string()
+        .min(6, "Password must be at least 6 characters")
+        .required("requerido"),
+  });
 
-const validation = Yup.object({
-  email: Yup.string().email("Coloque un email válido").required(" requerido"),
-  password: Yup.string()
-    .min(6, "Password must be at least 6 characters")
-    .required("requerido"),
-});
+  const apiLogIn = () => {
+    const body = {
+      username,
+      password
+    };
+    props.actions
+        .postLogin(body)
+        .then((response) => {
+          props.history.push('/');
+        })
+        .catch((error) => {
+          if (error.response) {
+          }
+        });
+  };
 
-const apiLogIn = () => {};
-
-const FormLogin = () => {
   const formik = useFormik({
     initialValues: {
-      email: "",
+      username: "",
       password: "",
     },
     validationSchema: validation,
@@ -136,7 +153,9 @@ const FormLogin = () => {
                       name="email"
                       autoComplete="email"
                       autoFocus
-                      onChange={formik.handleChange}
+                      onChange={(event) => {
+                        setUsername(event.target.value);
+                      }}
                       value={formik.values.email}
                       helperText={formik.errors.email}
                       error={formik.errors.email}
@@ -151,7 +170,7 @@ const FormLogin = () => {
                       type="password"
                       id="password"
                       autoComplete="current-password"
-                      onChange={formik.handleChange}
+                      onChange={(event) => setPassword(event.target.value)}
                       value={formik.values.password}
                       helperText={formik.errors.password}
                       error={formik.errors.password}
@@ -191,4 +210,20 @@ const FormLogin = () => {
     </div>
   );
 };
-export default FormLogin;
+
+FormLogin.defaultProps = {
+  actions: {
+    postLogin: () => new Promise((resolve, reject) => resolve({}))
+  },
+  dispatch: () => {}
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: {
+      postLogin: (body) => dispatch(authActions.loginHandler(body))
+    }
+  };
+};
+
+export default connect(null, mapDispatchToProps)(FormLogin);

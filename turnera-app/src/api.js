@@ -8,6 +8,21 @@ export const api = axios.create({
 	},
 })
 
+export const login = (user) => {
+	return axios.post('/api/v1/login', {}, { auth: user });
+};
+
+export const setAuthorizationHeader = ({ username, password, isLoggedIn }) => {
+	if (isLoggedIn) {
+		axios.defaults.headers.common['Authorization'] = `Basic ${btoa(
+			username + ':' + password
+		)}`;
+	} else {
+		delete axios.defaults.headers.common['Authorization'];
+	}
+};
+
+
 export const getSucursales = async () => {
 	const url = `sucursales/findAll`
 	return await api.get(url)
