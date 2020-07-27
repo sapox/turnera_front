@@ -165,6 +165,7 @@ const FormLogin = () => {
                       fullWidth
                       variant="contained"
                       color="primary"
+                      onClick={apiLogIn}
                     >
                       Sign In
                     </Button>
