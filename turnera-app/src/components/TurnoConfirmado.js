@@ -76,7 +76,7 @@ const TurnoConfirmado = () => {
                 <p>{`${cliente.nombre} ${cliente.apellido}, con documento ${cliente.dni}`}</p>
                 <p>{`Turno: ${fecha}, horario: ${hora}`}</p>
                 Tipo de caja: {caja.tipo.nombre}
-                <p>Oficina Comercial: {sucursal.nombre}</p>
+                <p>Oficina Comercial: {sucursal.direccion}</p>
                 <div  style={{ display: 'flex', justifyContent: 'center'}}>
                   <Button 
                     variant="contained" 

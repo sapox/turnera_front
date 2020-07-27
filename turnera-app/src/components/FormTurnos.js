@@ -134,10 +134,11 @@ const FormTurnos = () => {
 						onChange={formik.handleChange}
 						value={formik.values.sucursalId}>
 						{sucursales && sucursales.map(sucursal => (
-							<MenuItem 
+							<MenuItem
 								key={`sucursal_${sucursal.id}`} 
 								value={sucursal.id}>
-									{sucursal.nombre} - {sucursal.direccion}
+									{sucursal.nombre} -    
+									<p style={{ fontSize: 13 }}>{sucursal.direccion}</p>
 							</MenuItem>
 						))}
 					</Select>
