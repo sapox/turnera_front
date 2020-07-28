@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { TextField, Button } from "@material-ui/core";
@@ -12,8 +12,10 @@ import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
-
+import Header from "./Header";
+import BuscarTurno from "./BuscarTurno";
 
 const validation = Yup.object({
   email: Yup.string().email("Coloque un email válido").required(" requerido"),
@@ -24,7 +26,7 @@ const validation = Yup.object({
 
 const apiLogIn = () => {};
 
-const FormLogin = () => {
+function FormLogin(props) {
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -60,21 +62,15 @@ const FormLogin = () => {
   }));
 
   const classes = useStyles();
+  const title = null ;
+  const welcome = null;
+  const button = null
 
   return (
     <div>
       <Container fixed>
         <div>
-          <img
-            src="https://www.aysa.com.ar/assets/Menu/img/logo.png"
-            alt="aysa logo"
-          />
-        </div>
-        <div>
-          <h2 style={Style.h1}> BackOffice Turno</h2>
-        </div>
-        <div>
-          <img style={{ width: "100%" }} src={img} alt="foto" />
+          <Header title={title} welcome={welcome} button ={button}/>
         </div>
 
         <Grid container spacing={6}>
@@ -90,29 +86,30 @@ const FormLogin = () => {
                 </Grid>
                 <Grid container spacing={1}>
                   <Grid item xs>
-                      <Link to="/">
+                    <Link to="/">
                       <Button
-                      type="submit"
-                      fullWidth
-                      variant="contained"
-                      color="light"
-                    >
-                      Nuevo Turno
-                    </Button>
-                      </Link>
-                    
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="light"
+                      >
+                        Nuevo Turno
+                      </Button>
+                    </Link>
                   </Grid>
                 </Grid>
                 <Grid container spacing={1}>
                   <Grid item xs>
-                    <Button
-                      type="submit"
-                      fullWidth
-                      variant="contained"
-                      color="light"
-                    >
-                      Buscar Turno
-                    </Button>
+                    <Link to="/buscarTurno">
+                      <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="light"
+                      >
+                        Buscar Turno
+                      </Button>
+                    </Link>
                   </Grid>
                 </Grid>
               </div>
@@ -191,5 +188,5 @@ const FormLogin = () => {
       </Container>
     </div>
   );
-};
-export default FormLogin;
+}
+export default withRouter(FormLogin);
