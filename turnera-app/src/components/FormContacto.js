@@ -4,7 +4,8 @@ import * as Yup from 'yup';
 import { FormControl, TextField, Button } from "@material-ui/core";
 import { useDispatch } from 'react-redux';
 import { setUserValues } from './features/contacto/userSlice';
-import $ from "jquery"
+import $, { param } from "jquery"
+import service from './features/contacto/service.png';
 
 const validation = Yup.object({
 	dni: Yup.string('Ingrese dni')
@@ -20,7 +21,7 @@ const validation = Yup.object({
 		.email("Coloque un email válido")
 		.required("requerido"),
 	confirmarEmail: Yup.string()
-		.oneOf([Yup.ref('email'), null], 'debe coincidir con el email ingresado')
+		.oneOf([Yup.ref('email'), null], 'Debe coincidir con el email ingresado')
 		.email("Coloque un email válido")
         .required("requerido"),
 	codArea: Yup.string()
@@ -39,10 +40,12 @@ const validation = Yup.object({
 		.notRequired(),
 	
 });
+
 const FormContacto = () => {
 
 	const dispatch = useDispatch();
 	const [error,setError]= useState(''); 
+	const [toggle, setToggle]= useState(false);
 	const formik = useFormik({
 		initialValues: {
 			dni: '',
@@ -62,6 +65,10 @@ const FormContacto = () => {
 	});
 
 	const disablePaste = id => $(id).bind("paste", function(){return false;});
+
+	const handleToggle = () => {
+		setToggle(!toggle);
+	}
 
 	useEffect(() => { 
 		try{ disablePaste("#confirmarEmail"); }
@@ -120,28 +127,31 @@ const FormContacto = () => {
 					helperText={formik.errors.confirmarEmail || "*Campo requerido"}
 					error={formik.errors.confirmarEmail}
        			/>
-				<TextField
-					type="codArea"
-					placeholder="codArea" 
-					label="Cod. área"
-					id="codArea"
-					name="codArea"
-					onChange={formik.handleChange}
-					value={formik.values.codArea}  
-					helperText={formik.errors.codArea || "*Ingrese Cod. Area sin el 0"}
-					error={formik.errors.codArea} 
-				/>
-				<TextField
-					type="number"
-					placeholder="Telefono" 
-					label="Telefono"
-					id="telefono"
-					name="telefono"
-					onChange={formik.handleChange}
-					value={formik.values.telefono}  
-					helperText={formik.errors.telefono || "*Ingrese el numero sin el 15"}
-					error={formik.errors.telefono}
-				/>
+				<tr>
+					<TextField style={{width: 70}}
+						type="codArea"
+						placeholder="codArea" 
+						label="Cod. área"
+						id="codArea"
+						name="codArea"
+						onChange={formik.handleChange}
+						value={formik.values.codArea}  
+						helperText={formik.errors.codArea || "*Ingrese Cod. Area sin el 0"}
+						error={formik.errors.codArea} 
+					/>
+					<TextField style={{width: 130}}
+						value="rigth"
+						type="number"
+						placeholder="Telefono" 
+						label="Telefono"
+						id="telefono"
+						name="telefono"
+						onChange={formik.handleChange}
+						value={formik.values.telefono}  
+						helperText={formik.errors.telefono || "*Ingrese el numero sin el 15"}
+						error={formik.errors.telefono}
+					/>
+				</tr>
 				<TextField 
 					placeholder="Cuenta Contrato" 
 					label="Cuenta de Servicios"
@@ -152,6 +162,14 @@ const FormContacto = () => {
 					helperText={formik.errors.cuentaContrato}
 					error={formik.errors.cuentaContrato} 
 				/>
+				<Button  
+					onClick={handleToggle}
+					style={{width: 0, height:18}}
+					variant="contained" 
+					color="primary">
+					NRO
+				</Button>
+				{toggle && <img id="service" style={{width: 350, height: 250}} src={service}></img>}
 				<TextField 
 					placeholder="Titular de la Cuenta" 
 					label="Titular de la Cuenta"
