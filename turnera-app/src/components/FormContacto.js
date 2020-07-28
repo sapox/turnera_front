@@ -1,4 +1,6 @@
 import React , { useState, useEffect, } from 'react';
+import Paper from '@material-ui/core/Paper';
+import Zoom from '@material-ui/core/Zoom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { FormControl, TextField, Button } from "@material-ui/core";
@@ -167,9 +169,14 @@ const FormContacto = () => {
 					style={{width: 0, height:18}}
 					variant="contained" 
 					color="primary">
-					NRO
+					?
 				</Button>
-				{toggle && <img id="service" style={{width: 350, height: 250}} src={service}></img>}
+				<Zoom in={toggle}>
+					<Paper elevation={4}>
+						{toggle && <img id="service" style={{width: 350, height: 250}} src={service}></img>}
+					</Paper>
+				</Zoom>
+				
 				<TextField 
 					placeholder="Titular de la Cuenta" 
 					label="Titular de la Cuenta"

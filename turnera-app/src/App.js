@@ -10,7 +10,7 @@ import TurnoConfirmado from './components/TurnoConfirmado';
 import Disclaimer from './components/Disclaimer';
 import { getTipoCaja } from './api';
 import { setCajaValues } from './components/features/contacto/cajaSlice';
-import { resetUserValues } from './components/features/contacto/userSlice';
+import { resetUserValues, setUserValues } from './components/features/contacto/userSlice';
 import { resetTurnoValues } from './components/features/contacto/turnoSlice';
 import { resetTurnoConfirmadoValues } from './components/features/contacto/turnoConfirmadoSlice';
 import { resetCajaValues } from './components/features/contacto/cajaSlice';
@@ -18,6 +18,7 @@ import { resetDisclaimer } from './components/features/contacto/disclaimerSlice'
 import FormLogin from './components/FormLogin'
 import Header from "./components/Header";
 import BuscarTurno from "./components/BuscarTurno";
+import Alert from "@material-ui/lab/Alert";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -29,7 +30,6 @@ const useStyles = makeStyles(theme => ({
   },
   button: {
     marginTop: theme.spacing(1),
-    marginRight: theme.spacing(1)
   },
   actionsContainer: {
     marginBottom: theme.spacing(2)
@@ -110,6 +110,10 @@ function Home(){
   const tipoCajaStep = useSelector((state) => state.caja.submitted);
   const turnoConfirmado = useSelector((state) => state.turnoConfirmado.submitted);
 
+  const handleSubmit = () => {
+    setUserValues((state) => state.user.submitted);
+  }  
+
   const handleNext = () => {
     setActiveStep(prevActiveStep => prevActiveStep + 1);
   };
@@ -170,9 +174,10 @@ function Home(){
                   >
                     Volver
                   </Button>
-                  <Button
+                  <Button 
                     variant="contained"
                     color="primary"
+                    onMouseEnter={handleSubmit}
                     onClick={handleNext}
                     className={classes.button}
                     disabled={checkStep(activeStep)}
@@ -192,8 +197,10 @@ function Home(){
     {activeStep === steps.length && (
       <Paper square elevation={0} className={classes.resetContainer}>
         <TurnoConfirmado />
-        <Button onClick={handleReset} className={classes.button}>
-          Reset
+        <Button onClick={handleReset} className={classes.button}
+                variant="contained"
+                color="primary">
+          Solicitar nuevo turno
         </Button>
       </Paper>
     )}
