@@ -45,6 +45,7 @@ const FormContacto = () => {
 
 	const dispatch = useDispatch();
 	const [error,setError]= useState(''); 
+	const [toggle, setToggle]= useState(false);
 	const formik = useFormik({
 		initialValues: {
 			dni: '',
@@ -64,6 +65,10 @@ const FormContacto = () => {
 	});
 
 	const disablePaste = id => $(id).bind("paste", function(){return false;});
+
+	const handleToggle = () => {
+		setToggle(!toggle);
+	}
 
 	useEffect(() => { 
 		try{ disablePaste("#confirmarEmail"); }
@@ -147,25 +152,24 @@ const FormContacto = () => {
 						error={formik.errors.telefono}
 					/>
 				</tr>
-				<tr>
-					<TextField 
-						placeholder="Cuenta Contrato" 
-						label="Cuenta de Servicios"
-						id="cuentaContrato"
-						name="cuentaContrato"
-						onChange={formik.handleChange}
-						value={formik.values.cuentaContrato} 
-						helperText={formik.errors.cuentaContrato}
-						error={formik.errors.cuentaContrato} 
-					/>
-					<Button  
-						style={{width: 0, height:18}}
-						variant="contained" 
-						color="primary">
-						NRO
-					</Button>
-				</tr>
-					<img id="service" style={{width: 350, height: 250}} src={service}></img>
+				<TextField 
+					placeholder="Cuenta Contrato" 
+					label="Cuenta de Servicios"
+					id="cuentaContrato"
+					name="cuentaContrato"
+					onChange={formik.handleChange}
+					value={formik.values.cuentaContrato} 
+					helperText={formik.errors.cuentaContrato}
+					error={formik.errors.cuentaContrato} 
+				/>
+				<Button  
+					onClick={handleToggle}
+					style={{width: 0, height:18}}
+					variant="contained" 
+					color="primary">
+					NRO
+				</Button>
+				{toggle && <img id="service" style={{width: 350, height: 250}} src={service}></img>}
 				<TextField 
 					placeholder="Titular de la Cuenta" 
 					label="Titular de la Cuenta"
