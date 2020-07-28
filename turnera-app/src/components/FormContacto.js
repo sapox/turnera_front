@@ -64,7 +64,8 @@ const FormContacto = () => {
 	const disablePaste = id => $(id).bind("paste", function(){return false;});
 
 	useEffect(() => { 
-		try{ disablePaste("#confirmarEmail"); }
+		try{ disablePaste("#confirmarEmail");
+		disablePaste("#email"); }
 		 catch(err){ setError(err); } }, []);
 		 
 	return (
@@ -106,6 +107,9 @@ const FormContacto = () => {
 					id="email"
 					name="email"
 					onChange={formik.handleChange}
+					inputProps={{
+						autoComplete: 'off'
+					 }}
 					value={formik.values.email} 
 					helperText={formik.errors.email || "*Campo requerido"}
 					error={formik.errors.email}
@@ -116,6 +120,9 @@ const FormContacto = () => {
 					id="confirmarEmail"
 					name="confirmarEmail"
 					onChange={formik.handleChange}
+					inputProps={{
+						autoComplete: 'off'
+					 }}
 					value={formik.values.confirmarEmail} 
 					helperText={formik.errors.confirmarEmail || "*Campo requerido"}
 					error={formik.errors.confirmarEmail}
