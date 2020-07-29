@@ -18,7 +18,6 @@ import { resetDisclaimer } from './components/features/contacto/disclaimerSlice'
 import FormLogin from './components/FormLogin'
 import Header from "./components/Header";
 import BuscarTurno from "./components/BuscarTurno";
-import Alert from "@material-ui/lab/Alert";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -110,10 +109,6 @@ function Home(){
   const tipoCajaStep = useSelector((state) => state.caja.submitted);
   const turnoConfirmado = useSelector((state) => state.turnoConfirmado.submitted);
 
-  const handleSubmit = () => {
-    setUserValues((state) => state.user.submitted);
-  }  
-
   const handleNext = () => {
     setActiveStep(prevActiveStep => prevActiveStep + 1);
   };
@@ -169,15 +164,14 @@ function Home(){
                 <div>
                   <Button
                     disabled={activeStep === 0}
-                    onClick={handleBack}
+                    onClick={handleReset}
                     className={classes.button}
                   >
-                    Volver
+                    Cancelar
                   </Button>
                   <Button 
                     variant="contained"
                     color="primary"
-                    onMouseEnter={handleSubmit}
                     onClick={handleNext}
                     className={classes.button}
                     disabled={checkStep(activeStep)}

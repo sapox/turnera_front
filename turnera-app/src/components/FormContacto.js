@@ -176,7 +176,6 @@ const FormContacto = () => {
 						{toggle && <img id="service" style={{width: 350, height: 250}} src={service}></img>}
 					</Paper>
 				</Zoom>
-				
 				<TextField 
 					placeholder="Titular de la Cuenta" 
 					label="Titular de la Cuenta"
