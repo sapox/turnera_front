@@ -3,7 +3,7 @@ import Paper from '@material-ui/core/Paper';
 import Zoom from '@material-ui/core/Zoom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { FormControl, TextField, Button } from "@material-ui/core";
+import { FormControl, TextField, Button, Checkbox, FormControlLabel } from "@material-ui/core";
 import { useDispatch } from 'react-redux';
 import { setUserValues } from './features/contacto/userSlice';
 import $, { param } from "jquery"
@@ -48,6 +48,7 @@ const FormContacto = () => {
 	const dispatch = useDispatch();
 	const [error,setError]= useState(''); 
 	const [toggle, setToggle]= useState(false);
+	const [titular, setTitular]= useState(false);
 	const formik = useFormik({
 		initialValues: {
 			dni: '',
@@ -70,6 +71,10 @@ const FormContacto = () => {
 
 	const handleToggle = () => {
 		setToggle(!toggle);
+	}
+
+	const handleTitular = () => {
+		setTitular(!titular);
 	}
 
 	useEffect(() => { 
@@ -176,15 +181,23 @@ const FormContacto = () => {
 						{toggle && <img id="service" style={{width: 350, height: 250}} src={service}></img>}
 					</Paper>
 				</Zoom>
-				<TextField 
-					placeholder="Titular de la Cuenta" 
-					label="Titular de la Cuenta"
-					id="titularCuenta"
-					name="titularCuenta"
-					onChange={formik.handleChange}
-					value={formik.values.titularCuenta} 
-					helperText={formik.errors.titularCuenta}
-					error={formik.errors.titularCuenta} 
+				<Zoom in={!titular}>
+					<TextField 
+						placeholder="Titular de la Cuenta" 
+						label="Titular de la Cuenta"
+						id="titularCuenta"
+						name="titularCuenta"
+						onChange={formik.handleChange}
+						value={formik.values.titularCuenta} 
+						helperText={formik.errors.titularCuenta}
+						error={formik.errors.titularCuenta} 
+					/>
+				</Zoom>
+				<FormControlLabel
+					value="end"
+					control={<Checkbox color="primary" onClick={handleTitular}/>}
+					label="Soy titular de la cuenta."
+					labelPlacement="end"
 				/>
 				<Button 
 					type="submit" 
