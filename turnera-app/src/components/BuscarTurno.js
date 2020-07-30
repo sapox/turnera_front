@@ -1,27 +1,15 @@
-import React, { useState } from "react";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import { TextField, Button } from "@material-ui/core";
-import img from "./features/contacto/img.jpg";
+import React, { useState, useEffect } from "react";
+import {
+  Button,
+  InputLabel,
+  MenuItem,
+  FormControl,
+  Select,
+  Container,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
-import Typography from "@material-ui/core/Typography";
-import Container from "@material-ui/core/Container";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
-import Accordion from "@material-ui/core/Accordion";
-import AccordionDetails from "@material-ui/core/AccordionDetails";
-import AccordionSummary from "@material-ui/core/AccordionSummary";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-
+import { getSucursales } from "./../api";
 import Header from "./Header";
 
 function BuscarTurno(props) {
@@ -46,21 +34,39 @@ function BuscarTurno(props) {
     },
   }));
   const classes = useStyles();
-  const [oficina, setOficina] = React.useState("");
-  const [open, setOpen] = React.useState(false);
+  const [oficina, setOficina] = useState(false);
+  const [openFecha, setOpenFecha] = useState(false);
+  const [openTipoTramite, setOpenTipoTramite] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [sucursales, setSucursales] = useState([]);
+  const [error, setError] = useState("");
 
   const handleChange = (event) => {
     setOficina(event.target.value);
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleOpen = (value) => {
+    if (value === "oficina") {
+      setOpen(!open);
+    } else if (value === "fecha") {
+      setOpenFecha(!openFecha);
+    } else if (value === "tipoTramite") {
+      setOpenTipoTramite(!openTipoTramite);
+    }
   };
 
-  const handleOpen = () => {
-      
-    setOpen(true);
-  };
+  async function getSucursalesFunc() {
+    const res = await getSucursales();
+    setSucursales(res.data);
+  }
+
+  useEffect(() => {
+    try {
+      getSucursalesFunc();
+    } catch (err) {
+      setError(err);
+    }
+  }, []);
 
   return (
     <div>
@@ -77,18 +83,19 @@ function BuscarTurno(props) {
               <Select
                 labelId="demo-controlled-open-select-label"
                 id="oficinaId"
-                open={open}
-                onClose={handleClose}
-                onOpen={handleOpen}
-                value={oficina}
+                name="oficinaId"
                 onChange={handleChange}
+                value={oficina}
               >
-                <MenuItem value="">
-                  <em>None</em>
-                </MenuItem>
-                <MenuItem value={10}>Caballito</MenuItem>
-                <MenuItem value={20}>Flotres</MenuItem>
-                <MenuItem value={30}>Palermo</MenuItem>
+                {sucursales &&
+                  sucursales.map((sucursal) => (
+                    <MenuItem
+                      key={`sucursal_${sucursal.id}`}
+                      value={sucursal.id}
+                    >
+                      {sucursal.nombre}
+                    </MenuItem>
+                  ))}
               </Select>
             </FormControl>
             <FormControl className={classes.formControl}>
@@ -98,9 +105,6 @@ function BuscarTurno(props) {
               <Select
                 labelId="demo-controlled-open-select-label"
                 id="TramiteId"
-                open={open}
-                onClose={handleClose}
-                onOpen={handleOpen}
                 value={oficina}
                 onChange={handleChange}
               >
@@ -119,9 +123,6 @@ function BuscarTurno(props) {
               <Select
                 labelId="demo-controlled-open-select-label"
                 id="fechaId"
-                open={open}
-                onClose={handleClose}
-                onOpen={handleOpen}
                 value={oficina}
                 onChange={handleChange}
               >

@@ -130,7 +130,7 @@ const FormContacto = () => {
 					error={formik.errors.confirmarEmail}
        			/>
 				<tr>
-					<TextField style={{width: 70}}
+					<TextField style={{maxWidth: 75}}
 						type="codArea"
 						placeholder="codArea" 
 						label="Cod. área"
@@ -141,7 +141,7 @@ const FormContacto = () => {
 						helperText={formik.errors.codArea || "*Ingrese Cod. Area sin el 0"}
 						error={formik.errors.codArea} 
 					/>
-					<TextField style={{width: 130}}
+					<TextField style={{maxWidth: 130}}
 						value="rigth"
 						type="number"
 						placeholder="Telefono" 
