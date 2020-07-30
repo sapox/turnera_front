@@ -179,7 +179,7 @@ const FormTurnos = () => {
 				type="submit" 
 				variant="contained" 
 				color="secondary">
-					Confirmar Datos
+					Confirmar Turno
 			</Button>
 		</FormControl>
 		</form>

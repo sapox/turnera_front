@@ -10,11 +10,14 @@ import TurnoConfirmado from './components/TurnoConfirmado';
 import Disclaimer from './components/Disclaimer';
 import { getTipoCaja } from './api';
 import { setCajaValues } from './components/features/contacto/cajaSlice';
-import { resetUserValues } from './components/features/contacto/userSlice';
+import { resetUserValues, setUserValues } from './components/features/contacto/userSlice';
 import { resetTurnoValues } from './components/features/contacto/turnoSlice';
 import { resetTurnoConfirmadoValues } from './components/features/contacto/turnoConfirmadoSlice';
 import { resetCajaValues } from './components/features/contacto/cajaSlice';
 import { resetDisclaimer } from './components/features/contacto/disclaimerSlice';
+import FormLogin from './components/FormLogin'
+import Header from "./components/Header";
+import BuscarTurno from "./components/BuscarTurno";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -26,7 +29,6 @@ const useStyles = makeStyles(theme => ({
   },
   button: {
     marginTop: theme.spacing(1),
-    marginRight: theme.spacing(1)
   },
   actionsContainer: {
     marginBottom: theme.spacing(2)
@@ -111,9 +113,16 @@ function Home(){
     setActiveStep(prevActiveStep => prevActiveStep + 1);
   };
 
-  const handleBack = () => {
+  /*const handleBack = () => {
     setActiveStep(prevActiveStep => prevActiveStep - 1);
-  };
+  };*/
+
+  const handleCreate = () => {
+    let cancel = window.confirm('Estas a punto de cancelar el turno. ¿Desea continuar?');
+    if(cancel){
+      handleReset();
+    }
+  }
 
   const handleReset = () => {
     setActiveStep(0);
@@ -162,12 +171,12 @@ function Home(){
                 <div>
                   <Button
                     disabled={activeStep === 0}
-                    onClick={handleBack}
+                    onClick={handleCreate}
                     className={classes.button}
                   >
-                    Volver
+                    Cancelar
                   </Button>
-                  <Button
+                  <Button 
                     variant="contained"
                     color="primary"
                     onClick={handleNext}
@@ -185,12 +194,13 @@ function Home(){
         ))}
       </Stepper>
     </CardContent>
-
     {activeStep === steps.length && (
       <Paper square elevation={0} className={classes.resetContainer}>
         <TurnoConfirmado />
-        <Button onClick={handleReset} className={classes.button}>
-          Reset
+        <Button onClick={handleReset} className={classes.button}
+                variant="contained"
+                color="primary">
+          Solicitar nuevo turno
         </Button>
       </Paper>
     )}
@@ -209,6 +219,12 @@ class App extends Component {
         </Route>
         <Route path="/turno_confirmado/" exact component={TurnoConfirmado}>
           <TurnoConfirmado />
+        </Route>
+        <Route path="/login" exact component={FormLogin}>
+          <FormLogin />
+        </Route>
+        <Route path="/buscarTurno" exact component={BuscarTurno}>
+          <BuscarTurno />
         </Route>
       </Switch>
     </Router>

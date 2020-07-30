@@ -1,4 +1,6 @@
 import React , { useState, useEffect, } from 'react';
+import Paper from '@material-ui/core/Paper';
+import Zoom from '@material-ui/core/Zoom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { FormControl, TextField, Button } from "@material-ui/core";
@@ -128,7 +130,7 @@ const FormContacto = () => {
 					error={formik.errors.confirmarEmail}
        			/>
 				<tr>
-					<TextField style={{width: 70}}
+					<TextField style={{maxWidth: 75}}
 						type="codArea"
 						placeholder="codArea" 
 						label="Cod. área"
@@ -139,7 +141,7 @@ const FormContacto = () => {
 						helperText={formik.errors.codArea || "*Ingrese Cod. Area sin el 0"}
 						error={formik.errors.codArea} 
 					/>
-					<TextField style={{width: 130}}
+					<TextField style={{maxWidth: 130}}
 						value="rigth"
 						type="number"
 						placeholder="Telefono" 
@@ -167,9 +169,13 @@ const FormContacto = () => {
 					style={{width: 0, height:18}}
 					variant="contained" 
 					color="primary">
-					NRO
+					?
 				</Button>
-				{toggle && <img id="service" style={{width: 350, height: 250}} src={service}></img>}
+				<Zoom in={toggle}>
+					<Paper elevation={4}>
+						{toggle && <img id="service" style={{width: 350, height: 250}} src={service}></img>}
+					</Paper>
+				</Zoom>
 				<TextField 
 					placeholder="Titular de la Cuenta" 
 					label="Titular de la Cuenta"
