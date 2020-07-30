@@ -194,7 +194,6 @@ function Home(){
         ))}
       </Stepper>
     </CardContent>
-
     {activeStep === steps.length && (
       <Paper square elevation={0} className={classes.resetContainer}>
         <TurnoConfirmado />
@@ -209,7 +208,7 @@ function Home(){
 </Card>
 </div>
 )}
-
+//
 class App extends Component {
   render() {
     return (
