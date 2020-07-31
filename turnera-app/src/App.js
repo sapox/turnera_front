@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
       width: "25ch"
     }
   },
-  button: {
+  button: { 
     marginTop: theme.spacing(1),
   },
   actionsContainer: {
@@ -42,7 +42,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function getSteps() {
-  return ["Datos de contacto", "Tipo de tramite", "Confirmar Terminos", "Oficina Comercial", "Confirmar Turno"];
+  return ["Datos de contacto", "Tipo de tramite", "Confirmar Terminos", "Oficina Comercial"];
 }
 
 function getStepContent(step, disclaimer, userStep) {
@@ -113,10 +113,6 @@ function Home(){
     setActiveStep(prevActiveStep => prevActiveStep + 1);
   };
 
-  /*const handleBack = () => {
-    setActiveStep(prevActiveStep => prevActiveStep - 1);
-  };*/
-
   const handleCancel = () => {
     let cancel = window.confirm('¿Esta seguro que desea salir de esta operacion?');
     if(cancel){
@@ -142,9 +138,7 @@ function Home(){
       return true;
     } else if (step === 3 && !turnoConfirmado){
       return true;
-    } else if (step === 4 && !turnoConfirmado){
-      return true;
-    } else {
+    }  else {
       return false;
     }
   }
@@ -182,7 +176,7 @@ function Home(){
                     className={classes.button}
                     disabled={checkStep(activeStep)}
                   >
-                    {activeStep === steps.length - 1
+                  {activeStep === steps.length - 1
                       ? "Finish"
                       : "Siguiente"}
                   </Button>

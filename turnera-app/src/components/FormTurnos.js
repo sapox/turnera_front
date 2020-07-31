@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
+import Zoom from '@material-ui/core/Zoom';
+import Paper from '@material-ui/core/Paper';
 import { MenuItem, Select, FormControl, InputLabel, Button } from "@material-ui/core";
 import Alert from '@material-ui/lab/Alert';
 import { setMinutes, getDay, addDays, formatISO } from "date-fns";
@@ -17,6 +19,7 @@ const FormTurnos = () => {
 
 	const [ sucursales, setSucursales ] = useState([]);
 	const [ feriados, setFeriados ] = useState([]);
+	const [datosTurno, setDatosTurno] = useState(false);
 	const [ turnos, setTurnos ] = useState([]);
 	const [ error, setError ] = useState("");
 	//values from store
@@ -29,6 +32,9 @@ const FormTurnos = () => {
 	const cuentaUser = useSelector((state) => state.user.cuentaContrato);
 	const titularUser = useSelector((state) => state.user.titularCuenta);
 	const disclaimerStep = useSelector((state) => state.disclaimer.isConfirmed);
+
+	const sucursalFecha = useSelector((state) => state.turno.fecha);
+	const sucursalHora = useSelector((state) => state.turno.hora);
 	
 	const isWeekday = date => {
     const day = getDay(date);
@@ -64,6 +70,7 @@ const FormTurnos = () => {
 			createTurnoFunc(objTurno);
 		}	
 	});
+
 
 	async function createTurnoFunc(obj){
 		if(disclaimerStep){
@@ -108,6 +115,10 @@ const FormTurnos = () => {
 		return feriadoData;
 	}
 
+	const handleDatosTurno = () => {
+		setDatosTurno(!datosTurno)
+	}
+
 	function handleDateChange(date){
 		const { sucursalId } = formik.values;
 		formik.setFieldValue('fecha', date);
@@ -123,6 +134,9 @@ const FormTurnos = () => {
 		}
 	}, []);
 
+	let nombreSucursal = null;
+	let direccionSucursal = null;
+
 	return (
 		<form onSubmit={formik.handleSubmit}>
 			<FormControl>
@@ -137,8 +151,8 @@ const FormTurnos = () => {
 							<MenuItem
 								key={`sucursal_${sucursal.id}`} 
 								value={sucursal.id}>
-									{sucursal.nombre} -    
-									<p style={{ fontSize: 13 }}>{sucursal.direccion}</p>
+									{nombreSucursal = sucursal.nombre} -    
+									<p style={{ fontSize: 13 }}>{direccionSucursal = sucursal.direccion}</p> 
 							</MenuItem>
 						))}
 					</Select>
@@ -175,12 +189,18 @@ const FormTurnos = () => {
 						</Select>
 					</FormControl>
 				}			
-			<Button 
+			<Button
+				onClick={handleDatosTurno}
 				type="submit" 
 				variant="contained" 
 				color="secondary">
 					Confirmar Turno
 			</Button>
+			<Zoom in={datosTurno}>
+			<div>Ud. {nombreUser} {apellidoUser}, con DNI: {dniUser} esta a punto de sacar un turno 
+				para la oficina comerical {nombreSucursal} ({direccionSucursal})  
+				en la fecha {sucursalFecha}, en el horario {sucursalHora}.</div>
+			</Zoom>
 		</FormControl>
 		</form>
 	);
