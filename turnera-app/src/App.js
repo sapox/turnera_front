@@ -117,8 +117,8 @@ function Home(){
     setActiveStep(prevActiveStep => prevActiveStep - 1);
   };*/
 
-  const handleCreate = () => {
-    let cancel = window.confirm('Estas a punto de cancelar el turno. ¿Desea continuar?');
+  const handleCancel = () => {
+    let cancel = window.confirm('¿Esta seguro que desea salir de esta operacion?');
     if(cancel){
       handleReset();
     }
@@ -170,8 +170,7 @@ function Home(){
               <div className={classes.actionsContainer}>
                 <div>
                   <Button
-                    disabled={activeStep === 0}
-                    onClick={handleCreate}
+                    onClick={handleCancel}
                     className={classes.button}
                   >
                     Cancelar

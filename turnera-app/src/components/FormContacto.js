@@ -35,7 +35,7 @@ const validation = Yup.object({
 		.max(8, "Debe contener 8 caracteres o menos")
 		.required("requerido"),
 	cuenta: Yup.string()
-		.max(13, "Debe contener 13 caracteres o menos")
+		.max(12, "Debe contener 12 caracteres o menos")
 		.notRequired("no requerido"),
 	titularCuenta: Yup.string()
 		.max(20, "Debe contener 20 caracteres o menos")
