@@ -189,6 +189,11 @@ const FormTurnos = () => {
 						</Select>
 					</FormControl>
 				}			
+				
+					<td>Ud. {nombreUser} {apellidoUser}, con DNI: {dniUser} esta a punto de sacar un turno 
+					para la oficina comerical {nombreSucursal} ({direccionSucursal})  
+					en la fecha {sucursalFecha}, en el horario {sucursalHora}.</td>
+				
 			<Button
 				onClick={handleDatosTurno}
 				type="submit" 
@@ -196,11 +201,6 @@ const FormTurnos = () => {
 				color="secondary">
 					Confirmar Turno
 			</Button>
-			<Zoom in={datosTurno}>
-			<div>Ud. {nombreUser} {apellidoUser}, con DNI: {dniUser} esta a punto de sacar un turno 
-				para la oficina comerical {nombreSucursal} ({direccionSucursal})  
-				en la fecha {sucursalFecha}, en el horario {sucursalHora}.</div>
-			</Zoom>
 		</FormControl>
 		</form>
 	);
