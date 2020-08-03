@@ -20,6 +20,7 @@ const FormTurnos = () => {
 	const [ sucursales, setSucursales ] = useState([]);
 	const [ feriados, setFeriados ] = useState([]);
 	const [datosTurno, setDatosTurno] = useState(false);
+	const [habilitado, setHabilitado]= useState(false);
 	const [ turnos, setTurnos ] = useState([]);
 	const [ error, setError ] = useState("");
 	//values from store
@@ -68,9 +69,9 @@ const FormTurnos = () => {
 				};
 			dispatch(setTurnoValues(obj));
 			createTurnoFunc(objTurno);
+			dispatch(deshabilitar());
 		}	
 	});
-
 
 	async function createTurnoFunc(obj){
 		if(disclaimerStep){
@@ -119,6 +120,10 @@ const FormTurnos = () => {
 		setDatosTurno(!datosTurno)
 	}
 
+	const deshabilitar = () => {
+		setHabilitado(!habilitado);
+	}
+
 	function handleDateChange(date){
 		const { sucursalId } = formik.values;
 		formik.setFieldValue('fecha', date);
@@ -145,6 +150,7 @@ const FormTurnos = () => {
 					<Select 
 						id="sucursalId"
 						name="sucursalId"
+						disabled={habilitado}
 						onChange={formik.handleChange}
 						value={formik.values.sucursalId}>
 						{sucursales && sucursales.map(sucursal => (
@@ -162,6 +168,7 @@ const FormTurnos = () => {
 					locale="es"
 					selected={formik.values.fecha}
 					name="fecha"
+					disabled={habilitado}
 					onChange={date => handleDateChange(date)}
 					dateFormat="MMMM d, yyyy"	 
 					filterDate={isWeekday}
@@ -169,7 +176,6 @@ const FormTurnos = () => {
 					showDisabledMonthNavigation
 					inline={formik.values.sucursalId !== ''}
 					excludeDates={populateFeriados(feriados)}
-					disabled={formik.values.sucursalId === ''}
 				/>
 				{turnos.length > 0 &&
 					<FormControl style={{ maxWidth: 200 }}>
@@ -177,6 +183,7 @@ const FormTurnos = () => {
 						<Select 
 							id="hora"
 							name="hora"
+							disabled={habilitado}
 							onChange={formik.handleChange}
 							value={formik.values.hora}>
 							{turnos.map(turno => (
