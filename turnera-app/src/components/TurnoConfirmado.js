@@ -27,9 +27,11 @@ const TurnoConfirmado = () => {
     }
      
   }
+  
 
   const componentRef = useRef();
   const handlePrint = useReactToPrint({
+    pageStyle: () => "@page { size: A4 portrait;} @page {margin-left: 256;}",
     content: () => componentRef.current,
   });
 
@@ -47,7 +49,7 @@ const TurnoConfirmado = () => {
   const { cliente, caja, fecha, hora, sucursal } = turnoConfirmado;
   
   return (
-    <Card style={{ maxWidth: '250px' }} ref={componentRef}>
+    <Card style={{maxWidth: '250px' }} ref={componentRef}>
       
       <div style={{ display: "flex", justifyContent: "center", flexDirection: 'column' }}>
         <div style={{ alignSelf: 'center'}}>
