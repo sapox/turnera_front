@@ -16,6 +16,7 @@ import { resetTurnoConfirmadoValues } from './components/features/contacto/turno
 import { resetCajaValues } from './components/features/contacto/cajaSlice';
 import { resetDisclaimer } from './components/features/contacto/disclaimerSlice';
 import FormLogin from './components/FormLogin'
+import swal from 'sweetalert';
 import Header from "./components/Header";
 import BuscarTurno from "./components/BuscarTurno";
 
@@ -114,10 +115,17 @@ function Home(){
   };
 
   const handleCancel = () => {
-    let cancel = window.confirm('¿Esta seguro que desea salir de esta operacion?');
-    if(cancel){
-      handleReset();
-    }
+      swal({
+        title: "Cancelar Operacion",
+        text: "¿Esta seguro que desea salir de esta operacion?",
+        icon: "warning",
+        buttons: ["No", "Si"],
+        dangerMode: true
+      }).then((isCanceled) => {
+        if (isCanceled) {
+          handleReset();
+        }
+      });
   }
 
   const handleReset = () => {
@@ -176,9 +184,7 @@ function Home(){
                     className={classes.button}
                     disabled={checkStep(activeStep)}
                   >
-                  {activeStep === steps.length - 1
-                      ? "Finish"
-                      : "Siguiente"}
+                    Siguiente
                   </Button>
                 </div>
               </div>
