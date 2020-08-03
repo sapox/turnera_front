@@ -16,6 +16,7 @@ import { resetTurnoConfirmadoValues } from './components/features/contacto/turno
 import { resetCajaValues } from './components/features/contacto/cajaSlice';
 import { resetDisclaimer } from './components/features/contacto/disclaimerSlice';
 import FormLogin from './components/FormLogin'
+import swal from 'sweetalert';
 import Header from "./components/Header";
 import BuscarTurno from "./components/BuscarTurno";
 
@@ -27,7 +28,7 @@ const useStyles = makeStyles(theme => ({
       width: "25ch"
     }
   },
-  button: {
+  button: { 
     marginTop: theme.spacing(1),
   },
   actionsContainer: {
@@ -42,7 +43,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function getSteps() {
-  return ["Datos de contacto", "Tipo de tramite", "Confirmar Terminos", "Oficina Comercial", "Confirmar Turno"];
+  return ["Datos de contacto", "Tipo de tramite", "Confirmar Terminos", "Oficina Comercial"];
 }
 
 function getStepContent(step, disclaimer, userStep) {
@@ -113,15 +114,18 @@ function Home(){
     setActiveStep(prevActiveStep => prevActiveStep + 1);
   };
 
-  /*const handleBack = () => {
-    setActiveStep(prevActiveStep => prevActiveStep - 1);
-  };*/
-
-  const handleCreate = () => {
-    let cancel = window.confirm('Estas a punto de cancelar el turno. ¿Desea continuar?');
-    if(cancel){
-      handleReset();
-    }
+  const handleCancel = () => {
+      swal({
+        title: "Cancelar Operacion",
+        text: "¿Esta seguro que desea salir de esta operacion?",
+        icon: "warning",
+        buttons: ["No", "Si"],
+        dangerMode: true
+      }).then((isCanceled) => {
+        if (isCanceled) {
+          handleReset();
+        }
+      });
   }
 
   const handleReset = () => {
@@ -142,9 +146,7 @@ function Home(){
       return true;
     } else if (step === 3 && !turnoConfirmado){
       return true;
-    } else if (step === 4 && !turnoConfirmado){
-      return true;
-    } else {
+    }  else {
       return false;
     }
   }
@@ -170,8 +172,7 @@ function Home(){
               <div className={classes.actionsContainer}>
                 <div>
                   <Button
-                    disabled={activeStep === 0}
-                    onClick={handleCreate}
+                    onClick={handleCancel}
                     className={classes.button}
                   >
                     Cancelar
@@ -183,9 +184,7 @@ function Home(){
                     className={classes.button}
                     disabled={checkStep(activeStep)}
                   >
-                    {activeStep === steps.length - 1
-                      ? "Finish"
-                      : "Siguiente"}
+                    Siguiente
                   </Button>
                 </div>
               </div>

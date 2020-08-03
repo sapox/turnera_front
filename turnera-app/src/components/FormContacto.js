@@ -34,9 +34,9 @@ const validation = Yup.object({
 		.min(5, "Debe contener 5 caracteres o mas")
 		.max(8, "Debe contener 8 caracteres o menos")
 		.required("requerido"),
-	cuenta: Yup.string()
-		.max(13, "Debe contener 13 caracteres o menos")
-		.notRequired("no requerido"),
+	cuentaContrato: Yup.string()
+		.max(12, "Debe contener 12 caracteres o menos")
+		.notRequired(),
 	titularCuenta: Yup.string()
 		.max(20, "Debe contener 20 caracteres o menos")
 		.notRequired(),
@@ -49,6 +49,7 @@ const FormContacto = () => {
 	const [error,setError]= useState(''); 
 	const [toggle, setToggle]= useState(false);
 	const [titular, setTitular]= useState(false);
+	const [habilitado, setHabilitado]= useState(false);
 	const formik = useFormik({
 		initialValues: {
 			dni: '',
@@ -64,6 +65,7 @@ const FormContacto = () => {
 		validationSchema: validation,
 		onSubmit: values => {
 			dispatch(setUserValues(values));
+			dispatch(deshabilitar());
 		},
 	});
 
@@ -71,6 +73,10 @@ const FormContacto = () => {
 
 	const handleToggle = () => {
 		setToggle(!toggle);
+	}
+
+	const deshabilitar = () => {
+		setHabilitado(!habilitado);
 	}
 
 	const handleTitular = () => {
@@ -89,6 +95,7 @@ const FormContacto = () => {
 					id="dni"
 					name="dni"
 					type="number"
+					disabled={habilitado}
 					onChange={formik.handleChange}
 					value={formik.values.dni}
 					helperText={formik.errors.dni || "*Campo requerido"}
@@ -99,6 +106,7 @@ const FormContacto = () => {
 					label="Nombre"
 					id="nombre"
 					name="nombre"
+					disabled={habilitado}
 					onChange={formik.handleChange}
 					value={formik.values.nombre} 
 					helperText={formik.errors.nombre || "*Campo requerido"}
@@ -109,6 +117,7 @@ const FormContacto = () => {
 					label="Apellido"
 					id="apellido"
 					name="apellido"
+					disabled={habilitado}
 					onChange={formik.handleChange}
 					value={formik.values.apellido}  
 					helperText={formik.errors.apellido || "*Campo requerido"}
@@ -119,6 +128,7 @@ const FormContacto = () => {
 					label="Email"
 					id="email"
 					name="email"
+					disabled={habilitado}
 					onChange={formik.handleChange}
 					value={formik.values.email} 
 					helperText={formik.errors.email || "*Campo requerido"}
@@ -129,6 +139,7 @@ const FormContacto = () => {
 					label="Confirmar Email"
 					id="confirmarEmail"
 					name="confirmarEmail"
+					disabled={habilitado}
 					onChange={formik.handleChange}
 					value={formik.values.confirmarEmail} 
 					helperText={formik.errors.confirmarEmail || "*Campo requerido"}
@@ -141,6 +152,7 @@ const FormContacto = () => {
 						label="Cod. área"
 						id="codArea"
 						name="codArea"
+						disabled={habilitado}
 						onChange={formik.handleChange}
 						value={formik.values.codArea}  
 						helperText={formik.errors.codArea || "*Ingrese Cod. Area sin el 0"}
@@ -153,6 +165,7 @@ const FormContacto = () => {
 						label="Telefono"
 						id="telefono"
 						name="telefono"
+						disabled={habilitado}
 						onChange={formik.handleChange}
 						value={formik.values.telefono}  
 						helperText={formik.errors.telefono || "*Ingrese el numero sin el 15"}
@@ -164,6 +177,7 @@ const FormContacto = () => {
 					label="Cuenta de Servicios"
 					id="cuentaContrato"
 					name="cuentaContrato"
+					disabled={habilitado}
 					onChange={formik.handleChange}
 					value={formik.values.cuentaContrato} 
 					helperText={formik.errors.cuentaContrato}
@@ -187,6 +201,7 @@ const FormContacto = () => {
 						label="Titular de la Cuenta"
 						id="titularCuenta"
 						name="titularCuenta"
+						disabled={habilitado}
 						onChange={formik.handleChange}
 						value={formik.values.titularCuenta} 
 						helperText={formik.errors.titularCuenta}
@@ -194,6 +209,7 @@ const FormContacto = () => {
 					/>
 				</Zoom>
 				<FormControlLabel
+					disabled={habilitado}
 					value="end"
 					control={<Checkbox color="primary" onClick={handleTitular}/>}
 					label="Soy titular de la cuenta."

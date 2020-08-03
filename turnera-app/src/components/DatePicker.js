@@ -24,7 +24,7 @@ const CustomDatePicker = ({ name, value, onChange, minDate, maxDate, showTimeSel
 			selected={(value && new Date(value)) || null}
 			onChange={val => {
         onChange(name, val);
-      }}
+	  }}
 			showTimeSelect={showTimeSelect}
 			showTimeSelectOnly={showTimeSelectOnly}
 			showDisabledMonthNavigation={showDisabledMonthNavigation}
