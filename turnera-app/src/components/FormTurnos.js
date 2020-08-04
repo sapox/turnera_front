@@ -202,6 +202,7 @@ const FormTurnos = () => {
 					en la fecha {sucursalFecha}, en el horario {sucursalHora}.</td>
 				
 			<Button
+				disabled={habilitado}
 				onClick={handleDatosTurno}
 				type="submit" 
 				variant="contained" 
