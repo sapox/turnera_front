@@ -1,24 +1,22 @@
 import React, { useState } from "react";
+import { useDispatch } from 'react-redux';
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { TextField, Button } from "@material-ui/core";
-import img from "./features/contacto/img.jpg";
+import { TextField, Button, Paper, FormControlLabel, Checkbox, Grid, Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
+import { setUserLoginValues } from './features/contacto/userLoginSlice';
 
 import Header from "./Header";
 import BuscarTurno from "./BuscarTurno";
 
 const validation = Yup.object({
-  email: Yup.string().email("Coloque un email válido").required(" requerido"),
+  user: Yup.string()
+    .min(5, "User must be at least 5 characters")
+    .required("requerido"),
   password: Yup.string()
     .min(6, "Password must be at least 6 characters")
     .required("requerido"),
@@ -26,14 +24,17 @@ const validation = Yup.object({
 
 const apiLogIn = () => {};
 
-function FormLogin(props) {
+const FormLogin = (props) => {
+  const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
-      email: "",
+      user: "",
       password: "",
     },
     validationSchema: validation,
-    onSubmit: apiLogIn,
+    onSubmit: values => {
+      dispatch(setUserLoginValues(values));
+    },
   });
 
   const Style = {
@@ -128,15 +129,15 @@ function FormLogin(props) {
                       margin="normal"
                       required
                       fullWidth
-                      id="email"
-                      label="Email Address"
-                      name="email"
-                      autoComplete="email"
+                      id="user"
+                      label="User Name"
+                      name="user"
+                      autoComplete="user"
                       autoFocus
                       onChange={formik.handleChange}
-                      value={formik.values.email}
-                      helperText={formik.errors.email}
-                      error={formik.errors.email}
+                      value={formik.values.user}
+                      helperText={formik.errors.user}
+                      error={formik.errors.user}
                     />
                     <TextField
                       variant="outlined"
