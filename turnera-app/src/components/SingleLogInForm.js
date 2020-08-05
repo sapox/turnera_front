@@ -4,39 +4,43 @@ import * as Yup from "yup";
 import { makeStyles } from "@material-ui/core/styles";
 import { TextField, Button, Grid, Box, Typography, Container, Paper, FormControlLabel, Checkbox } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import { setUserLoginValues } from './features/contacto/userLoginSlice';
 
-const SingleLogInForm = (props) => {
-  const validation = Yup.object({
-    email: Yup.string()
-      .email( <Typography
-        variant="p"
-        style={{ fontSize: "12pt", textTransform: "none" }}
-      >
-       Coloque un email válido
-      </Typography>)
-      .required(
-        <Typography
-          variant="p"
-          style={{ fontSize: "12pt", textTransform: "none" }}
-        >
-          requerido
-        </Typography>
-      ),
-    password: Yup.string()
-      .min(6,  <Typography
-        variant="p"
-        style={{ fontSize: "12pt", textTransform: "none" }}
-      >
-       "La contraseña debe tener al menos 6 caracteres"
-      </Typography>)
-      .required(<Typography
+const validation = Yup.object({
+  email: Yup.string()
+    .email( <Typography
+      variant="p"
+      style={{ fontSize: "12pt", textTransform: "none" }}
+    >
+     Coloque un email válido
+    </Typography>)
+    .required(
+      <Typography
         variant="p"
         style={{ fontSize: "12pt", textTransform: "none" }}
       >
         requerido
-      </Typography>),
-  });
+      </Typography>
+    ),
+  password: Yup.string()
+    .min(6,  <Typography
+      variant="p"
+      style={{ fontSize: "12pt", textTransform: "none" }}
+    >
+     "La contraseña debe tener al menos 6 caracteres"
+    </Typography>)
+    .required(<Typography
+      variant="p"
+      style={{ fontSize: "12pt", textTransform: "none" }}
+    >
+      requerido
+    </Typography>),
+});
 
+
+
+const SingleLogInForm = (props) => {
+  
   const apiLogIn = () => {
     const body = {
       username,
