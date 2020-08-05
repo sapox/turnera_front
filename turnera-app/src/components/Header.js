@@ -24,10 +24,8 @@ function Header(props) {
   const apiLogOut = null;
   const button = null;
   return (
-    <div>
       <Container fixed>
-        <div style={{ marginTop: "10px" }}>
-          <Grid container spacing={6}>
+          <Grid container style={{ marginTop: "1%" }}>
             <Grid item xs>
               <div>
                 <img
@@ -37,13 +35,12 @@ function Header(props) {
               </div>
             </Grid>
             <Grid item xs>
-              <div style={{ marginLeft: "70%" }}>
-              <div><h4>{props.welcome || welcome}</h4></div>  
+              <div style={{ marginLeft: "83%" }}>
+              <div><p>{props.welcome || welcome}</p></div>  
               <div> {props.button || button}</div>  
               </div>
             </Grid>
           </Grid>
-        </div>
         <div style={Style.h1}>
           <Grid container spacing={6}>
             <Grid item xs>
@@ -58,7 +55,6 @@ function Header(props) {
           <img style={{ width: "100%" }} src={img} alt="foto" />
         </div>
       </Container>
-    </div>
   );
 }
 export default withRouter(Header);
