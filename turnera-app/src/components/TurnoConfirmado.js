@@ -28,7 +28,6 @@ const TurnoConfirmado = () => {
      
   }
   
-
   const componentRef = useRef();
   const handlePrint = useReactToPrint({
     pageStyle: () => "@page { size: A4 portrait;} @page {margin-left: 256;}",

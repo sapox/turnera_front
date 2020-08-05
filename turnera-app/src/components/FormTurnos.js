@@ -19,8 +19,7 @@ const FormTurnos = () => {
 
 	const [ sucursales, setSucursales ] = useState([]);
 	const [ feriados, setFeriados ] = useState([]);
-	const [datosTurno, setDatosTurno] = useState(false);
-	const [habilitado, setHabilitado]= useState(false);
+	const [ habilitado, setHabilitado ]= useState(false);
 	const [ turnos, setTurnos ] = useState([]);
 	const [ error, setError ] = useState("");
 	//values from store
@@ -90,6 +89,7 @@ const FormTurnos = () => {
 	}
 
 	async function getTurnosDisponiblesFunc(fecha, sucursal, tipoCaja){
+		fechaData(fecha)
 		const auxFecha = formatISO(new Date(`${fecha}`), {representation: 'date' });
 		const res = await getTurnosDisponibles(auxFecha, sucursal, tipoCaja);
 		setTurnos(res.data);
@@ -116,10 +116,6 @@ const FormTurnos = () => {
 		return feriadoData;
 	}
 
-	const handleDatosTurno = () => {
-		setDatosTurno(!datosTurno)
-	}
-
 	const deshabilitar = () => {
 		setHabilitado(!habilitado);
 	}
@@ -139,9 +135,29 @@ const FormTurnos = () => {
 		}
 	}, []);
 
-	let nombreSucursal = null;
-	let direccionSucursal = null;
+	let sucursalNombre = null;
+	let sucursalDireccion= null;
+	const sucursalData = value => {
+		sucursales.map(sucursal => {
+			if(sucursal.id === value){
+				sucursalNombre = sucursal.nombre;
+				sucursalDireccion = sucursal.direccion;
+			}
+		})
+	}
 
+	let fechaTurno = null;
+	function fechaData(value) {
+		const fecha = formatISO(new Date(`${value}`), {representation: 'date' });
+		fechaTurno = fecha;
+	}
+
+	let horaTurno = null;
+	const horaData = value => {
+		horaTurno = value.split(":00")[0];
+		fechaTurno = formatISO(new Date(`${formik.values.fecha}`), {representation: 'date' });
+	}
+	
 	return (
 		<form onSubmit={formik.handleSubmit}>
 			<FormControl>
@@ -156,9 +172,10 @@ const FormTurnos = () => {
 						{sucursales && sucursales.map(sucursal => (
 							<MenuItem
 								key={`sucursal_${sucursal.id}`} 
-								value={sucursal.id}>
-									{nombreSucursal = sucursal.nombre} -    
-									<p style={{ fontSize: 13 }}>{direccionSucursal = sucursal.direccion}</p> 
+								value={sucursal.id}
+								onChange={sucursalData(formik.values.sucursalId)}>
+									{sucursal.nombre} -    
+									<p style={{ fontSize: 13 }}>{sucursal.direccion}</p> 
 							</MenuItem>
 						))}
 					</Select>
@@ -189,21 +206,21 @@ const FormTurnos = () => {
 							{turnos.map(turno => (
 								<MenuItem 
 									key={`tur_${turno.idCaja}`} 
-									value={`${turno.hora}_${turno.idCaja}`}>
+									value={`${turno.hora}_${turno.idCaja}`}
+									onChange={horaData(formik.values.hora)}>
 										{turno.hora}
 								</MenuItem>
 							))}
 						</Select>
 					</FormControl>
-				}			
-				
-					<td>Ud. {nombreUser} {apellidoUser}, con DNI: {dniUser} esta a punto de sacar un turno 
-					para la oficina comerical {nombreSucursal} ({direccionSucursal})  
-					en la fecha {sucursalFecha}, en el horario {sucursalHora}.</td>
-				
+				}
+				<Zoom in={horaTurno}>
+					<div  style={{border: "ridge", color: "black"}}>Ud. <b>{nombreUser} {apellidoUser}</b>, con DNI: <b>{dniUser}</b> esta a punto de sacar un turno 
+					para la oficina comerical de <b>{sucursalNombre} ({sucursalDireccion})</b>.  
+				 	En la fecha <b>{fechaTurno}</b> a las <b>{horaTurno} hs</b>.</div>
+				</Zoom>
 			<Button
 				disabled={habilitado}
-				onClick={handleDatosTurno}
 				type="submit" 
 				variant="contained" 
 				color="secondary">
@@ -213,5 +230,7 @@ const FormTurnos = () => {
 		</form>
 	);
 };
+
+				/*	*/
 
 export default FormTurnos;
