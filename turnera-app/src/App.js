@@ -129,6 +129,7 @@ function Home(){
       }).then((isCanceled) => {
         if (isCanceled) {
           handleReset();
+          window.location.reload();
         }
       });
   }
