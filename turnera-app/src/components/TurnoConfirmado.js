@@ -28,7 +28,6 @@ const TurnoConfirmado = () => {
      
   }
   
-
   const componentRef = useRef();
   const handlePrint = useReactToPrint({
     pageStyle: () => "@page { size: A4 portrait;} @page {margin-left: 256;}",
@@ -49,9 +48,9 @@ const TurnoConfirmado = () => {
   const { cliente, caja, fecha, hora, sucursal } = turnoConfirmado;
   
   return (
-    <Card style={{maxWidth: '250px' }} ref={componentRef}>
+    <Card style={{maxWidth: '250px', justifyContent: "center"}} ref={componentRef}>
       
-      <div style={{ display: "flex", justifyContent: "center", flexDirection: 'column' }}>
+      <div style={{ display: "flex", justifyContent: "center", flexDirection: 'column'}}>
         <div style={{ alignSelf: 'center'}}>
           <img
             src="https://www.aysa.com.ar/assets/Menu/img/logo.png"
@@ -75,11 +74,11 @@ const TurnoConfirmado = () => {
               </Link>
               {cliente && 
                 <Fragment>
-                <p>{`${cliente.nombre} ${cliente.apellido}, con documento ${cliente.dni}`}</p>
-                <p>{`Turno: ${fecha}, horario: ${hora}`}</p>
-                Tipo de caja: {caja.tipo.nombre}
-                <p>Oficina Comercial: {sucursal.direccion}</p>
-                <div  style={{ display: 'flex', justifyContent: 'center'}}>
+                <p>{`${cliente.nombre} ${cliente.apellido}. DNI: ${cliente.dni}`}</p>
+                <p>{`Turno: ${fecha}. Horario: ${hora}`}</p>
+                Tipo de tramite: {caja.tipo.nombre}
+                <p>Oficina Comercial: {sucursal.nombre} - {sucursal.direccion}</p>
+                <div  style={{ display: 'flex', justifyContent: 'center',  textAlign: 'justify'}}>
                   <Button 
                     variant="contained" 
                     color="primary"

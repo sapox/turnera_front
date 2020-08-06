@@ -31,6 +31,11 @@ const useStyles = makeStyles(theme => ({
   button: { 
     marginTop: theme.spacing(1),
   },
+  newTurnButton: {
+    marginTop: theme.spacing(1),
+    marginLeft: theme.spacing(3),
+    marginRight: theme.spacing(7),
+  },
   actionsContainer: {
     marginBottom: theme.spacing(2)
   },
@@ -38,7 +43,7 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(3)
   },
   cardContainer: {
-    maxWidth: 500
+    maxWidth: 500,
   }
 }));
 
@@ -124,6 +129,7 @@ function Home(){
       }).then((isCanceled) => {
         if (isCanceled) {
           handleReset();
+          window.location.reload();
         }
       });
   }
@@ -196,7 +202,7 @@ function Home(){
     {activeStep === steps.length && (
       <Paper square elevation={0} className={classes.resetContainer}>
         <TurnoConfirmado />
-        <Button onClick={handleReset} className={classes.button}
+        <Button onClick={handleReset} className={classes.newTurnButton}
                 variant="contained"
                 color="primary">
           Solicitar nuevo turno

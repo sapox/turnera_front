@@ -216,6 +216,7 @@ const FormContacto = () => {
 					labelPlacement="end"
 				/>
 				<Button 
+					disabled={habilitado}
 					type="submit" 
 					variant="contained" 
 					color="secondary">
