@@ -9,7 +9,7 @@ import {
   Container,
   TextField,
 } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, MuiThemeProvider } from "@material-ui/core/styles";
 import * as Yup from "yup";
 import { withRouter, Link } from "react-router-dom";
 import Header from "./Header";
@@ -20,18 +20,23 @@ import {
   getFeriados,
   getTurnosByFecha_Caja_Sucursal,
 } from "../api";
-import {createMuiTheme ,responsiveFontSizes, ThemeProvider, Typography} from "@material-ui/core";
-function BuscarTurno(props) {
+import {
+  createMuiTheme,
+  responsiveFontSizes,
+  ThemeProvider,
+  Typography,
+} from "@material-ui/core";
 
+function BuscarTurno(props) {
   let theme = createMuiTheme();
   theme = responsiveFontSizes(theme);
   const apiLogOut = () => {};
-  const title = "Buscar Turno";
-  const welcome = "Bienvenido !";
+  const title = <Typography variant="p">Buscar Turno</Typography>;
+  const welcome = <Typography variant="p">Bienvenido!</Typography>;
   const button = (
     <Link to="/backOffice" style={{ textDecoration: "none" }}>
-      <Button variant="contained" color="secondary">
-        Log Out
+      <Button size="small" variant="contained" color="secondary" >
+        Salir
       </Button>
     </Link>
   );
@@ -51,9 +56,8 @@ function BuscarTurno(props) {
       flexWrap: "wrap",
     },
     textField: {
-      marginLeft: theme.spacing(1),
-      marginRight: theme.spacing(1),
-      width: 480,
+      marginTop: theme.spacing(6),
+
     },
   }));
   const classes = useStyles();
@@ -151,7 +155,7 @@ function BuscarTurno(props) {
   }
   const [showButton, setShowButton] = useState(true);
   return (
-    <div>
+    <MuiThemeProvider theme={theme}>
       <Container fixed>
         <div>
           <Header title={title} welcome={welcome} button={button} />
@@ -163,7 +167,7 @@ function BuscarTurno(props) {
               <FormControl className={classes.formControl}>
                 <InputLabel>Tipo Tramite ( opcional)</InputLabel>
                 <Select
-                  labelId="demo-controlled-open-select-label"
+                
                   id="tramiteId"
                   name="tramiteId"
                   value={formik.values.tramiteId}
@@ -180,7 +184,8 @@ function BuscarTurno(props) {
               <FormControl className={classes.formControl}>
                 <InputLabel>Oficina comercial (obligatorio)</InputLabel>
                 <Select
-                  labelId="demo-controlled-open-select-label"
+                  className={classes.textField}
+                 
                   id="sucursalId"
                   name="sucursalId"
                   value={formik.values.sucursalId}
@@ -194,17 +199,16 @@ function BuscarTurno(props) {
                         key={`sucursal_${sucursal.id}`}
                         value={sucursal.id}
                       >
-                        {sucursal.nombre}  -
-                  <p style={{ fontSize: 13 }}>{sucursal.direccion}</p>
+                        {sucursal.nombre} -
+                        <p style={{ fontSize: 13 }}>{sucursal.direccion}</p>
                       </MenuItem>
                     ))}
                 </Select>
               </FormControl>
-              <div
-                style={{ marginTop: "30px", width: "100%", marginLeft: "10%" }}
-              >
-                <InputLabel>fecha (obligatorio)</InputLabel>
-                <FormControl>
+              
+                
+                <FormControl className={classes.formControl}>
+                <InputLabel >fecha (obligatorio)</InputLabel>
                   <TextField
                     className={classes.textField}
                     id="fecha"
@@ -216,8 +220,9 @@ function BuscarTurno(props) {
                     error={formik.errors.fecha}
                     excludeDates={populateFeriados(feriados)}
                   />
+             
                 </FormControl>
-              </div>
+              
               {showButton && (
                 <div>
                   <Button
@@ -256,7 +261,7 @@ function BuscarTurno(props) {
           </Container>
         </div>
       </Container>
-    </div>
+    </MuiThemeProvider>
   );
 }
 export default withRouter(BuscarTurno);
