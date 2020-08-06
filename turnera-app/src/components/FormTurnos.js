@@ -185,7 +185,6 @@ const FormTurnos = () => {
 					locale="es"
 					selected={formik.values.fecha}
 					name="fecha"
-					disabled={habilitado}
 					onChange={date => handleDateChange(date)}
 					dateFormat="MMMM d, yyyy"	 
 					filterDate={isWeekday}
@@ -193,6 +192,7 @@ const FormTurnos = () => {
 					showDisabledMonthNavigation
 					inline={formik.values.sucursalId !== ''}
 					excludeDates={populateFeriados(feriados)}
+					disabled
 				/>
 				{turnos.length > 0 &&
 					<FormControl style={{ maxWidth: 200 }}>
@@ -215,7 +215,7 @@ const FormTurnos = () => {
 					</FormControl>
 				}
 				<Zoom in={horaTurno}>
-					<div  style={{border: "ridge", color: "black"}}>Ud. <b>{nombreUser} {apellidoUser}</b>, con DNI: <b>{dniUser}</b> esta a punto de sacar un turno 
+					<div  style={{ border: "ridge", textAlign: "justify" }}>Ud. <b>{nombreUser} {apellidoUser}</b>, con DNI: <b>{dniUser}</b> esta a punto de sacar un turno 
 					para la oficina comerical de <b>{sucursalNombre} ({sucursalDireccion})</b>.  
 				 	En la fecha <b>{fechaTurno}</b> a las <b>{horaTurno} hs</b>.</div>
 				</Zoom>
@@ -230,7 +230,5 @@ const FormTurnos = () => {
 		</form>
 	);
 };
-
-				/*	*/
 
 export default FormTurnos;
