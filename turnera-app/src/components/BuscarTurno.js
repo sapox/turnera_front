@@ -194,7 +194,8 @@ function BuscarTurno(props) {
                         key={`sucursal_${sucursal.id}`}
                         value={sucursal.id}
                       >
-                        {sucursal.nombre}
+                        {sucursal.nombre}  -
+                  <p style={{ fontSize: 13 }}>{sucursal.direccion}</p>
                       </MenuItem>
                     ))}
                 </Select>
