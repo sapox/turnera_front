@@ -61,7 +61,7 @@ export const BackOffice = (props) => {
         </div>
 
         <Grid container spacing={6}>
-          <Grid item xs style={{ padding: "80px" }}>
+          <Grid item xs style={{ marginTop:'5%',marginLeft:'3%'}}>
             <Paper className={classes.paper}>
               <div className={classes.root}>
                 <Grid container spacing={1}>
@@ -102,7 +102,7 @@ export const BackOffice = (props) => {
               </div>
             </Paper>
           </Grid>
-          <Grid item xs>
+          <Grid item xs style={{marginTop:'5%'}}>
           <SingleLogInForm/>
           </Grid>
         </Grid>

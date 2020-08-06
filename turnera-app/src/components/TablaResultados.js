@@ -10,6 +10,12 @@ import Grid from "@material-ui/core/Grid";
 import { Button } from "@material-ui/core";
 import { printTurno, getTurnosByFecha_Caja_Sucursal } from "../api";
 import React, { useState, useEffect } from "react";
+import {
+  createMuiTheme,
+  responsiveFontSizes,
+  ThemeProvider,
+  Typography,
+} from "@material-ui/core";
 
 const useStyles = makeStyles({
   table: {
@@ -18,6 +24,8 @@ const useStyles = makeStyles({
 });
 
 export default function TablaResultados(props) {
+  let theme = createMuiTheme();
+  theme = responsiveFontSizes(theme);
   const classes = useStyles();
   const [error, setError] = useState("");
   const [turnos, setTurnos] = useState([]);
@@ -102,7 +110,7 @@ export default function TablaResultados(props) {
           </Table>
         </TableContainer>
       </div>
-      <div style={{ marginTop: "10px" }}>
+      <div style={{marginTop: theme.spacing(1) , display: "flex" }}>
         <Grid container spacing={6}>
           <Grid item xs>
             <div>
@@ -119,8 +127,9 @@ export default function TablaResultados(props) {
             </div>
           </Grid>
           <Grid item xs>
-            <div style={{ marginLeft: "70%" }}>
+            <div align='right' style={{alignSelf:'flex-end' , marginRight:'8%'}}>
               <Button
+              
                 variant="contained"
                 color="secondary"
                 onClick={() => print(sucursalId, fecha, tipoCajaId)}

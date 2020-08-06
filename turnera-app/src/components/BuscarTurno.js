@@ -48,8 +48,8 @@ function BuscarTurno(props) {
     },
     formControl: {
       margin: theme.spacing(1),
-      width: "50%",
-      marginLeft: "10%",
+      width: "70%",
+      
     },
     container: {
       display: "flex",
@@ -165,7 +165,7 @@ function BuscarTurno(props) {
           <div style={{ marginTop: "70px", marginLeft: "20%" }}>
             <form onSubmit={formik.handleSubmit}>
               <FormControl className={classes.formControl}>
-                <InputLabel>Tipo Tramite ( opcional)</InputLabel>
+                <InputLabel>Tipo Trámite ( opcional)</InputLabel>
                 <Select
                 
                   id="tramiteId"
@@ -182,7 +182,7 @@ function BuscarTurno(props) {
                 </Select>
               </FormControl>
               <FormControl className={classes.formControl}>
-                <InputLabel>Oficina comercial (obligatorio)</InputLabel>
+                <InputLabel>Oficina Comercial (obligatorio)</InputLabel>
                 <Select
                   className={classes.textField}
                  
@@ -199,8 +199,7 @@ function BuscarTurno(props) {
                         key={`sucursal_${sucursal.id}`}
                         value={sucursal.id}
                       >
-                        {sucursal.nombre} -
-                        <p style={{ fontSize: 13 }}>{sucursal.direccion}</p>
+                        {sucursal.nombre}-<p style={{ fontSize: 13 }}>{sucursal.direccion}</p>
                       </MenuItem>
                     ))}
                 </Select>
