@@ -54,3 +54,12 @@ export const getCajaById = async (cajaId) => {
 	const url = `cajas/${cajaId}`
 	return await api.get(url)
 }
+export const getTurnosByFecha_Caja_Sucursal = async ( sucursalId,fecha, tipoCajaId) => {
+	const url = `turnos/pagina?sucursalId=${sucursalId}&fecha=${fecha}&tipoCajaId=${tipoCajaId}`
+	return await api.get(url)
+}
+export const printTurno = async ( sucursalId,fecha, tipoCajaId) => {
+	const url = `turnos/print?sucursalId=${sucursalId}&fecha=${fecha}&tipoCajaId=${tipoCajaId}`
+	return await api.get(url,{responseType:'blob'})
+}
+

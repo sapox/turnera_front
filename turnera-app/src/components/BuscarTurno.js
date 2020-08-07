@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useFormik } from "formik";
 import {
   Button,
   InputLabel,
@@ -6,20 +7,38 @@ import {
   FormControl,
   Select,
   Container,
+  TextField,
 } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import { withRouter } from "react-router-dom";
-import { getSucursales } from "./../api";
+import { makeStyles, MuiThemeProvider } from "@material-ui/core/styles";
+import * as Yup from "yup";
+import { withRouter, Link } from "react-router-dom";
 import Header from "./Header";
+import TablaResultados from "./TablaResultados";
+import {
+  getSucursales,
+  getTipoCaja,
+  getFeriados,
+  getTurnosByFecha_Caja_Sucursal,
+} from "../api";
+import {
+  createMuiTheme,
+  responsiveFontSizes,
+  ThemeProvider,
+  Typography,
+} from "@material-ui/core";
 
 function BuscarTurno(props) {
+  let theme = createMuiTheme();
+  theme = responsiveFontSizes(theme);
   const apiLogOut = () => {};
-  const title = "Buscar Turno";
-  const welcome = "Bienvenido !";
+  const title = <Typography variant="p">Buscar Turno</Typography>;
+  const welcome = <Typography variant="p">Bienvenido!</Typography>;
   const button = (
-    <Button variant="contained" color="secondary" onClick={apiLogOut}>
-      Log Out
-    </Button>
+    <Link to="/backOffice" style={{ textDecoration: "none" }}>
+      <Button size="small" variant="contained" color="secondary" >
+        Salir
+      </Button>
+    </Link>
   );
 
   const useStyles = makeStyles((theme) => ({
@@ -29,8 +48,16 @@ function BuscarTurno(props) {
     },
     formControl: {
       margin: theme.spacing(1),
-      width: "80%",
-      marginLeft: "10%",
+      width: "70%",
+      
+    },
+    container: {
+      display: "flex",
+      flexWrap: "wrap",
+    },
+    textField: {
+      marginTop: theme.spacing(6),
+
     },
   }));
   const classes = useStyles();
@@ -40,6 +67,8 @@ function BuscarTurno(props) {
   const [open, setOpen] = useState(false);
   const [sucursales, setSucursales] = useState([]);
   const [error, setError] = useState("");
+  const [turnos, setTurnos] = useState([]);
+  const [tipoDecajas, setTipoDecajas] = useState([]);
 
   const handleChange = (event) => {
     setOficina(event.target.value);
@@ -55,6 +84,17 @@ function BuscarTurno(props) {
     }
   };
 
+  async function getTurnosFunc(fecha, sucursal, tipoCaja) {
+    //const auxFecha = formatISO(new Date(`${fecha}`), {representation: 'date' });
+    const res = await getTurnosByFecha_Caja_Sucursal(fecha, sucursal, tipoCaja);
+    setTurnos(res.data);
+  }
+
+  async function getTipoCajaFunc() {
+    const res = await getTipoCaja();
+    setTipoDecajas(res.data);
+  }
+
   async function getSucursalesFunc() {
     const res = await getSucursales();
     setSucursales(res.data);
@@ -62,87 +102,165 @@ function BuscarTurno(props) {
 
   useEffect(() => {
     try {
+      getFeriadosFunc();
+      getTipoCajaFunc();
       getSucursalesFunc();
+      getTurnosFunc();
     } catch (err) {
       setError(err);
     }
   }, []);
 
+  const validation = Yup.object({
+    sucursalId: Yup.string("Ingrese dni").required("requerido"),
+    fecha: Yup.string().required("requerido"),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      sucursalId: "",
+      fecha: "",
+      tramiteId: "",
+    },
+    validationSchema: validation,
+    onSubmit: (values) => {
+      const { sucursalId, fecha, tramiteId } = values;
+
+      //getTurnosFunc(sucursalId, fecha ,tramiteId);
+    },
+  });
+
+  const [showResults, setShowResults] = React.useState(false);
+  const onClick = () => {
+    setShowResults(true);
+    setShowButton(!showButton);
+  };
+
+  const [feriados, setFeriados] = useState([]);
+
+  async function getFeriadosFunc() {
+    const res = await getFeriados();
+    setFeriados(res.data);
+  }
+
+  function populateFeriados(feriados) {
+    const feriadoData = [];
+    if (feriados) {
+      for (let a = 0; a < feriados.length; a++) {
+        const day = feriados[a].fecha.replace(/-/g, "/");
+        feriadoData.push(new Date(day));
+      }
+    }
+    return feriadoData;
+  }
+  const [showButton, setShowButton] = useState(true);
   return (
-    <div>
+    <MuiThemeProvider theme={theme}>
       <Container fixed>
         <div>
           <Header title={title} welcome={welcome} button={button} />
         </div>
+
         <div>
-          <div style={{ marginTop: "70px" }}>
-            <FormControl className={classes.formControl}>
-              <InputLabel id="demo-controlled-open-select-label">
-                Oficina Comercial
-              </InputLabel>
-              <Select
-                labelId="demo-controlled-open-select-label"
-                id="oficinaId"
-                name="oficinaId"
-                onChange={handleChange}
-                value={oficina}
-              >
-                {sucursales &&
-                  sucursales.map((sucursal) => (
-                    <MenuItem
-                      key={`sucursal_${sucursal.id}`}
-                      value={sucursal.id}
-                    >
-                      {sucursal.nombre}
-                    </MenuItem>
-                  ))}
-              </Select>
-            </FormControl>
-            <FormControl className={classes.formControl}>
-              <InputLabel id="demo-controlled-open-select-label">
-                Tipo Tramite
-              </InputLabel>
-              <Select
-                labelId="demo-controlled-open-select-label"
-                id="TramiteId"
-                value={oficina}
-                onChange={handleChange}
-              >
-                <MenuItem value="">
-                  <em>None</em>
-                </MenuItem>
-                <MenuItem value={10}>A</MenuItem>
-                <MenuItem value={20}>B</MenuItem>
-                <MenuItem value={30}>C</MenuItem>
-              </Select>
-            </FormControl>
-            <FormControl className={classes.formControl}>
-              <InputLabel id="demo-controlled-open-select-label">
-                Fecha
-              </InputLabel>
-              <Select
-                labelId="demo-controlled-open-select-label"
-                id="fechaId"
-                value={oficina}
-                onChange={handleChange}
-              >
-                <MenuItem value="">
-                  <em>None</em>
-                </MenuItem>
-                <MenuItem value={10}>A</MenuItem>
-                <MenuItem value={20}>B</MenuItem>
-                <MenuItem value={30}>C</MenuItem>
-              </Select>
-            </FormControl>
-          </div>
-          <div style={{ marginTop: "30px", width: "30%", marginLeft: "35%" }}>
-            <Button type="submit" fullWidth variant="contained" color="primary">
-              Buscar
-            </Button>
+          <div style={{ marginTop: "70px", marginLeft: "20%" }}>
+            <form onSubmit={formik.handleSubmit}>
+              <FormControl className={classes.formControl}>
+                <InputLabel>Tipo Trámite ( opcional)</InputLabel>
+                <Select
+                
+                  id="tramiteId"
+                  name="tramiteId"
+                  value={formik.values.tramiteId}
+                  onChange={formik.handleChange}
+                >
+                  {tipoDecajas &&
+                    tipoDecajas.map((tipo) => (
+                      <MenuItem key={`tipo_${tipo.id}`} value={tipo.id}>
+                        {tipo.nombre}
+                      </MenuItem>
+                    ))}
+                </Select>
+              </FormControl>
+              <FormControl className={classes.formControl}>
+                <InputLabel>Oficina Comercial (obligatorio)</InputLabel>
+                <Select
+                  className={classes.textField}
+                 
+                  id="sucursalId"
+                  name="sucursalId"
+                  value={formik.values.sucursalId}
+                  onChange={formik.handleChange}
+                  helperText={formik.errors.sucursalId || "*Campo requerido"}
+                  error={formik.errors.sucursalId}
+                >
+                  {sucursales &&
+                    sucursales.map((sucursal) => (
+                      <MenuItem
+                        key={`sucursal_${sucursal.id}`}
+                        value={sucursal.id}
+                      >
+                        {sucursal.nombre}-<p style={{ fontSize: 13 }}>{sucursal.direccion}</p>
+                      </MenuItem>
+                    ))}
+                </Select>
+              </FormControl>
+              
+                
+                <FormControl className={classes.formControl}>
+                <InputLabel >fecha (obligatorio)</InputLabel>
+                  <TextField
+                    className={classes.textField}
+                    id="fecha"
+                    type="date"
+                    value={formik.values.fecha}
+                    selected={formik.values.fecha}
+                    onChange={formik.handleChange}
+                    helperText={formik.errors.fecha}
+                    error={formik.errors.fecha}
+                    excludeDates={populateFeriados(feriados)}
+                  />
+             
+                </FormControl>
+              
+              {showButton && (
+                <div>
+                  <Button
+                    style={{
+                      marginTop: "30px",
+                      width: "30%",
+                      marginLeft: "20%",
+                      marginBottom: "30px",
+                    }}
+                    id="buttom"
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    onClick={onClick}
+                  >
+                    Buscar
+                  </Button>
+                </div>
+              )}
+            </form>
           </div>
         </div>
+        <div
+          style={{
+            marginBottom: "80px",
+          }}
+        >
+          <Container
+            fixed
+            style={{
+              marginTop: "80px",
+            }}
+          >
+            {showResults ? <TablaResultados params={formik.values} /> : null}
+          </Container>
+        </div>
       </Container>
-    </div>
+    </MuiThemeProvider>
   );
 }
 export default withRouter(BuscarTurno);
