@@ -16,6 +16,7 @@ import { resetTurnoConfirmadoValues } from './components/features/contacto/turno
 import { resetCajaValues } from './components/features/contacto/cajaSlice';
 import { resetDisclaimer } from './components/features/contacto/disclaimerSlice';
 import FormLogin from './components/FormLogin'
+import swal from 'sweetalert';
 import Header from "./components/Header";
 import BuscarTurno from "./components/BuscarTurno";
 import BackOffice from "./components/BackOffice";
@@ -31,8 +32,13 @@ const useStyles = makeStyles(theme => ({
       width: "25ch"
     }
   },
-  button: {
+  button: { 
     marginTop: theme.spacing(1),
+  },
+  newTurnButton: {
+    marginTop: theme.spacing(1),
+    marginLeft: theme.spacing(3),
+    marginRight: theme.spacing(7),
   },
   actionsContainer: {
     marginBottom: theme.spacing(2)
@@ -41,12 +47,12 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(3)
   },
   cardContainer: {
-    maxWidth: 500
+    maxWidth: 500,
   }
 }));
 
 function getSteps() {
-  return ["Datos de contacto", "Tipo de tramite", "Confirmar Terminos", "Oficina Comercial", "Confirmar Turno"];
+  return ["Datos de contacto", "Tipo de tramite", "Confirmar Terminos", "Oficina Comercial"];
 }
 
 function getStepContent(step, disclaimer, userStep) {
@@ -117,15 +123,19 @@ function Home(){
     setActiveStep(prevActiveStep => prevActiveStep + 1);
   };
 
-  /*const handleBack = () => {
-    setActiveStep(prevActiveStep => prevActiveStep - 1);
-  };*/
-
-  const handleCreate = () => {
-    let cancel = window.confirm('Estas a punto de cancelar el turno. ¿Desea continuar?');
-    if(cancel){
-      handleReset();
-    }
+  const handleCancel = () => {
+      swal({
+        title: "Cancelar Operacion",
+        text: "¿Esta seguro que desea salir de esta operacion?",
+        icon: "warning",
+        buttons: ["No", "Si"],
+        dangerMode: true
+      }).then((isCanceled) => {
+        if (isCanceled) {
+          handleReset();
+          window.location.reload();
+        }
+      });
   }
 
   const handleReset = () => {
@@ -146,9 +156,7 @@ function Home(){
       return true;
     } else if (step === 3 && !turnoConfirmado){
       return true;
-    } else if (step === 4 && !turnoConfirmado){
-      return true;
-    } else {
+    }  else {
       return false;
     }
   }
@@ -174,8 +182,7 @@ function Home(){
               <div className={classes.actionsContainer}>
                 <div>
                   <Button
-                    disabled={activeStep === 0}
-                    onClick={handleCreate}
+                    onClick={handleCancel}
                     className={classes.button}
                   >
                     Cancelar
@@ -187,9 +194,7 @@ function Home(){
                     className={classes.button}
                     disabled={checkStep(activeStep)}
                   >
-                    {activeStep === steps.length - 1
-                      ? "Finish"
-                      : "Siguiente"}
+                    Siguiente
                   </Button>
                 </div>
               </div>
@@ -201,7 +206,7 @@ function Home(){
     {activeStep === steps.length && (
       <Paper square elevation={0} className={classes.resetContainer}>
         <TurnoConfirmado />
-        <Button onClick={handleReset} className={classes.button}
+        <Button onClick={handleReset} className={classes.newTurnButton}
                 variant="contained"
                 color="primary">
           Solicitar nuevo turno
