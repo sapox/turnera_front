@@ -32,9 +32,6 @@ const FormTurnos = () => {
 	const cuentaUser = useSelector((state) => state.user.cuentaContrato);
 	const titularUser = useSelector((state) => state.user.titularCuenta);
 	const disclaimerStep = useSelector((state) => state.disclaimer.isConfirmed);
-
-	const sucursalFecha = useSelector((state) => state.turno.fecha);
-	const sucursalHora = useSelector((state) => state.turno.hora);
 	
 	const isWeekday = date => {
     const day = getDay(date);
@@ -51,7 +48,7 @@ const FormTurnos = () => {
 			hora: '',
 		},
 		onSubmit: values => {	
-			const { hora, sucursalId, direccion, fecha } = values;
+			const { hora, sucursalId, direccion, localidad, fecha } = values;
 			const auxHora = hora.split('_')[0];
 			const auxCaja = hora.split('_')[1];
 			const fechaAux = formatISO(new Date(`${fecha}`), {representation: 'date' });
@@ -135,11 +132,13 @@ const FormTurnos = () => {
 		}
 	}, []);
 
+	let sucursalLocalidad = null;
 	let sucursalNombre = null;
 	let sucursalDireccion= null;
 	const sucursalData = value => {
 		sucursales.map(sucursal => {
 			if(sucursal.id === value){
+				sucursalLocalidad = sucursal.distrito.localidad.nombre;
 				sucursalNombre = sucursal.nombre;
 				sucursalDireccion = sucursal.direccion;
 			}
@@ -216,7 +215,7 @@ const FormTurnos = () => {
 				}
 				<Zoom in={horaTurno}>
 					<div  style={{ border: "ridge", textAlign: "justify" }}>Ud. <b>{nombreUser} {apellidoUser}</b>, con DNI: <b>{dniUser}</b> esta a punto de sacar un turno 
-					para la oficina comercial de <b>{sucursalNombre} ({sucursalDireccion})</b>.  
+					para la oficina comercial de <b>{sucursalNombre}({sucursalDireccion}),{sucursalLocalidad}</b>.  
 				 	En la fecha <b>{fechaTurno}</b> a las <b>{horaTurno} hs</b>.</div>
 				</Zoom>
 			<Button
