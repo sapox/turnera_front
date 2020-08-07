@@ -185,7 +185,6 @@ function BuscarTurno(props) {
                 <InputLabel>Oficina Comercial (obligatorio)</InputLabel>
                 <Select
                   className={classes.textField}
-                 
                   id="sucursalId"
                   name="sucursalId"
                   value={formik.values.sucursalId}

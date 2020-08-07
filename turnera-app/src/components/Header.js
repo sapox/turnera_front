@@ -15,7 +15,7 @@ function Header(props) {
   const Style = {
     h1: {
       color: "white",
-      backgroundColor: "dodgerblue",
+      backgroundColor: "#009bdb",
       padding: "10px",
       marginTop: "10px",
     },
