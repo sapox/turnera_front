@@ -1,21 +1,10 @@
-import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
-import { Button } from "@material-ui/core";
-import { printTurno, getTurnosByFecha_Caja_Sucursal } from "../api";
+
 import React, { useState, useEffect } from "react";
-import {
-  createMuiTheme,
-  responsiveFontSizes,
-  ThemeProvider,
-  Typography,
-} from "@material-ui/core";
+
+import { makeStyles } from "@material-ui/core/styles";
+import { Button, Grid, Paper, TableRow, TableContainer, TableCell, Table, TableHead, TableBody } from "@material-ui/core";
+import { createMuiTheme,  responsiveFontSizes } from "@material-ui/core";
+import { printTurno, getTurnosByFecha_Caja_Sucursal } from "../api";
 
 const useStyles = makeStyles({
   table: {

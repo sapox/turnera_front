@@ -7,12 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import es from "date-fns/locale/es";
-import {
-  getSucursales,
-  getFeriados,
-  getTurnosDisponibles,
-  createTurno,
-} from "../api";
+import { getSucursales, getFeriados, getTurnosDisponibles, createTurno } from "../api";
 import { setTurnoValues } from "./features/contacto/turnoSlice";
 import { setTurnoConfirmado } from "./features/contacto/turnoConfirmadoSlice";
 
@@ -71,43 +66,6 @@ const FormTurnos = () => {
 			dispatch(deshabilitar());
 		}	
 	});
-
-  const formik = useFormik({
-    initialValues: {
-      sucursalId: "",
-      direccion: "",
-      fecha: "",
-      hora: "",
-    },
-    onSubmit: (values) => {
-      const { hora, sucursalId, direccion, fecha } = values;
-      const auxHora = hora.split("_")[0];
-      const auxCaja = hora.split("_")[1];
-      const fechaAux = formatISO(new Date(`${fecha}`), {
-        representation: "date",
-      });
-      const obj = {
-        hora: auxHora,
-        cajaId: auxCaja,
-        sucursalId: sucursalId,
-        direccion: direccion,
-        fecha: fechaAux,
-      };
-      const objTurno = {
-        dni: dniUser,
-        nombre: nombreUser,
-        apellido: apellidoUser,
-        email: emailUser,
-        telefono: telefonoUser,
-        cuentaContrato: cuentaUser,
-        titularCuenta: titularUser,
-        ...obj,
-      };
-      dispatch(setTurnoValues(obj));
-      createTurnoFunc(objTurno);
-    },
-  });
-
 
   async function createTurnoFunc(obj) {
     if (disclaimerStep) {
