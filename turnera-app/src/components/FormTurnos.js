@@ -115,6 +115,7 @@ const FormTurnos = () => {
 
 	const deshabilitar = () => {
 		setHabilitado(!habilitado);
+		document.getElementById('datePicker').style.display  = 'none';
 	}
 
 	function handleDateChange(date){
@@ -179,21 +180,21 @@ const FormTurnos = () => {
 						))}
 					</Select>
 				</FormControl>
-				<DatePicker 
-					id="fecha"
-					locale="es"
-					selected={formik.values.fecha}
-					name="fecha"
-					onChange={date => handleDateChange(date)}
-					dateFormat="MMMM d, yyyy"	 
-					filterDate={isWeekday}
-					minDate={setMinutes(addDays(new Date(), 1), 30)}
-					showDisabledMonthNavigation
-					inline={formik.values.sucursalId !== ''}
-					excludeDates={populateFeriados(feriados)}
-					disabled
-					placeholderText="This is disabled"
-				/>
+				<div id="datePicker">
+					<DatePicker 
+						id="fecha"
+						locale="es"
+						selected={formik.values.fecha}
+						name="fecha"
+						onChange={date => handleDateChange(date)}
+						dateFormat="MMMM d, yyyy"	 
+						filterDate={isWeekday}
+						minDate={setMinutes(addDays(new Date(), 1), 30)}
+						showDisabledMonthNavigation
+						inline={formik.values.sucursalId !== ''}
+						excludeDates={populateFeriados(feriados)}
+					/>
+				</div>
 				{turnos.length > 0 &&
 					<FormControl style={{ maxWidth: 200 }}>
 						<InputLabel>Horario</InputLabel>
