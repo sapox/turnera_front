@@ -207,13 +207,10 @@ const FormContacto = () => {
 					<td>
 					<Button  
 						onClick={handleToggle}
-						style={{width: 0, height:18}}
-						variant="contained" 
-						color="primary">
-						?
+						style={{fontSize: '10px', color: "blue"}}>
+						¿Donde lo encuentro?
 					</Button>
 					</td>
-
 					<Zoom in={toggle}>
 						<Paper elevation={4}>
 							{toggle && <img id="service" style={{width: 350, height: 250}} src={service}></img>}
