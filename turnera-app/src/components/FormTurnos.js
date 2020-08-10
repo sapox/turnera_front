@@ -48,7 +48,7 @@ const FormTurnos = () => {
 			hora: '',
 		},
 		onSubmit: values => {	
-			const { hora, sucursalId, direccion, localidad, fecha } = values;
+			const { hora, sucursalId, direccion, fecha } = values;
 			const auxHora = hora.split('_')[0];
 			const auxCaja = hora.split('_')[1];
 			const fechaAux = formatISO(new Date(`${fecha}`), {representation: 'date' });
@@ -192,6 +192,7 @@ const FormTurnos = () => {
 					inline={formik.values.sucursalId !== ''}
 					excludeDates={populateFeriados(feriados)}
 					disabled
+					placeholderText="This is disabled"
 				/>
 				{turnos.length > 0 &&
 					<FormControl style={{ maxWidth: 200 }}>
@@ -214,7 +215,7 @@ const FormTurnos = () => {
 					</FormControl>
 				}
 				<Zoom in={horaTurno}>
-					<div  style={{ border: "ridge", textAlign: "justify" }}>Ud. <b>{nombreUser} {apellidoUser}</b>, con DNI: <b>{dniUser}</b> esta a punto de sacar un turno 
+					<div  style={{ border: "ridge", textAlign: "justify", justifyContent: "center" }}>Ud. <b>{nombreUser} {apellidoUser}</b>, con DNI: <b>{dniUser}</b> esta a punto de sacar un turno 
 					para la oficina comercial de <b>{sucursalNombre}({sucursalDireccion}),{sucursalLocalidad}</b>.  
 				 	En la fecha <b>{fechaTurno}</b> a las <b>{horaTurno} hs</b>.</div>
 				</Zoom>
