@@ -19,6 +19,10 @@ import FormLogin from './components/FormLogin'
 import swal from 'sweetalert';
 import Header from "./components/Header";
 import BuscarTurno from "./components/BuscarTurno";
+import BackOffice from "./components/BackOffice";
+import SingleLogInForm from "./components/SingleLogInForm";
+import BackOfficeLoguado from "./components/BackOfficeLogueado";
+import TablaResultados from "./components/TablaResultados";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -168,7 +172,7 @@ function Home(){
       />  
     </div>
 
-    <CardContent>
+    
       <Stepper activeStep={activeStep} orientation="vertical">
         {steps.map((label, index) => (
           <Step key={label}>
@@ -198,7 +202,7 @@ function Home(){
           </Step>
         ))}
       </Stepper>
-    </CardContent>
+   
     {activeStep === steps.length && (
       <Paper square elevation={0} className={classes.resetContainer}>
         <TurnoConfirmado />
@@ -225,11 +229,23 @@ class App extends Component {
         <Route path="/turno_confirmado/" exact component={TurnoConfirmado}>
           <TurnoConfirmado />
         </Route>
-        <Route path="/login" exact component={FormLogin}>
-          <FormLogin />
+        <Route path="/backOffice" exact component={BackOffice}>
+          <BackOffice />
         </Route>
         <Route path="/buscarTurno" exact component={BuscarTurno}>
           <BuscarTurno />
+        </Route>
+        <Route path="/login" exact component={FormLogin}>
+          <FormLogin />
+        </Route>
+        <Route path="/singleLoginForm" exact component={SingleLogInForm}>
+          <SingleLogInForm />
+        </Route>
+        <Route path="/BackOfficeL" exact component={BackOfficeLoguado}>
+          <BackOfficeLoguado />
+        </Route>
+        <Route path="/tabla" exact component={TablaResultados}>
+          <TablaResultados />
         </Route>
       </Switch>
     </Router>
