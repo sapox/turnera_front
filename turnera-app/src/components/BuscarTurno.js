@@ -38,7 +38,6 @@ function BuscarTurno(props) {
     formControl: {
       margin: theme.spacing(1),
       width: "70%",
-     
     },
     container: {
       display: "flex",
@@ -46,7 +45,6 @@ function BuscarTurno(props) {
     },
     textField: {
       marginTop: theme.spacing(6),
-     
     },
   }));
   const classes = useStyles();
@@ -56,10 +54,10 @@ function BuscarTurno(props) {
     <Link to="/backOffice" style={{ textDecoration: "none" }}>
       <Button size="small" variant="contained" color="#009bdb">
         <Typography
-          variant="p"
           style={{
             fontSize: "16pt",
             textTransform: "none",
+            fontFamily: "Roboto",
             fontWeight: "bold",
           }}
         >
@@ -172,7 +170,9 @@ function BuscarTurno(props) {
           <div style={{ marginTop: "70px", marginLeft: "20%" }}>
             <form onSubmit={formik.handleSubmit}>
               <FormControl className={classes.formControl}>
-                <InputLabel style={{fontSize: "16pt"}}>Tipo Trámite ( opcional)</InputLabel>
+                <InputLabel style={{ fontSize: "16pt", fontFamily: "Roboto" }}>
+                  Tipo Trámite ( opcional)
+                </InputLabel>
                 <Select
                   id="tramiteId"
                   name="tramiteId"
@@ -188,7 +188,9 @@ function BuscarTurno(props) {
                 </Select>
               </FormControl>
               <FormControl className={classes.formControl}>
-                <InputLabel  style={{fontSize: "16pt"}}>Oficina Comercial (obligatorio)</InputLabel>
+                <InputLabel style={{ fontSize: "16pt", fontFamily: "Roboto" }}>
+                  Oficina Comercial (obligatorio)
+                </InputLabel>
                 <Select
                   className={classes.textField}
                   id="sucursalId"
@@ -212,7 +214,9 @@ function BuscarTurno(props) {
               </FormControl>
 
               <FormControl className={classes.formControl}>
-                <InputLabel style={{fontSize: "16pt"}}>fecha (obligatorio)</InputLabel>
+                <InputLabel style={{ fontSize: "16pt", fontFamily: "Roboto" }}>
+                  Fecha (obligatorio)
+                </InputLabel>
                 <TextField
                   className={classes.textField}
                   id="fecha"
@@ -233,6 +237,7 @@ function BuscarTurno(props) {
                       fontSize: "16pt",
                       textTransform: "none",
                       fontWeight: "bold",
+                      fontFamily: "Roboto",
                       backgroundColor: "#0055a6",
                       marginTop: "30px",
                       width: "30%",

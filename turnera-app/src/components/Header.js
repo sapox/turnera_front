@@ -21,15 +21,16 @@ function Header(props) {
       marginTop: "10px",
     },
   };
-  const useStyles = makeStyles(theme => ({
-    root :{
-      fontSize : '16pt',
-      marginLeft: "10%" 
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      fontSize: "16pt",
+      marginLeft: "10%",
+      fontFamily: "Roboto ",
     },
-    button :{
-      fontSize : '16pt',
-      fontFamily: 'bold'
-    }
+    button: {
+      fontSize: "16pt",
+      fontFamily: "Roboto",
+    },
   }));
   const classes = useStyles();
   const title = null;
@@ -48,26 +49,48 @@ function Header(props) {
           </div>
         </Grid>
         <Grid item xs>
-          <div style={{marginTop: theme.spacing(1) , display: "flex" , flexDirection:'column'}}>
-            <div style={{alignSelf:'flex-end' ,marginBottom: '1%'}}>
-              <Typography variant="p" style={{marginBottom: '1%' , fontSize:'16pt'}}>{props.welcome || welcome}</Typography>
-            </div >
-            <div style={{alignSelf:'flex-end'}}> {props.button || button}</div>
+          <div
+            style={{
+              marginTop: theme.spacing(1),
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <div style={{ alignSelf: "flex-end", marginBottom: "1%" }}>
+              <Typography
+                variant="p"
+                style={{
+                  marginBottom: "1%",
+                  fontSize: "16pt",
+                  fontFamily: "Roboto ",
+                }}
+              >
+                {props.welcome || welcome}
+              </Typography>
+            </div>
+            <div style={{ alignSelf: "flex-end" }}>
+              {" "}
+              {props.button || button}
+            </div>
           </div>
         </Grid>
       </Grid>
       <div style={Style.h1}>
         <Grid container spacing={6}>
           <Grid item xs>
-            <Typography  variant="h1" className={classes.root}>
-            Back Office Turno
+            <Typography variant="h1" className={classes.root}>
+              Back Office Turno
             </Typography>
           </Grid>
           <Grid item xs>
-            <Typography variant="h1" align='right' style={{marginRight:'10%'}} >
-            <Typography  variant="h1" className={classes.root}>
-            {props.title || title}
-            </Typography>
+            <Typography
+              variant="h1"
+              align="right"
+              style={{ marginRight: "10%" }}
+            >
+              <Typography variant="h1" className={classes.root}>
+                {props.title || title}
+              </Typography>
             </Typography>
           </Grid>
         </Grid>
