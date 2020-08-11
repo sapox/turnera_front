@@ -10,10 +10,34 @@ import BuscarTurno from "./BuscarTurno";
 
 export const SingleLogInForm = (props) => {
   const validation = Yup.object({
-    email: Yup.string().email("Coloque un email válido").required(" requerido"),
+    email: Yup.string()
+      .email( <Typography
+        variant="p"
+        style={{ fontSize: "12pt", textTransform: "none" }}
+      >
+       Coloque un email válido
+      </Typography>)
+      .required(
+        <Typography
+          variant="p"
+          style={{ fontSize: "12pt", textTransform: "none" }}
+        >
+          requerido
+        </Typography>
+      ),
     password: Yup.string()
-      .min(6, "Password must be at least 6 characters")
-      .required("requerido"),
+      .min(6,  <Typography
+        variant="p"
+        style={{ fontSize: "12pt", textTransform: "none" }}
+      >
+       "La contraseña debe tener al menos 6 caracteres"
+      </Typography>)
+      .required(<Typography
+        variant="p"
+        style={{ fontSize: "12pt", textTransform: "none" }}
+      >
+        requerido
+      </Typography>),
   });
 
   const apiLogIn = () => {
@@ -74,10 +98,19 @@ export const SingleLogInForm = (props) => {
   const button = null;
 
   const loginButton = (
-    <Link to="/backOfficeL" style={{ textDecoration: 'none' }}>
-    <Button variant="contained" color="primary" >
-      Sign in 
-    </Button>
+    <Link to="/backOfficeL" style={{ textDecoration: "none" }}>
+      <Button size="small" variant="contained" color="primary">
+        <Typography
+          variant="p"
+          style={{
+            fontSize: "16pt",
+            textTransform: "none",
+            fontFamily: "Roboto",
+          }}
+        >
+          Sign in
+        </Typography>
+      </Button>
     </Link>
   );
   return (
@@ -88,7 +121,15 @@ export const SingleLogInForm = (props) => {
             <Paper className={classes.paper}>
               <Container component="main" maxWidth="xs">
                 <div className={classes.paper}>
-                  <Typography component="h1" variant="h5">
+                  <Typography
+                    variant="h2"
+                    style={{
+                      fontSize: "17pt",
+                      fontFamily: "Roboto",
+                      textTransform: "none",
+                      color: "#b7b7b7",
+                    }}
+                  >
                     Sign in
                   </Typography>
                   <form className={classes.form} onSubmit={formik.handleSubmit}>
@@ -99,8 +140,9 @@ export const SingleLogInForm = (props) => {
                       fullWidth
                       id="email"
                       label="Email Address"
+                      style={{fontFamily: "Roboto"}}
                       name="email"
-                      autoComplete="email"
+                      autoComplete="nope"
                       autoFocus
                       onChange={formik.handleChange}
                       value={formik.values.email}
@@ -156,6 +198,5 @@ SingleLogInForm.defaultProps = {
   },
   dispatch: () => {},
 };
-
 
 export default SingleLogInForm;

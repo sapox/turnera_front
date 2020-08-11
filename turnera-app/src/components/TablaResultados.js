@@ -83,23 +83,21 @@ export default function TablaResultados(props) {
                     <TableCell component="th" scope="row">
                       {row.id}
                     </TableCell>
-                    <TableCell >{row.caja.tipo.nombre}</TableCell>
-                    <TableCell >{row.hora}</TableCell>
-                    <TableCell >{row.cliente.nombre}</TableCell>
-                    <TableCell >{row.cliente.dni}</TableCell>
-                    <TableCell >{row.cliente.email}</TableCell>
-                    <TableCell >{row.cliente.cuenta || "sin datos"}</TableCell>
-                    <TableCell >{row.cliente.telefono}</TableCell>
-                    <TableCell >
-                      {row.cliente.titularCuenta || "sin datos"}
-                    </TableCell>
+                    <TableCell>{row.caja.tipo.nombre}</TableCell>
+                    <TableCell>{row.hora}</TableCell>
+                    <TableCell>{row.cliente.nombre}</TableCell>
+                    <TableCell>{row.cliente.dni}</TableCell>
+                    <TableCell>{row.cliente.email}</TableCell>
+                    <TableCell>{row.cliente.cuenta}</TableCell>
+                    <TableCell>{row.cliente.telefono}</TableCell>
+                    <TableCell>{row.cliente.titularCuenta}</TableCell>
                   </TableRow>
                 ))}
             </TableBody>
           </Table>
         </TableContainer>
       </div>
-      <div style={{marginTop: theme.spacing(1) , display: "flex" }}>
+      <div style={{ marginTop: theme.spacing(1), display: "flex" }}>
         <Grid container spacing={6}>
           <Grid item xs>
             <div>
@@ -108,6 +106,8 @@ export default function TablaResultados(props) {
                 color="primary"
                 onClick={reload}
                 style={{
+                  fontWeight: "bold",
+                  fontFamily: "Roboto",
                   marginLeft: "20%",
                 }}
               >
@@ -116,9 +116,12 @@ export default function TablaResultados(props) {
             </div>
           </Grid>
           <Grid item xs>
-            <div align='right' style={{alignSelf:'flex-end' , marginRight:'8%'}}>
+            <div
+              align="right"
+              style={{ alignSelf: "flex-end", marginRight: "8%" }}
+            >
               <Button
-              
+                style={{ fontWeight: "bold", fontFamily: "Roboto" }}
                 variant="contained"
                 color="secondary"
                 onClick={() => print(sucursalId, fecha, tipoCajaId)}

@@ -172,7 +172,7 @@ function Home(){
       />  
     </div>
 
-    <CardContent>
+    
       <Stepper activeStep={activeStep} orientation="vertical">
         {steps.map((label, index) => (
           <Step key={label}>
@@ -202,7 +202,7 @@ function Home(){
           </Step>
         ))}
       </Stepper>
-    </CardContent>
+   
     {activeStep === steps.length && (
       <Paper square elevation={0} className={classes.resetContainer}>
         <TurnoConfirmado />

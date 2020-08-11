@@ -21,7 +21,7 @@ import SingleLogInForm from "./SingleLogInForm";
 export const BackOffice = (props) => {
   const Style = {
     turno: {
-      color: "gray",
+      color: "#b7b7b7",
     },
     h1: {
       color: "white",
@@ -36,7 +36,6 @@ export const BackOffice = (props) => {
     paper: {
       padding: theme.spacing(2),
       textAlign: "center",
-      color: theme.palette.text.secondary,
     },
     form: {
       width: "100%",
@@ -49,9 +48,7 @@ export const BackOffice = (props) => {
   const welcome = null;
   const button = null;
 
-  function getLogin (){
-      
-  }
+  function getLogin() {}
 
   return (
     <div>
@@ -61,40 +58,47 @@ export const BackOffice = (props) => {
         </div>
 
         <Grid container spacing={6}>
-          <Grid item xs style={{ marginTop:'5%',marginLeft:'3%'}}>
+          <Grid item xs style={{ marginTop: "5%", marginLeft: "3%" }}>
             <Paper className={classes.paper}>
               <div className={classes.root}>
                 <Grid container spacing={1}>
                   <Grid item xs>
                     <Paper style={Style.turno}>
-                      <h2>Turnos</h2>
+                    <Typography variant="h2" style={{ fontSize: "17pt" ,fontFamily: "Roboto",textTransform: "none"}}>
+                         Turnos
+                        </Typography>
                     </Paper>
                   </Grid>
                 </Grid>
-                <Grid container spacing={1}>
+                <Grid container spacing={1} style={{marginTop: '1%'}}>
                   <Grid item xs>
-                    <Link to="/" style={{ textDecoration: 'none' }}>
+                    <Link to="/" style={{ textDecoration: "none" }}>
                       <Button
                         type="submit"
                         fullWidth
                         variant="contained"
                         color="light"
                       >
-                        Nuevo Turno
+                        <Typography variant="p" style={{ fontSize: "16pt",fontFamily: "Roboto",textTransform: "none" }}>
+                          Nuevo Turno
+                        </Typography>
                       </Button>
                     </Link>
                   </Grid>
                 </Grid>
                 <Grid container spacing={1}>
                   <Grid item xs>
-                    <Link to="/login" style={{ textDecoration: 'none' }}>
+                    <Link to="/login" style={{ textDecoration: "none" }}>
                       <Button
                         type="submit"
                         fullWidth
                         variant="contained"
                         color="light"
+                        
                       >
-                        Buscar Turno
+                       <Typography variant="p" style={{ fontSize: "16pt" ,fontFamily: "Roboto",textTransform: "none"}}>
+                         Buscar Turno
+                        </Typography>
                       </Button>
                     </Link>
                   </Grid>
@@ -102,8 +106,8 @@ export const BackOffice = (props) => {
               </div>
             </Paper>
           </Grid>
-          <Grid item xs style={{marginTop:'5%'}}>
-          <SingleLogInForm/>
+          <Grid item xs style={{ marginTop: "5%" }}>
+            <SingleLogInForm />
           </Grid>
         </Grid>
       </Container>

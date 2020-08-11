@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Text } from "react";
 import { useFormik } from "formik";
 import {
   Button,
@@ -31,25 +31,13 @@ function BuscarTurno(props) {
   let theme = createMuiTheme();
   theme = responsiveFontSizes(theme);
   const apiLogOut = () => {};
-  const title = <Typography variant="p">Buscar Turno</Typography>;
+  const title = "Buscar Turno";
   const welcome = <Typography variant="p">Bienvenido!</Typography>;
-  const button = (
-    <Link to="/backOffice" style={{ textDecoration: "none" }}>
-      <Button size="small" variant="contained" color="secondary" >
-        Salir
-      </Button>
-    </Link>
-  );
 
   const useStyles = makeStyles((theme) => ({
-    button: {
-      display: "block",
-      marginTop: theme.spacing(2),
-    },
     formControl: {
       margin: theme.spacing(1),
       width: "70%",
-      
     },
     container: {
       display: "flex",
@@ -57,10 +45,27 @@ function BuscarTurno(props) {
     },
     textField: {
       marginTop: theme.spacing(6),
-
     },
   }));
   const classes = useStyles();
+  const sentence = "Salir";
+  const toLower = sentence.toLowerCase();
+  const button = (
+    <Link to="/backOffice" style={{ textDecoration: "none" }}>
+      <Button size="small" variant="contained" color="#009bdb">
+        <Typography
+          style={{
+            fontSize: "16pt",
+            textTransform: "none",
+            fontFamily: "Roboto",
+            fontWeight: "bold",
+          }}
+        >
+          Salir
+        </Typography>
+      </Button>
+    </Link>
+  );
   const [oficina, setOficina] = useState(false);
   const [openFecha, setOpenFecha] = useState(false);
   const [openTipoTramite, setOpenTipoTramite] = useState(false);
@@ -165,9 +170,10 @@ function BuscarTurno(props) {
           <div style={{ marginTop: "70px", marginLeft: "20%" }}>
             <form onSubmit={formik.handleSubmit}>
               <FormControl className={classes.formControl}>
-                <InputLabel>Tipo Trámite ( opcional)</InputLabel>
+                <InputLabel style={{ fontSize: "16pt", fontFamily: "Roboto" }}>
+                  Tipo Trámite ( opcional)
+                </InputLabel>
                 <Select
-                
                   id="tramiteId"
                   name="tramiteId"
                   value={formik.values.tramiteId}
@@ -182,10 +188,11 @@ function BuscarTurno(props) {
                 </Select>
               </FormControl>
               <FormControl className={classes.formControl}>
-                <InputLabel>Oficina Comercial (obligatorio)</InputLabel>
+                <InputLabel style={{ fontSize: "16pt", fontFamily: "Roboto" }}>
+                  Oficina Comercial (obligatorio)
+                </InputLabel>
                 <Select
                   className={classes.textField}
-                 
                   id="sucursalId"
                   name="sucursalId"
                   value={formik.values.sucursalId}
@@ -199,33 +206,39 @@ function BuscarTurno(props) {
                         key={`sucursal_${sucursal.id}`}
                         value={sucursal.id}
                       >
-                        {sucursal.nombre}-<p style={{ fontSize: 13 }}>{sucursal.direccion}</p>
+                        {sucursal.nombre}-
+                        <p style={{ fontSize: 13 }}>{sucursal.direccion}</p>
                       </MenuItem>
                     ))}
                 </Select>
               </FormControl>
-              
-                
-                <FormControl className={classes.formControl}>
-                <InputLabel >fecha (obligatorio)</InputLabel>
-                  <TextField
-                    className={classes.textField}
-                    id="fecha"
-                    type="date"
-                    value={formik.values.fecha}
-                    selected={formik.values.fecha}
-                    onChange={formik.handleChange}
-                    helperText={formik.errors.fecha}
-                    error={formik.errors.fecha}
-                    excludeDates={populateFeriados(feriados)}
-                  />
-             
-                </FormControl>
-              
+
+              <FormControl className={classes.formControl}>
+                <InputLabel style={{ fontSize: "16pt", fontFamily: "Roboto" }}>
+                  Fecha (obligatorio)
+                </InputLabel>
+                <TextField
+                  className={classes.textField}
+                  id="fecha"
+                  type="date"
+                  value={formik.values.fecha}
+                  selected={formik.values.fecha}
+                  onChange={formik.handleChange}
+                  helperText={formik.errors.fecha}
+                  error={formik.errors.fecha}
+                  excludeDates={populateFeriados(feriados)}
+                />
+              </FormControl>
+
               {showButton && (
                 <div>
                   <Button
                     style={{
+                      fontSize: "16pt",
+                      textTransform: "none",
+                      fontWeight: "bold",
+                      fontFamily: "Roboto",
+                      backgroundColor: "#0055a6",
                       marginTop: "30px",
                       width: "30%",
                       marginLeft: "20%",

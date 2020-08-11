@@ -1,4 +1,5 @@
 import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import { withRouter } from "react-router-dom";
 import img from "./features/contacto/img.jpg";
 import Container from "@material-ui/core/Container";
@@ -15,12 +16,23 @@ function Header(props) {
   const Style = {
     h1: {
       color: "white",
-      backgroundColor: "dodgerblue",
+      backgroundColor: "#009bdb",
       padding: "10px",
       marginTop: "10px",
     },
   };
-
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      fontSize: "16pt",
+      marginLeft: "10%",
+      fontFamily: "Roboto ",
+    },
+    button: {
+      fontSize: "16pt",
+      fontFamily: "Roboto",
+    },
+  }));
+  const classes = useStyles();
   const title = null;
   const welcome = null;
   const apiLogOut = null;
@@ -37,24 +49,48 @@ function Header(props) {
           </div>
         </Grid>
         <Grid item xs>
-          <div style={{marginTop: theme.spacing(1) , display: "flex" , flexDirection:'column'}}>
-            <div style={{alignSelf:'flex-end'}}>
-              <Typography variant="p">{props.welcome || welcome}</Typography>
-            </div >
-            <div style={{alignSelf:'flex-end'}}> {props.button || button}</div>
+          <div
+            style={{
+              marginTop: theme.spacing(1),
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <div style={{ alignSelf: "flex-end", marginBottom: "1%" }}>
+              <Typography
+                variant="p"
+                style={{
+                  marginBottom: "1%",
+                  fontSize: "16pt",
+                  fontFamily: "Roboto ",
+                }}
+              >
+                {props.welcome || welcome}
+              </Typography>
+            </div>
+            <div style={{ alignSelf: "flex-end" }}>
+              {" "}
+              {props.button || button}
+            </div>
           </div>
         </Grid>
       </Grid>
       <div style={Style.h1}>
         <Grid container spacing={6}>
           <Grid item xs>
-            <Typography variant="h5" style={{ marginLeft: "10%" }}>
-              BackOffice Turno
+            <Typography variant="h1" className={classes.root}>
+              Back Office Turno
             </Typography>
           </Grid>
           <Grid item xs>
-            <Typography variant="h5" align='right' style={{marginRight:'10%'}} >
-              {props.title || title}
+            <Typography
+              variant="h1"
+              align="right"
+              style={{ marginRight: "10%" }}
+            >
+              <Typography variant="h1" className={classes.root}>
+                {props.title || title}
+              </Typography>
             </Typography>
           </Grid>
         </Grid>
