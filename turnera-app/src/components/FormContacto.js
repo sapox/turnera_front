@@ -82,6 +82,7 @@ const FormContacto = () => {
 
 	const show = () => {
 		document.getElementById('titular').style.display  = 'block';
+		formik.values.titularCuenta = document.getElementById('titularCuenta').value;
 	}
 
 	const hide = () => {
@@ -199,19 +200,6 @@ const FormContacto = () => {
 						{toggle && <img id="service" style={{width: 350, height: 150}} src={service}></img>}
 					</Paper>
 				</Zoom>
-				<div id="titular">
-				<TextField 
-						placeholder="Titular de la Cuenta" 
-						label="Titular de la Cuenta"
-						id="titularCuenta"
-						name="titularCuenta"
-						disabled={habilitado}
-						onChange={formik.handleChange}
-						value={formik.values.titularCuenta} 
-						helperText={formik.errors.titularCuenta}
-						error={formik.errors.titularCuenta} 
-					/>
-				</div>
 				<RadioGroup row aria-label="position" name="position" defaultValue="top" >
 					<FormControlLabel
 					value="Si"
@@ -228,6 +216,19 @@ const FormContacto = () => {
 					labelPlacement="No"
 					/>
      			</RadioGroup>
+				<div id="titular">
+				<TextField 
+						placeholder="Titular de la Cuenta" 
+						label="Titular de la Cuenta"
+						id="titularCuenta"
+						name="titularCuenta"
+						disabled={habilitado}
+						onChange={formik.handleChange}
+						value={formik.values.titularCuenta} 
+						helperText={formik.errors.titularCuenta}
+						error={formik.errors.titularCuenta} 
+					/>
+				</div>
 				<Button 
 					disabled={habilitado}
 					type="submit" 
