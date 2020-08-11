@@ -30,25 +30,6 @@ const FormTurnos = () => {
 	const cuentaUser = useSelector((state) => state.user.cuentaContrato);
 	const titularUser = useSelector((state) => state.user.titularCuenta);
 	const disclaimerStep = useSelector((state) => state.disclaimer.isConfirmed);
-	
-	const isWeekday = date => {
-  const [sucursales, setSucursales] = useState([]);
-  const [feriados, setFeriados] = useState([]);
-  const [turnos, setTurnos] = useState([]);
-  const [error, setError] = useState("");
-  const [ habilitado, setHabilitado ]= useState(false);
-  //values from store
-  const tipoCaja = useSelector((state) => state.caja.tipo);
-  const dniUser = useSelector((state) => state.user.dni);
-  const nombreUser = useSelector((state) => state.user.nombre);
-  const apellidoUser = useSelector((state) => state.user.apellido);
-  const telefonoUser = useSelector((state) => state.user.telefono);
-  const emailUser = useSelector((state) => state.user.email);
-  const cuentaUser = useSelector((state) => state.user.cuentaContrato);
-  const titularUser = useSelector((state) => state.user.titularCuenta);
-  const disclaimerStep = useSelector((state) => state.disclaimer.isConfirmed);
-  const sucursalFecha = useSelector((state) => state.turno.fecha);
-	const sucursalHora = useSelector((state) => state.turno.hora);
 
   const isWeekday = (date) => {
     const day = getDay(date);
@@ -184,6 +165,7 @@ const FormTurnos = () => {
 					<Select 
 						id="sucursalId"
 						name="sucursalId"
+						style={{ marginBottom:'15px'}}
 						disabled={habilitado}
 						onChange={formik.handleChange}
 						value={formik.values.sucursalId}>
@@ -214,7 +196,7 @@ const FormTurnos = () => {
 					/>
 				</div>
 				{turnos.length > 0 &&
-					<FormControl style={{ maxWidth: 200 }}>
+					<FormControl style={{ maxWidth: 200, marginBottom:'15px' }}>
 						<InputLabel>Horario</InputLabel>
 						<Select 
 							id="hora"
@@ -239,6 +221,7 @@ const FormTurnos = () => {
 				 	En la fecha <b>{fechaTurno}</b> a las <b>{horaTurno} hs</b>.</div>
 				</Zoom>
 			<Button
+				style={{width:'50%' , marginTop: '15px'}}
 				disabled={habilitado}
 				type="submit" 
 				variant="contained" 

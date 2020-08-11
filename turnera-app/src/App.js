@@ -4,6 +4,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from 'react-redux';
 import { Stepper, Step, StepLabel, StepContent, CardContent } from "@material-ui/core";
 import { MenuItem, Select, FormControl, InputLabel, Button, Paper, Card } from "@material-ui/core";
+import Divider from '@material-ui/core/Divider';
+import Container from "@material-ui/core/Container";
 import FormContacto from './components/FormContacto';
 import FormTurnos from './components/FormTurnos';
 import TurnoConfirmado from './components/TurnoConfirmado';
@@ -162,61 +164,74 @@ function Home(){
   }
 
   return (
-  <div style={{display: 'flex', justifyContent: 'center'}}>
-  <Card className={classes.cardContainer} style={{ marginTop:'30px' }}>
-  <div className={classes.root}>
-    <div style={{ display: "flex", justifyContent: "center" }}>
-      <img
-        src="https://www.aysa.com.ar/assets/Menu/img/logo.png"
-        alt="aysa logo"
-      />  
-    </div>
-
-    
-      <Stepper activeStep={activeStep} orientation="vertical">
-        {steps.map((label, index) => (
-          <Step key={label}>
-            <StepLabel>{label}</StepLabel>
-            <StepContent>
-              <div>{getStepContent(index, disclaimerStep, userStep)}</div>
-              <div className={classes.actionsContainer}>
-                <div>
-                  <Button
-                    onClick={handleCancel}
-                    className={classes.button}
-                  >
-                    Cancelar
-                  </Button>
-                  <Button 
-                    variant="contained"
-                    color="primary"
-                    onClick={handleNext}
-                    className={classes.button}
-                    disabled={checkStep(activeStep)}
-                  >
-                    Siguiente
-                  </Button>
+    <div>
+    <Container fixed>
+      <div className={classes.root}>
+        <div style={{ marginTop: "2%",marginBottom:'2%'}}>
+          <img
+            src="https://www.aysa.com.ar/assets/Menu/img/logo.png"
+            alt="aysa logo"
+          />
+        </div>
+        <Divider />
+        <h1>
+        Reservá tu turno para ir al Centro de Atención
+        </h1>
+        <Divider />
+        <Stepper activeStep={activeStep} orientation="horinzal" style={{marginTop:'2%',marginBottom:'2%',width:'100%'}}>
+          {steps.map((label, index) => (
+            <Step key={label}>
+              <StepLabel>{label}</StepLabel>
+              <StepContent style={{width:'100%'}}>
+                <div>{getStepContent(index, disclaimerStep, userStep)}</div>
+                <div className={classes.actionsContainer}>
+                  <div>
+                    <Button
+                      disabled={activeStep === 0}
+                      onClick={handleCancel}
+                      className={classes.button}
+                    >
+                      Cancelar
+                    </Button>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleNext}
+                      className={classes.button}
+                      disabled={checkStep(activeStep)}
+                    >
+                      Siguiente
+                    </Button>
+                  </div>
                 </div>
+              </StepContent>
+            </Step>
+          ))}
+        </Stepper>
+        {activeStep === steps.length && (
+          <Paper square elevation={0} className={classes.resetContainer}>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <TurnoConfirmado />
               </div>
-            </StepContent>
-          </Step>
-        ))}
-      </Stepper>
-   
-    {activeStep === steps.length && (
-      <Paper square elevation={0} className={classes.resetContainer}>
-        <TurnoConfirmado />
-        <Button onClick={handleReset} className={classes.newTurnButton}
-                variant="contained"
-                color="primary">
-          Solicitar nuevo turno
-        </Button>
-      </Paper>
-    )}
+              <p>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <Button
+                  onClick={handleReset}
+                  className={classes.button}
+                  variant="contained"
+                  color="primary"
+                >
+                  Solicitar nuevo turno
+                </Button>
+                </div>
+              </p>
+          </Paper>
+        )}
+      </div>
+    </Container>
   </div>
-</Card>
-</div>
-)}
+);
+}
 
 class App extends Component {
   render() {
