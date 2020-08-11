@@ -63,6 +63,9 @@ const TurnoConfirmado = () => {
           {turnoConfirmado ? (
             <Fragment>
               <h2>Turno Confirmado</h2>
+              {cliente &&
+              <p style={{textAlign: 'justify'}}>{`Se ha enviado la confirmación del turno a su correo electrónico ${cliente.email}`}.</p>
+              }
               <Link to={`/turno_confirmado?turnoId=${turnoId}&userDni=${userDni}`}>
                 <QRCode 
                   bgColor="#FFFFFF"
@@ -78,7 +81,7 @@ const TurnoConfirmado = () => {
                 <p>{`Turno: ${fecha}. Horario: ${hora}`}</p>
                 <b>Tipo de tramite:</b> {caja.tipo.nombre}
                 <p><b>Oficina Comercial:</b> {sucursal.nombre} - {sucursal.direccion}, {sucursal.distrito.localidad.nombre}</p>
-                <p style={{textAlign: 'justify'}}>Se ha enviado la confirmación turno a su correo electrónico {cliente.email}. <b>No olvides traer tu DNI y recordá que este comprobante te servirá para circular en la calle desde tu domicilio hasta la oficina comercial, así como para ser atendido.</b></p>
+                <p style={{textAlign: 'justify'}}><b>No olvides traer tu DNI y recordá que este comprobante te servirá para circular en la calle desde tu domicilio hasta la oficina comercial, así como para ser atendido.</b></p>
                 <div  style={{ display: 'flex', justifyContent: 'center'}}>
                   <Button 
                     variant="contained" 

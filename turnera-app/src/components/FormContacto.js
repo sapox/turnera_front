@@ -86,6 +86,7 @@ const FormContacto = () => {
 
 	const hide = () => {
 		document.getElementById('titular').style.display  = 'none';
+		formik.values.titularCuenta = "";
 	}	
 
 	useEffect(() => { 
@@ -190,10 +191,8 @@ const FormContacto = () => {
 				/>
 				<Button  
 					onClick={handleToggle}
-					style={{width: 0, height:18}}
-					variant="contained" 
-					color="primary">
-					?
+					style={{fontSize: '10px', color: "blue"}}>
+					¿Donde lo encuentro?
 				</Button>
 				<Zoom in={toggle}>
 					<Paper elevation={4}>
@@ -215,7 +214,6 @@ const FormContacto = () => {
 				</div>
 				<RadioGroup row aria-label="position" name="position" defaultValue="top" >
 					<FormControlLabel
-					id="si"
 					value="Si"
 					disabled={habilitado}
 					control={<Radio color="primary" onChange={hide}/>}
