@@ -18,6 +18,8 @@ import TurnoConfirmado from "./components/TurnoConfirmado";
 import Disclaimer from "./components/Disclaimer";
 import { getTipoCaja } from "./api";
 import { setCajaValues } from "./components/features/contacto/cajaSlice";
+import Divider from '@material-ui/core/Divider';
+
 import {
   resetUserValues,
   setUserValues,
@@ -187,13 +189,19 @@ function Home() {
     <div>
       <Container fixed>
         <div className={classes.root}>
-          <div style={{ marginTop: "2%"}}>
+          <div style={{ marginTop: "2%",marginBottom:'2%'}}>
             <img
               src="https://www.aysa.com.ar/assets/Menu/img/logo.png"
               alt="aysa logo"
             />
           </div>
-          <Stepper activeStep={activeStep} orientation="horinzal" style={{marginTop:'2%',marginBottom:'2%',width:'100%',border: "ridge"}}>
+          <Divider />
+          <h1>
+          Reservá tu turno para ir al Centro de Atención
+          </h1>
+          <Divider />
+          <Stepper activeStep={activeStep} orientation="horinzal" style={{marginTop:'2%',marginBottom:'2%',width:'100%'}}>
+            
             {steps.map((label, index) => (
               <Step key={label}>
                 <StepLabel>{label}</StepLabel>
