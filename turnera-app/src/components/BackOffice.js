@@ -64,7 +64,7 @@ export const BackOffice = (props) => {
                 <Grid container spacing={1}>
                   <Grid item xs>
                     <Paper style={Style.turno}>
-                    <Typography variant="h2" style={{ fontSize: "17pt" ,textTransform: "none"}}>
+                    <Typography variant="h2" style={{ fontSize: "17pt" ,fontFamily: "Roboto",textTransform: "none"}}>
                          Turnos
                         </Typography>
                     </Paper>
@@ -79,7 +79,7 @@ export const BackOffice = (props) => {
                         variant="contained"
                         color="light"
                       >
-                        <Typography variant="p" style={{ fontSize: "16pt",textTransform: "none" }}>
+                        <Typography variant="p" style={{ fontSize: "16pt",fontFamily: "Roboto",textTransform: "none" }}>
                           Nuevo Turno
                         </Typography>
                       </Button>
@@ -96,7 +96,7 @@ export const BackOffice = (props) => {
                         color="light"
                         
                       >
-                       <Typography variant="p" style={{ fontSize: "16pt" ,textTransform: "none"}}>
+                       <Typography variant="p" style={{ fontSize: "16pt" ,fontFamily: "Roboto",textTransform: "none"}}>
                          Buscar Turno
                         </Typography>
                       </Button>

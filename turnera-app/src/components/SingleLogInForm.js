@@ -115,7 +115,7 @@ export const SingleLogInForm = (props) => {
           style={{
             fontSize: "16pt",
             textTransform: "none",
-            
+            fontFamily: "Roboto",
           }}
         >
           Sign in
@@ -135,6 +135,7 @@ export const SingleLogInForm = (props) => {
                     variant="h2"
                     style={{
                       fontSize: "17pt",
+                      fontFamily: "Roboto",
                       textTransform: "none",
                       color: "#b7b7b7",
                     }}
@@ -149,8 +150,9 @@ export const SingleLogInForm = (props) => {
                       fullWidth
                       id="email"
                       label="Email Address"
+                      style={{fontFamily: "Roboto"}}
                       name="email"
-                      autoComplete="email"
+                      autoComplete="nope"
                       autoFocus
                       onChange={formik.handleChange}
                       value={formik.values.email}
