@@ -48,7 +48,7 @@ const TurnoConfirmado = () => {
   const { cliente, caja, fecha, hora, sucursal } = turnoConfirmado;
   
   return (
-    <Card style={{maxWidth: '100%', justifyContent: "center"}} ref={componentRef}>
+    <Card style={{maxWidth: '35%', justifyContent: "center"}} ref={componentRef}>
       
       <div style={{ display: "flex", justifyContent: "center", flexDirection: 'column'}}>
         <div style={{ alignSelf: 'center'}}>
@@ -79,8 +79,9 @@ const TurnoConfirmado = () => {
                 <Fragment>
                 <p>{`${cliente.nombre} ${cliente.apellido}. DNI: ${cliente.dni}`}</p>
                 <p>{`Turno: ${fecha}. Horario: ${hora}`}</p>
-                Tipo de tramite: {caja.tipo.nombre}
-                <p>Oficina Comercial: {sucursal.nombre} - {sucursal.direccion}</p>
+                <b>Tipo de tramite:</b> {caja.tipo.nombre}
+                <p><b>Oficina Comercial:</b> {sucursal.nombre} - {sucursal.direccion}, {sucursal.distrito.localidad.nombre}</p>
+                <p style={{textAlign: 'justify'}}><b>No olvides traer tu DNI y recordá que este comprobante te servirá para circular en la calle desde tu domicilio hasta la oficina comercial, así como para ser atendido.</b></p>
                 <div  style={{ display: 'flex', justifyContent: 'center',  textAlign: 'justify'}}>
                   <Button 
                     variant="contained" 
