@@ -37,6 +37,7 @@ import SingleLogInForm from "./components/SingleLogInForm";
 import BackOfficeLoguado from "./components/BackOfficeLogueado";
 import TablaResultados from "./components/TablaResultados";
 import Container from "@material-ui/core/Container";
+import NewFront from "./components/NewFront"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -287,6 +288,9 @@ class App extends Component {
           </Route>
           <Route path="/tabla" exact component={TablaResultados}>
             <TablaResultados />
+          </Route>
+          <Route path="/newFront" exact component={NewFront}>
+            <NewFront />
           </Route>
         </Switch>
       </Router>
