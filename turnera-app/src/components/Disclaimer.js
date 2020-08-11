@@ -29,7 +29,7 @@ const Disclaimer = () => {
 
 	return (
 		<form onChange={formik.handleSubmit}>
-      <div style={{ display: "flex", justifyContent: "center", textAlign: "justify" , width:'80%'}}>
+      <div style={{ display: "flex", justifyContent: "center", textAlign: "justify" }}>
         <FormControl>
           {text.map((t, i) => (
               <Fragment key={i}>

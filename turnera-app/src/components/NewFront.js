@@ -1,5 +1,3 @@
-import Typography from "@material-ui/core/Typography";
-
 import React, { Component, useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
@@ -14,26 +12,25 @@ import {
   Paper,
   Card,
 } from "@material-ui/core";
-import FormContacto from "./FormContacto";
+import FormContactoH from "./FormContactoH";
 import FormTurnos from "./FormTurnos";
 import TurnoConfirmado from "./TurnoConfirmado";
 import Disclaimer from "./Disclaimer";
-import {
-  getSucursales,
-  getTipoCaja,
-  getFeriados,
-  getTurnosByFecha_Caja_Sucursal,
-} from "../api";
+import { getTipoCaja } from "../api";
 import { setCajaValues } from "./features/contacto/cajaSlice";
-import Divider from "@material-ui/core/Divider";
+import Divider from '@material-ui/core/Divider';
 
-import { resetUserValues, setUserValues } from "./features/contacto/userSlice";
+import {
+  resetUserValues,
+  setUserValues,
+} from "./features/contacto/userSlice";
 import { resetTurnoValues } from "./features/contacto/turnoSlice";
 import { resetTurnoConfirmadoValues } from "./features/contacto/turnoConfirmadoSlice";
 import { resetCajaValues } from "./features/contacto/cajaSlice";
 import { resetDisclaimer } from "./features/contacto/disclaimerSlice";
 import swal from "sweetalert";
 import Container from "@material-ui/core/Container";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,11 +41,21 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   button: {
-    marginRight: theme.spacing(1),
-  },
-  instructions: {
     marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
+  },
+  newTurnButton: {
+    marginTop: theme.spacing(1),
+    marginLeft: theme.spacing(3),
+    marginRight: theme.spacing(7),
+  },
+  actionsContainer: {
+    marginBottom: theme.spacing(2),
+  },
+  resetContainer: {
+    padding: theme.spacing(3),
+  },
+  cardContainer: {
+    maxWidth: 5005,
   },
 }));
 
@@ -64,7 +71,7 @@ function getSteps() {
 function getStepContent(step, disclaimer, userStep) {
   switch (step) {
     case 0:
-      return <FormContacto />;
+      return <FormContactoH />;
     case 1:
       return (userStep && <SelectTipo />) || "Complete información de contacto";
     case 2:
@@ -117,12 +124,12 @@ const SelectTipo = () => {
   );
 };
 
-export default function NewFront() {
+function NewFront() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
-  const [skipped, setSkipped] = React.useState(new Set());
   const steps = getSteps();
   const dispatch = useDispatch();
+
   const disclaimerStep = useSelector((state) => state.disclaimer.isConfirmed);
   const userStep = useSelector((state) => state.user.submitted);
   const tipoCajaStep = useSelector((state) => state.caja.submitted);
@@ -130,23 +137,8 @@ export default function NewFront() {
     (state) => state.turnoConfirmado.submitted
   );
 
-  const isStepOptional = (step) => {
-    return step === 1;
-  };
-
-  const isStepSkipped = (step) => {
-    return skipped.has(step);
-  };
-
   const handleNext = () => {
-    let newSkipped = skipped;
-    if (isStepSkipped(activeStep)) {
-      newSkipped = new Set(newSkipped.values());
-      newSkipped.delete(activeStep);
-    }
-
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped(newSkipped);
   };
 
   const handleCancel = () => {
@@ -161,25 +153,6 @@ export default function NewFront() {
         handleReset();
         window.location.reload();
       }
-    });
-  };
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
-  const handleSkip = () => {
-    if (!isStepOptional(activeStep)) {
-      // You probably want to guard against something like this,
-      // it should never occur unless someone's actively trying to break something.
-      throw new Error("You can't skip a step that isn't optional.");
-    }
-
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped((prevSkipped) => {
-      const newSkipped = new Set(prevSkipped.values());
-      newSkipped.add(activeStep);
-      return newSkipped;
     });
   };
 
@@ -207,82 +180,78 @@ export default function NewFront() {
   };
 
   return (
-    <Container fixed>
-      <div className={classes.root}>
-        <div style={{ marginTop: "2%", marginBottom: "2%" }}>
-          <img
-            src="https://www.aysa.com.ar/assets/Menu/img/logo.png"
-            alt="aysa logo"
-          />
-        </div>
-        <Divider />
-        <h1>Reservá tu turno para ir al Centro de Atención</h1>
-        <Divider />
-        <Stepper
-          activeStep={activeStep}
-          style={{ marginTop: "2%", marginBottom: "2%", width: "100%" }}
-        >
-          {steps.map((label, index) => {
-            const stepProps = {};
-            const labelProps = {};
-
-            if (isStepSkipped(index)) {
-              stepProps.completed = false;
-            }
-            return (
-              <Step key={label} {...stepProps}>
+    <div>
+      <Container fixed>
+        <div className={classes.root}>
+          <div style={{ marginTop: "2%",marginBottom:'2%'}}>
+            <img
+              src="https://www.aysa.com.ar/assets/Menu/img/logo.png"
+              alt="aysa logo"
+            />
+          </div>
+          <Divider />
+          <h1>
+          Reservá tu turno para ir al Centro de Atención
+          </h1>
+          <Divider />
+          <Stepper activeStep={activeStep} orientation="horinzal" style={{marginTop:'2%',marginBottom:'2%',width:'100%'}}>
+            
+            {steps.map((label, index) => (
+              <Step key={label}>
                 <StepLabel>{label}</StepLabel>
+                <StepContent style={{width:'100%'}}>
+                  <div>{getStepContent(index, disclaimerStep, userStep)}</div>
+                  <div className={classes.actionsContainer}>
+                    <div>
+                      <Button
+                        disabled={activeStep === 0}
+                        onClick={handleCancel}
+                        className={classes.button}
+                      >
+                        Cancelar
+                      </Button>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleNext}
+                        className={classes.button}
+                        disabled={checkStep(activeStep)}
+                      >
+                        {activeStep === steps.length - 1
+                          ? "Finish"
+                          : "Siguiente"}
+                      </Button>
+                    </div>
+                  </div>
+                </StepContent>
               </Step>
-            );
-          })}
-        </Stepper>
-        <div>
-          {activeStep === steps.length ? (
-            <div>
-              <Typography className={classes.instructions}>
-                All steps completed - you&apos;re finished
-              </Typography>
-              <Button onClick={handleReset} className={classes.button}>
-                Reset
-              </Button>
-            </div>
-          ) : (
-            <div>
-              <Typography className={classes.instructions}>
-              {getStepContent( disclaimerStep, userStep)}
-              </Typography>
-              <div>
-                <Button
-                  disabled={activeStep === 0}
-                  onClick={handleBack}
-                  className={classes.button}
-                >
-                  Back
-                </Button>
-                {isStepOptional(activeStep) && (
+            ))}
+          </Stepper>
+          {activeStep === steps.length && (
+            <Paper square elevation={0} className={classes.resetContainer}>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <TurnoConfirmado />
+                </div>
+                <p>
+                <div style={{ display: "flex", justifyContent: "center" }}>
                   <Button
+                    onClick={handleReset}
+                    className={classes.button}
                     variant="contained"
                     color="primary"
-                    onClick={handleSkip}
-                    className={classes.button}
                   >
-                    Skip
+                    Solicitar nuevo turno
                   </Button>
-                )}
-
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleNext}
-                  className={classes.button}
-                >
-                  {activeStep === steps.length - 1 ? "Finish" : "Next"}
-                </Button>
-              </div>
-            </div>
+                  </div>
+                </p>
+              
+            </Paper>
           )}
         </div>
-      </div>
-    </Container>
+      </Container>
+    </div>
   );
 }
+
+
+export default NewFront;
