@@ -14,6 +14,24 @@ import { setTurnoConfirmado } from "./features/contacto/turnoConfirmadoSlice";
 registerLocale("es", es);
 
 const FormTurnos = () => {
+
+	const [ sucursales, setSucursales ] = useState([]);
+	const [ feriados, setFeriados ] = useState([]);
+	const [ habilitado, setHabilitado ]= useState(false);
+	const [ turnos, setTurnos ] = useState([]);
+	const [ error, setError ] = useState("");
+	//values from store
+	const tipoCaja = useSelector((state) => state.caja.tipo);
+	const dniUser = useSelector((state) => state.user.dni);
+	const nombreUser = useSelector((state) => state.user.nombre);
+	const apellidoUser = useSelector((state) => state.user.apellido);
+	const telefonoUser = useSelector((state) => state.user.telefono);
+	const emailUser = useSelector((state) => state.user.email);
+	const cuentaUser = useSelector((state) => state.user.cuentaContrato);
+	const titularUser = useSelector((state) => state.user.titularCuenta);
+	const disclaimerStep = useSelector((state) => state.disclaimer.isConfirmed);
+	
+	const isWeekday = date => {
   const [sucursales, setSucursales] = useState([]);
   const [feriados, setFeriados] = useState([]);
   const [turnos, setTurnos] = useState([]);
@@ -114,6 +132,7 @@ const FormTurnos = () => {
 
 	const deshabilitar = () => {
 		setHabilitado(!habilitado);
+		document.getElementById('datePicker').style.display  = 'none';
 	}
 
   function handleDateChange(date) {
@@ -132,11 +151,13 @@ const FormTurnos = () => {
     }
   }, []);
 
+	let sucursalLocalidad = null;
 	let sucursalNombre = null;
 	let sucursalDireccion= null;
 	const sucursalData = value => {
 		sucursales.map(sucursal => {
 			if(sucursal.id === value){
+				sucursalLocalidad = sucursal.distrito.localidad.nombre;
 				sucursalNombre = sucursal.nombre;
 				sucursalDireccion = sucursal.direccion;
 			}
@@ -177,20 +198,21 @@ const FormTurnos = () => {
 						))}
 					</Select>
 				</FormControl>
-				<DatePicker 
-					id="fecha"
-					locale="es"
-					selected={formik.values.fecha}
-					name="fecha"
-					onChange={date => handleDateChange(date)}
-					dateFormat="MMMM d, yyyy"	 
-					filterDate={isWeekday}
-					minDate={setMinutes(addDays(new Date(), 1), 30)}
-					showDisabledMonthNavigation
-					inline={formik.values.sucursalId !== ''}
-					excludeDates={populateFeriados(feriados)}
-					disabled
-				/>
+				<div id="datePicker">
+					<DatePicker 
+						id="fecha"
+						locale="es"
+						selected={formik.values.fecha}
+						name="fecha"
+						onChange={date => handleDateChange(date)}
+						dateFormat="MMMM d, yyyy"	 
+						filterDate={isWeekday}
+						minDate={setMinutes(addDays(new Date(), 1), 30)}
+						showDisabledMonthNavigation
+						inline={formik.values.sucursalId !== ''}
+						excludeDates={populateFeriados(feriados)}
+					/>
+				</div>
 				{turnos.length > 0 &&
 					<FormControl style={{ maxWidth: 200 }}>
 						<InputLabel>Horario</InputLabel>
@@ -212,8 +234,8 @@ const FormTurnos = () => {
 					</FormControl>
 				}
 				<Zoom in={horaTurno}>
-					<div  style={{ border: "ridge", textAlign: "justify" }}>Ud. <b>{nombreUser} {apellidoUser}</b>, con DNI: <b>{dniUser}</b> esta a punto de sacar un turno 
-					para la oficina comercial de <b>{sucursalNombre} ({sucursalDireccion})</b>.  
+					<div  style={{ border: "ridge", textAlign: "justify", justifyContent: "center" }}>Ud. <b>{nombreUser} {apellidoUser}</b>, con DNI: <b>{dniUser}</b> esta a punto de sacar un turno 
+					para la oficina comercial de <b>{sucursalNombre}({sucursalDireccion}),{sucursalLocalidad}</b>.  
 				 	En la fecha <b>{fechaTurno}</b> a las <b>{horaTurno} hs</b>.</div>
 				</Zoom>
 			<Button

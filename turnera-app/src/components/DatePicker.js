@@ -7,7 +7,7 @@ import { addDays, setMinutes } from "date-fns";
 
 registerLocale("es", es);
 
-const CustomDatePicker = ({ name, value, onChange, minDate, maxDate, showTimeSelect, showDisabledMonthNavigation, showTimeSelectOnly, interval, excludeDates, excludedTimes, minTime, maxTime, dateFormat, filterDate, inline, disabled }) => {
+const CustomDatePicker = ({ name, value, onChange, minDate, maxDate, showTimeSelect, showDisabledMonthNavigation, showTimeSelectOnly, interval, excludeDates, excludedTimes, minTime, maxTime, dateFormat, filterDate, inline }) => {
 	//startDate is set to tomorrow starting at minute 30
 	const [ startDate, setStartDate ] = React.useState(setMinutes(addDays(new Date(), 1), 30));
  
@@ -38,7 +38,6 @@ const CustomDatePicker = ({ name, value, onChange, minDate, maxDate, showTimeSel
 			minTime={minTime}
 			maxTime={maxTime}
 			inline={inline}
-			disabled={disabled}
 		/>
 	); 
 }

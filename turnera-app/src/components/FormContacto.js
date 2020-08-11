@@ -4,6 +4,8 @@ import Zoom from '@material-ui/core/Zoom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { FormControl, TextField, Button, Checkbox, FormControlLabel } from "@material-ui/core";
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
 import { useDispatch } from 'react-redux';
 import { setUserValues } from './features/contacto/userSlice';
 import $, { param } from "jquery"
@@ -48,7 +50,6 @@ const FormContacto = () => {
 	const dispatch = useDispatch();
 	const [error,setError]= useState(''); 
 	const [toggle, setToggle]= useState(false);
-	const [titular, setTitular]= useState(false);
 	const [habilitado, setHabilitado]= useState(false);
 	const formik = useFormik({
 		initialValues: {
@@ -79,9 +80,15 @@ const FormContacto = () => {
 		setHabilitado(!habilitado);
 	}
 
-	const handleTitular = () => {
-		setTitular(!titular);
+	const show = () => {
+		document.getElementById('titular').style.display  = 'block';
+		formik.values.titularCuenta = document.getElementById('titularCuenta').value;
 	}
+
+	const hide = () => {
+		document.getElementById('titular').style.display  = 'none';
+		formik.values.titularCuenta = "";
+	}	
 
 	useEffect(() => { 
 		try{ disablePaste("#confirmarEmail"); }
@@ -185,18 +192,32 @@ const FormContacto = () => {
 				/>
 				<Button  
 					onClick={handleToggle}
-					style={{width: 0, height:18}}
-					variant="contained" 
-					color="primary">
-					?
+					style={{fontSize: '10px', color: "blue"}}>
+					¿Donde lo encuentro?
 				</Button>
 				<Zoom in={toggle}>
 					<Paper elevation={4}>
-						{toggle && <img id="service" style={{width: 350, height: 250}} src={service}></img>}
+						{toggle && <img id="service" style={{width: 350, height: 150}} src={service}></img>}
 					</Paper>
 				</Zoom>
-				<Zoom in={!titular}>
-					<TextField 
+				<RadioGroup row aria-label="position" name="position" defaultValue="top" >
+					<FormControlLabel
+					value="Si"
+					disabled={habilitado}
+					control={<Radio color="primary" onChange={hide}/>}
+					label="Si"
+					labelPlacement="Si"
+					/>
+					<FormControlLabel
+					value="No"
+					disabled={habilitado}
+					control={<Radio color="primary" onChange={show}/>}
+					label="No"
+					labelPlacement="No"
+					/>
+     			</RadioGroup>
+				<div id="titular">
+				<TextField 
 						placeholder="Titular de la Cuenta" 
 						label="Titular de la Cuenta"
 						id="titularCuenta"
@@ -207,14 +228,7 @@ const FormContacto = () => {
 						helperText={formik.errors.titularCuenta}
 						error={formik.errors.titularCuenta} 
 					/>
-				</Zoom>
-				<FormControlLabel
-					disabled={habilitado}
-					value="end"
-					control={<Checkbox color="primary" onClick={handleTitular}/>}
-					label="Soy titular de la cuenta."
-					labelPlacement="end"
-				/>
+				</div>
 				<Button 
 					disabled={habilitado}
 					type="submit" 
