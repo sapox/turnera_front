@@ -48,7 +48,7 @@ const TurnoConfirmado = () => {
   const { cliente, caja, fecha, hora, sucursal } = turnoConfirmado;
   
   return (
-    <Card style={{maxWidth: '250px', justifyContent: "center"}} ref={componentRef}>
+    <Card style={{maxWidth: '100%', justifyContent: "center"}} ref={componentRef}>
       
       <div style={{ display: "flex", justifyContent: "center", flexDirection: 'column'}}>
         <div style={{ alignSelf: 'center'}}>
@@ -58,20 +58,23 @@ const TurnoConfirmado = () => {
           
           />
         </div>
-        <Card >
+        <Card style={{ display: "flex", justifyContent: "center", flexDirection: 'column'}}>
         <CardContent >
           {turnoConfirmado ? (
             <Fragment>
               <h2>Turno Confirmado</h2>
+             
               <Link to={`/turno_confirmado?turnoId=${turnoId}&userDni=${userDni}`}>
                 <QRCode 
                   bgColor="#FFFFFF"
                   fgColor="#000000"
                   level="Q"
-                  style={{ maxWidth: 256 }}
+                  style={{  alignSelf: 'center' }}
                   value={`${baseUrl}/turno_confirmado?turnoId=${turnoId}&userDni=${userDni}`}
                 />
               </Link>
+             
+             
               {cliente && 
                 <Fragment>
                 <p>{`${cliente.nombre} ${cliente.apellido}. DNI: ${cliente.dni}`}</p>

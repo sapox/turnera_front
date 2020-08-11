@@ -161,6 +161,7 @@ const FormTurnos = () => {
 				<FormControl style={{ maxWidth: 200 }}>
 					<InputLabel>Oficina Comercial</InputLabel>
 					<Select 
+						style={{ marginBottom:'15px'}}
 						id="sucursalId"
 						name="sucursalId"
 						disabled={habilitado}
@@ -178,6 +179,7 @@ const FormTurnos = () => {
 					</Select>
 				</FormControl>
 				<DatePicker 
+					
 					id="fecha"
 					locale="es"
 					selected={formik.values.fecha}
@@ -192,7 +194,7 @@ const FormTurnos = () => {
 					disabled
 				/>
 				{turnos.length > 0 &&
-					<FormControl style={{ maxWidth: 200 }}>
+					<FormControl style={{ maxWidth: 200, marginBottom:'15px' }}>
 						<InputLabel>Horario</InputLabel>
 						<Select 
 							id="hora"
@@ -212,7 +214,7 @@ const FormTurnos = () => {
 					</FormControl>
 				}
 				<Zoom in={horaTurno}>
-					<div  style={{ border: "ridge", textAlign: "justify" }}>Ud. <b>{nombreUser} {apellidoUser}</b>, con DNI: <b>{dniUser}</b> esta a punto de sacar un turno 
+					<div  style={{ border: "ridge", textAlign: "justify", width:'50%' }}>Ud. <b>{nombreUser} {apellidoUser}</b>, con DNI: <b>{dniUser}</b> esta a punto de sacar un turno 
 					para la oficina comercial de <b>{sucursalNombre} ({sucursalDireccion})</b>.  
 				 	En la fecha <b>{fechaTurno}</b> a las <b>{horaTurno} hs</b>.</div>
 				</Zoom>
@@ -220,6 +222,7 @@ const FormTurnos = () => {
 				disabled={habilitado}
 				type="submit" 
 				variant="contained" 
+				style={{width:'50%' , marginTop: '15px'}}
 				color="secondary">
 					Confirmar Turno
 			</Button>

@@ -2,13 +2,7 @@ import React, { Component, useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  Stepper,
-  Step,
-  StepLabel,
-  StepContent,
-  CardContent,
-} from "@material-ui/core";
+import { Stepper, Step, StepLabel, StepContent } from "@material-ui/core";
 import {
   MenuItem,
   Select,
@@ -47,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     "& .MuiTextField-root": {
       margin: theme.spacing(1),
-      width: "25ch",
+      width: "100%",
     },
   },
   button: {
@@ -192,18 +186,18 @@ function Home() {
   return (
     <div>
       <Container fixed>
-      <div className={classes.root}>
-          <div style={{ display: "flex"}}>
+        <div className={classes.root}>
+          <div style={{ marginTop: "2%"}}>
             <img
               src="https://www.aysa.com.ar/assets/Menu/img/logo.png"
               alt="aysa logo"
             />
           </div>
-          <Stepper activeStep={activeStep} orientation="horinzal">
+          <Stepper activeStep={activeStep} orientation="horinzal" style={{marginTop:'2%',marginBottom:'2%',width:'100%',border: "ridge"}}>
             {steps.map((label, index) => (
               <Step key={label}>
                 <StepLabel>{label}</StepLabel>
-                <StepContent>
+                <StepContent style={{width:'100%'}}>
                   <div>{getStepContent(index, disclaimerStep, userStep)}</div>
                   <div className={classes.actionsContainer}>
                     <div>
@@ -233,15 +227,22 @@ function Home() {
           </Stepper>
           {activeStep === steps.length && (
             <Paper square elevation={0} className={classes.resetContainer}>
-              <TurnoConfirmado />
-              <Button
-                onClick={handleReset}
-                className={classes.button}
-                variant="contained"
-                color="primary"
-              >
-                Solicitar nuevo turno
-              </Button>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <TurnoConfirmado />
+                </div>
+                <p>
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  <Button
+                    onClick={handleReset}
+                    className={classes.button}
+                    variant="contained"
+                    color="primary"
+                  >
+                    Solicitar nuevo turno
+                  </Button>
+                  </div>
+                </p>
+              
             </Paper>
           )}
         </div>
