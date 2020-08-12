@@ -221,11 +221,11 @@ const FormTurnos = () => {
 				 	En la fecha <b>{fechaTurno}</b> a las <b>{horaTurno} hs</b>.</div>
 				</Zoom>
 			<Button
-				style={{width:'50%' , marginTop: '15px'}}
+				style={{width:'34%' , marginTop: '15px'}}
 				disabled={habilitado}
 				type="submit" 
 				variant="contained" 
-				color="secondary">
+				color="primary">
 					Confirmar Turno
 			</Button>
 		</FormControl>

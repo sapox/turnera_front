@@ -82,12 +82,12 @@ const FormContacto = () => {
 	}
 
 	const show = () => {
-		document.getElementById('titular').style.display  = 'block';
+		document.getElementById('titular').style.display = 'block';
 		formik.values.titularCuenta = document.getElementById('titularCuenta').value;
 	}
 
 	const hide = () => {
-		document.getElementById('titular').style.display  = 'none';
+		document.getElementById('titular').style.display = 'none';
 		formik.values.titularCuenta = "";
 	}	
 
@@ -171,7 +171,7 @@ const FormContacto = () => {
 					<Grid>
 						<TextField 
 							type="codArea"
-							placeholder="codArea" 
+							placeholder="Ej: 11" 
 							label="Cod. área"
 							id="codArea"
 							name="codArea"
@@ -186,7 +186,7 @@ const FormContacto = () => {
 						<TextField
 							value="rigth"
 							type="number"
-							placeholder="Telefono" 
+							placeholder="Ej: 12345678" 
 							label="Telefono"
 							id="telefono"
 							name="telefono"
@@ -199,9 +199,9 @@ const FormContacto = () => {
 					</Grid>
 				</Grid>
 				<Grid container>
-					<Grid >
+					<Grid>
 						<TextField 
-							placeholder="Cuenta Contrato" 
+							placeholder="0123456789" 
 							label="Cuenta de Servicios"
 							id="cuentaContrato"
 							name="cuentaContrato"
@@ -214,17 +214,20 @@ const FormContacto = () => {
 						<td>
 							<Button  
 								onClick={handleToggle}
+								color= "#009bdb"
 								style={{fontSize: '10px', color: "blue"}}>
 								¿Donde lo encuentro?
 							</Button>
+						<div>
+							<Zoom in={toggle}>
+								<Paper>
+									{toggle && <img id="service" style={{width: 350, height: 150}} src={service}></img>}
+								</Paper>
+							</Zoom>	
+						</div>	
 						</td>
-						<Zoom in={toggle}>
-							<Paper elevation={4}>
-								{toggle && <img id="service" style={{width: 350, height: 150}} src={service}></img>}
-							</Paper>
-						</Zoom>
 					</Grid>
-					<Grid >
+					<Grid>
 						<div id="titular">
 							<TextField 
 								placeholder="Titular de la Cuenta" 
@@ -239,29 +242,31 @@ const FormContacto = () => {
 							/>
 						</div>
 					</Grid>
-						<RadioGroup row aria-label="position" name="position" defaultValue="top" >
-						<FormControlLabel
-						value="Si"
-						disabled={habilitado}
-						control={<Radio color="primary" onChange={hide}/>}
-						label="Si"
-						labelPlacement="Si"
-						/>
-						<FormControlLabel
-						value="No"
-						disabled={habilitado}
-						control={<Radio color="primary" onChange={show}/>}
-						label="No"
-						labelPlacement="No"
-						/>
+					<Grid>
+						<RadioGroup style={{marginLeft: 15, marginTop: 23}} row aria-label="position" name="position" defaultValue="top" >
+							<FormControlLabel
+							value="Si"
+							disabled={habilitado}
+							control={<Radio color="primary" onChange={hide}/>}
+							label="Si"
+							labelPlacement="Si"
+							/>
+							<FormControlLabel
+							value="No"
+							disabled={habilitado}
+							control={<Radio color="primary" onChange={show}/>}
+							label="No"
+							labelPlacement="No"
+							/>
 						</RadioGroup>
+					</Grid>
 				</Grid>
 				<Button 
-					style={{width:'30%' , marginTop: '15px'}}
+					style={{width:'34%' , marginTop: '15px'}}
 					disabled={habilitado}
 					type="submit" 
 					variant="contained" 
-					color="secondary">
+					color="primary">
 						Confirmar Datos
 				</Button>
 		</FormControl>

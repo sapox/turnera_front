@@ -2,8 +2,8 @@ import React, { Component, useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from 'react-redux';
-import { Stepper, Step, StepLabel, StepContent, CardContent } from "@material-ui/core";
-import { MenuItem, Select, FormControl, InputLabel, Button, Paper, Card } from "@material-ui/core";
+import { Stepper, Step, StepLabel, StepContent } from "@material-ui/core";
+import { MenuItem, Select, FormControl, InputLabel, Button, Paper }  from "@material-ui/core"; 
 import Divider from '@material-ui/core/Divider';
 import Container from "@material-ui/core/Container";
 import FormContacto from './components/FormContacto';
@@ -35,15 +35,21 @@ const useStyles = makeStyles(theme => ({
     }
   },
   button: { 
-    marginTop: theme.spacing(1),
+    marginTop: theme.spacing(1), 
   },
-  newTurnButton: {
+  nextButton: {
     marginTop: theme.spacing(1),
     marginLeft: theme.spacing(3),
-    marginRight: theme.spacing(7),
+    color: "white",
+    backgroundColor: '#009bdb',
+  },
+  newTurnButton: {
+    marginTop: theme.spacing(1),    
+    color: "white",
+    backgroundColor: '#009bdb',
   },
   actionsContainer: {
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(2),
   },
   resetContainer: {
     padding: theme.spacing(3)
@@ -182,12 +188,12 @@ function Home(){
           {steps.map((label, index) => (
             <Step key={label}>
               <StepLabel>{label}</StepLabel>
-              <StepContent style={{width:'100%'}}>
+              <StepContent style={{width:'100%', display: "flex", justifyContent: "center"}}>
                 <div>{getStepContent(index, disclaimerStep, userStep)}</div>
                 <div className={classes.actionsContainer}>
                   <div>
                     <Button
-                      disabled={activeStep === 0}
+                      variant="outlined"
                       onClick={handleCancel}
                       className={classes.button}
                     >
@@ -195,9 +201,8 @@ function Home(){
                     </Button>
                     <Button
                       variant="contained"
-                      color="primary"
                       onClick={handleNext}
-                      className={classes.button}
+                      className={classes.nextButton}
                       disabled={checkStep(activeStep)}
                     >
                       Siguiente
@@ -217,7 +222,7 @@ function Home(){
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <Button
                   onClick={handleReset}
-                  className={classes.button}
+                  className={classes.newTurnButton}
                   variant="contained"
                   color="primary"
                 >
