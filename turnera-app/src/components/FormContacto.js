@@ -3,12 +3,12 @@ import Paper from '@material-ui/core/Paper';
 import Zoom from '@material-ui/core/Zoom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { FormControl, TextField, Button, Checkbox, FormControlLabel } from "@material-ui/core";
+import { FormControl, TextField, Button, FormControlLabel } from "@material-ui/core";
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import { useDispatch } from 'react-redux';
 import { setUserValues } from './features/contacto/userSlice';
-import $, { param } from "jquery"
+import $ from "jquery"
 import service from './features/contacto/service.png';
 
 const validation = Yup.object({
@@ -166,7 +166,6 @@ const FormContacto = () => {
 						error={formik.errors.codArea} 
 					/>
 					<TextField style={{maxWidth: 130}}
-						value="rigth"
 						type="number"
 						placeholder="Telefono" 
 						label="Telefono"
@@ -197,7 +196,7 @@ const FormContacto = () => {
 				</Button>
 				<Zoom in={toggle}>
 					<Paper elevation={4}>
-						{toggle && <img id="service" style={{width: 350, height: 150}} src={service}></img>}
+						{toggle && <img id="service" style={{width: 350, height: 150}} src={service} alt="factura ejemplo"></img>}
 					</Paper>
 				</Zoom>
 				<RadioGroup row aria-label="position" name="position" defaultValue="top" >

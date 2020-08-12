@@ -1,31 +1,13 @@
 import React, { useState, useEffect, Text } from "react";
 import { useFormik } from "formik";
-import {
-  Button,
-  InputLabel,
-  MenuItem,
-  FormControl,
-  Select,
-  Container,
-  TextField,
-} from "@material-ui/core";
+import { Button, InputLabel, MenuItem, FormControl, Select, Container, TextField } from "@material-ui/core";
 import { makeStyles, MuiThemeProvider } from "@material-ui/core/styles";
 import * as Yup from "yup";
 import { withRouter, Link } from "react-router-dom";
 import Header from "./Header";
 import TablaResultados from "./TablaResultados";
-import {
-  getSucursales,
-  getTipoCaja,
-  getFeriados,
-  getTurnosByFecha_Caja_Sucursal,
-} from "../api";
-import {
-  createMuiTheme,
-  responsiveFontSizes,
-  ThemeProvider,
-  Typography,
-} from "@material-ui/core";
+import { getSucursales, getTipoCaja, getFeriados, getTurnosByFecha_Caja_Sucursal } from "../api";
+import { createMuiTheme, responsiveFontSizes, Typography } from "@material-ui/core";
 
 function BuscarTurno(props) {
   let theme = createMuiTheme();

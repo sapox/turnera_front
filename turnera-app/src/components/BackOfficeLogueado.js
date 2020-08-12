@@ -1,23 +1,9 @@
-import React, { useState } from "react";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import { TextField, Button } from "@material-ui/core";
-import img from "./features/contacto/img.jpg";
+import React from "react";
+import { Button, Paper, Grid, Container } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
-import Typography from "@material-ui/core/Typography";
-import Container from "@material-ui/core/Container";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { withRouter } from "react-router-dom";
-import { connect } from "react-redux";
-import axios from "axios";
+import { Link } from "react-router-dom";
+
 import Header from "./Header";
-import BuscarTurno from "./BuscarTurno";
-import SingleLogInForm from "./SingleLogInForm";
 export const BackOfficeLoguado = (props) => {
   const Style = {
     turno: {
