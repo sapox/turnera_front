@@ -152,7 +152,7 @@ function BuscarTurno(props) {
           <div style={{ marginTop: "70px", marginLeft: "20%" }}>
             <form onSubmit={formik.handleSubmit}>
               <FormControl className={classes.formControl}>
-                <InputLabel style={{ fontSize: "16pt", fontFamily: "Roboto" }}>
+                <InputLabel style={{ fontSize: "16pt", fontFamily: "roboto" }}>
                   Tipo Trámite ( opcional)
                 </InputLabel>
                 <Select
