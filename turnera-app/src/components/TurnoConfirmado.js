@@ -11,10 +11,13 @@ import * as QueryString from "query-string";
 import { getTurnoConfirmado } from './../api';
 
 const useStyles = makeStyles(theme => ({
-  nextButton: {
+  printButton: {
     marginTop: theme.spacing(1),
     color: "white",
-    backgroundColor: '#009bdb',
+    background: '#009bdb',
+    '&:hover': {
+       background: '#009bdb',
+    },
   },
 }));
 
@@ -94,7 +97,8 @@ const TurnoConfirmado = () => {
                 <p style={{textAlign: 'justify'}}><b>No olvides traer tu DNI y recordá que este comprobante te servirá para circular en la calle desde tu domicilio hasta la oficina comercial, así como para ser atendido.</b></p>
                 <div  style={{ display: 'flex', justifyContent: 'center'}}>
                   <Button 
-                    className={classes.nextButton}
+                    variant="contained" 
+                    className={classes.printButton}
                     onClick={handlePrint}
                     startIcon={<PrintIcon />}
                     >

@@ -18,7 +18,7 @@ import { resetTurnoConfirmadoValues } from './components/features/contacto/turno
 import { resetCajaValues } from './components/features/contacto/cajaSlice';
 import { resetDisclaimer } from './components/features/contacto/disclaimerSlice';
 import FormLogin from './components/FormLogin'
-import swal from 'sweetalert';
+import swal from 'sweetalert2';
 import Header from "./components/Header";
 import BuscarTurno from "./components/BuscarTurno";
 import BackOffice from "./components/BackOffice";
@@ -41,12 +41,18 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(1),
     marginLeft: theme.spacing(3),
     color: "white",
-    backgroundColor: '#009bdb',
+    background: '#009bdb',
+    '&:hover': {
+       background: '#009bdb',
+    },
   },
   newTurnButton: {
     marginTop: theme.spacing(1),    
     color: "white",
-    backgroundColor: '#009bdb',
+    background: '#009bdb',
+    '&:hover': {
+       background: '#009bdb',
+    },
   },
   actionsContainer: {
     marginBottom: theme.spacing(2),
@@ -132,14 +138,18 @@ function Home(){
   };
 
   const handleCancel = () => {
-      swal({
+      swal.fire({
         title: "Cancelar Operacion",
         text: "¿Esta seguro que desea salir de esta operacion?",
         icon: "warning",
-        buttons: ["No", "Si"],
-        dangerMode: true
-      }).then((isCanceled) => {
-        if (isCanceled) {
+        confirmButtonColor: "#009bdb",
+        confirmButtonText: 'Si',
+        showCancelButton: true,
+        cancelButtonText: 'No',
+        cancelButtonColor: '#b7b7b7',
+        animation: true
+      }).then((result) => {
+        if(result.value){
           handleReset();
           window.location.reload();
         }
@@ -180,7 +190,7 @@ function Home(){
           />
         </div>
         <Divider />
-        <h1>
+        <h1 style={{fontFamily: "roboto"}}>
         Reservá tu turno para ir al Centro de Atención
         </h1>
         <Divider />

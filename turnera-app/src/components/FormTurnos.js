@@ -216,7 +216,7 @@ const FormTurnos = () => {
 					</FormControl>
 				}
 				<Zoom in={horaTurno}>
-					<div  style={{ border: "ridge", textAlign: "justify", justifyContent: "center" }}>Ud. <b>{nombreUser} {apellidoUser}</b>, con DNI: <b>{dniUser}</b> esta a punto de sacar un turno 
+					<div  style={{width: "50%" ,border: "ridge", textAlign: "justify"}}>Ud. <b>{nombreUser} {apellidoUser}</b>, con DNI: <b>{dniUser}</b> esta a punto de sacar un turno 
 					para la oficina comercial de <b>{sucursalNombre}({sucursalDireccion}),{sucursalLocalidad}</b>.  
 				 	En la fecha <b>{fechaTurno}</b> a las <b>{horaTurno} hs</b>.</div>
 				</Zoom>

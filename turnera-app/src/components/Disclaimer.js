@@ -43,6 +43,7 @@ const Disclaimer = () => {
             control={
               <Checkbox
                 onChange={formik.handleChange}
+                color= "primary"
                 checked={formik.values.isConfirmed}    
                 name="isConfirmed"
               />

@@ -11,6 +11,24 @@ import { useDispatch } from 'react-redux';
 import { setUserValues } from './features/contacto/userSlice';
 import $, { param } from "jquery"
 import service from './features/contacto/service.png';
+import { createMuiTheme, responsiveFontSizes, Typography } from "@material-ui/core";
+
+const Style = {
+	c: {
+	  fontFamily: "Roboto",
+	  textTransform: "none",
+	  color: "#0055a6",
+	  fontSize: "8pt",
+	  fontWeight: "bold",
+	},
+	d: {
+		fontFamily: "Roboto",
+		fontWeight: 'bold',
+		textTransform: "none",
+		color: "#009bdb",
+		fontSize: "9pt",
+	  },
+  };
 
 const validation = Yup.object({
 	dni: Yup.string('Ingrese dni')
@@ -108,7 +126,9 @@ const FormContacto = () => {
 							disabled={habilitado}
 							onChange={formik.handleChange}
 							value={formik.values.dni}
-							helperText={formik.errors.dni || "*Campo requerido"}
+							helperText={formik.errors.dni || <Typography variant="p" style={Style.c}>
+							*Campo requerido
+						  	</Typography>}
 							error={formik.errors.dni}
 						/>
 					</Grid>
@@ -121,7 +141,9 @@ const FormContacto = () => {
 							disabled={habilitado}
 							onChange={formik.handleChange}
 							value={formik.values.nombre} 
-							helperText={formik.errors.nombre || "*Campo requerido"}
+							helperText={formik.errors.nombre || <Typography variant="p" style={Style.c}>
+							*Campo requerido
+						  	</Typography>}
 							error={formik.errors.nombre}
 						/>
 					</Grid>
@@ -134,7 +156,9 @@ const FormContacto = () => {
 							disabled={habilitado}
 							onChange={formik.handleChange}
 							value={formik.values.apellido}  
-							helperText={formik.errors.apellido || "*Campo requerido"}
+							helperText={formik.errors.apellido || <Typography variant="p" style={Style.c}>
+							*Campo requerido
+						 	</Typography>}
 							error={formik.errors.apellido}
 						/>
 					</Grid>
@@ -149,7 +173,9 @@ const FormContacto = () => {
 							disabled={habilitado}
 							onChange={formik.handleChange}
 							value={formik.values.email} 
-							helperText={formik.errors.email || "*Campo requerido"}
+							helperText={formik.errors.email || <Typography variant="p" style={Style.c}>
+							*Campo requerido
+						  	</Typography>}
 							error={formik.errors.email}
 						/>
 					</Grid>
@@ -162,7 +188,9 @@ const FormContacto = () => {
 							disabled={habilitado}
 							onChange={formik.handleChange}
 							value={formik.values.confirmarEmail} 
-							helperText={formik.errors.confirmarEmail || "*Campo requerido"}
+							helperText={formik.errors.confirmarEmail || <Typography variant="p" style={Style.c}>
+							*Campo requerido
+						  	</Typography>}
 							error={formik.errors.confirmarEmail}
 						/>
 					</Grid>
@@ -178,7 +206,9 @@ const FormContacto = () => {
 							disabled={habilitado}
 							onChange={formik.handleChange}
 							value={formik.values.codArea}  
-							helperText={formik.errors.codArea || "*Ingrese Cod. Area sin el 0"}
+							helperText={formik.errors.codArea || <Typography variant="p" style={Style.c}>
+							*Ingrese Cod. Area sin el 0
+						  	</Typography>}
 							error={formik.errors.codArea} 
 						/>
 					</Grid>
@@ -193,13 +223,15 @@ const FormContacto = () => {
 							disabled={habilitado}
 							onChange={formik.handleChange}
 							value={formik.values.telefono}  
-							helperText={formik.errors.telefono || "*Ingrese el numero sin el 15"}
+							helperText={formik.errors.telefono || <Typography variant="p" style={Style.c}>
+							*Ingrese el numero sin el 15
+						  	</Typography>}
 							error={formik.errors.telefono}
 						/>
 					</Grid>
 				</Grid>
 				<Grid container>
-					<Grid>
+					<Grid >
 						<TextField 
 							placeholder="0123456789" 
 							label="Cuenta de Servicios"
@@ -211,21 +243,6 @@ const FormContacto = () => {
 							helperText={formik.errors.cuentaContrato}
 							error={formik.errors.cuentaContrato} 
 						/>
-						<td>
-							<Button  
-								onClick={handleToggle}
-								color= "#009bdb"
-								style={{fontSize: '10px', color: "blue"}}>
-								¿Donde lo encuentro?
-							</Button>
-						<div>
-							<Zoom in={toggle}>
-								<Paper>
-									{toggle && <img id="service" style={{width: 350, height: 150}} src={service}></img>}
-								</Paper>
-							</Zoom>	
-						</div>	
-						</td>
 					</Grid>
 					<Grid>
 						<div id="titular">
@@ -260,6 +277,24 @@ const FormContacto = () => {
 							/>
 						</RadioGroup>
 					</Grid>
+				</Grid>
+				<Grid >
+					<td>
+						<Button  
+							onClick={handleToggle}
+							style={{height: "3px", marginTop: '0%'}}>
+							<Typography variant="p" style={Style.d}>
+							¿Donde lo encuentro?
+						</Typography>
+						</Button>
+						<div>
+							<Zoom in={toggle}>
+								<Paper>
+									{toggle && <img id="service" style={{width: 350, height: 150}} src={service}></img>}
+								</Paper>
+							</Zoom>	
+						</div>	
+					</td>
 				</Grid>
 				<Button 
 					style={{width:'34%' , marginTop: '15px'}}
