@@ -1,0 +1,118 @@
+const validation = Yup.object({
+  dni: Yup.string("Ingrese dni")
+    .min(
+      8,
+      <Typography variant="p" style={Style.v}>
+        Debe contener 8 caracteres o más
+      </Typography>
+    )
+    .required(
+      <Typography variant="p" style={Style.v}>
+        requerido
+      </Typography>
+    ),
+  nombre: Yup.string()
+    .max(
+      20,
+      <Typography variant="p" style={Style.v}>
+        Debe contener 20 caracteres o menos
+      </Typography>
+    )
+    .required(
+      <Typography variant="p" style={Style.v}>
+        requerido
+      </Typography>
+    ),
+  apellido: Yup.string()
+    .max(
+      20,
+      <Typography variant="p" style={Style.v}>
+        Debe contener 20 caracteres o menos
+      </Typography>
+    )
+    .required(
+      <Typography variant="p" style={Style.v}>
+        requerido
+      </Typography>
+    ),
+  email: Yup.string()
+    .email(
+      <Typography variant="p" style={Style.v}>
+        Coloque un email válido
+      </Typography>
+    )
+    .required(
+      <Typography variant="p" style={Style.v}>
+        requerido
+      </Typography>
+    ),
+  confirmarEmail: Yup.string()
+    .oneOf(
+      [Yup.ref("email"), null],
+      <Typography variant="p" style={Style.v}>
+        Debe coincidir con el email ingresado
+      </Typography>
+    )
+    .email(
+      <Typography variant="p" style={Style.v}>
+        Coloque un email válido
+      </Typography>
+    )
+    .required(
+      <Typography variant="p" style={Style.v}>
+        requerido
+      </Typography>
+    ),
+  codArea: Yup.string()
+    .min(
+      2,
+      <Typography variant="p" style={Style.v}>
+        Debe contener 2 caracteres o mass
+      </Typography>
+    )
+    .max(
+      4,
+      <Typography variant="p" style={Style.v}>
+        Debe contener 4 caracteres o menos
+      </Typography>
+    )
+    .required(
+      <Typography variant="p" style={Style.v}>
+        requerido
+      </Typography>
+    ),
+  telefono: Yup.string()
+    .min(
+      5,
+      <Typography variant="p" style={Style.v}>
+        Debe contener 5 caracteres o mas
+      </Typography>
+    )
+    .max(
+      8,
+      <Typography variant="p" style={Style.v}>
+        Debe contener 8 caracteres o menos
+      </Typography>
+    )
+    .required(
+      <Typography variant="p" style={Style.v}>
+        requerido
+      </Typography>
+    ),
+  cuentaContrato: Yup.string()
+    .max(
+      12,
+      <Typography variant="p" style={Style.v}>
+        Debe contener 12 caracteres o menos
+      </Typography>
+    )
+    .notRequired(),
+  titularCuenta: Yup.string()
+    .max(
+      20,
+      <Typography variant="p" style={Style.v}>
+        Debe contener 20 caracteres o menos
+      </Typography>
+    )
+    .notRequired(),
+});

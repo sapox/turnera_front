@@ -1,6 +1,7 @@
-import React, { Component, useEffect, useState } from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import React, { Component, useEffect, useState, Fragment } from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Stepper,
@@ -36,27 +37,13 @@ import swal from "sweetalert";
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
-    "& .MuiTextField-root": {
-      margin: theme.spacing(1),
-      width: "25ch",
-    },
   },
-  button: {
+  backButton: {
+    marginRight: theme.spacing(1),
+  },
+  instructions: {
     marginTop: theme.spacing(1),
-  },
-  newTurnButton: {
-    marginTop: theme.spacing(1),
-    marginLeft: theme.spacing(3),
-    marginRight: theme.spacing(7),
-  },
-  actionsContainer: {
-    marginBottom: theme.spacing(2),
-  },
-  resetContainer: {
-    padding: theme.spacing(3),
-  },
-  cardContainer: {
-    maxWidth: 500,
+    marginBottom: theme.spacing(1),
   },
 }));
 
@@ -85,7 +72,6 @@ function getStepContent(step, disclaimer, userStep) {
       return "Unknown step";
   }
 }
-
 const SelectTipo = () => {
   const [tipo, setTipo] = React.useState("");
   const [tipoDecajas, setTipoDecajas] = useState([]);
@@ -125,23 +111,22 @@ const SelectTipo = () => {
   );
 };
 
-function NewFront() {
+export default function FrontHorizontal() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
-  const dispatch = useDispatch();
-
-  const disclaimerStep = useSelector((state) => state.disclaimer.isConfirmed);
-  const userStep = useSelector((state) => state.user.submitted);
-  const tipoCajaStep = useSelector((state) => state.caja.submitted);
-  const turnoConfirmado = useSelector(
-    (state) => state.turnoConfirmado.submitted
-  );
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+
+  const handleReset = () => {
+    setActiveStep(0);
+  };
   const handleCancel = () => {
     swal({
       title: "Cancelar Operacion",
@@ -156,16 +141,12 @@ function NewFront() {
       }
     });
   };
-
-  const handleReset = () => {
-    setActiveStep(0);
-    dispatch(resetUserValues());
-    dispatch(resetCajaValues());
-    dispatch(resetDisclaimer());
-    dispatch(resetTurnoValues());
-    dispatch(resetTurnoConfirmadoValues());
-  };
-
+  const disclaimerStep = useSelector((state) => state.disclaimer.isConfirmed);
+  const userStep = useSelector((state) => state.user.submitted);
+  const tipoCajaStep = useSelector((state) => state.caja.submitted);
+  const turnoConfirmado = useSelector(
+    (state) => state.turnoConfirmado.submitted
+  );
   const checkStep = (step) => {
     if (step === 0 && !userStep) {
       return true;
@@ -182,73 +163,74 @@ function NewFront() {
 
   return (
     <div>
-      <Container fixed>
-        <div className={classes.root}>
-          <div style={{ marginTop: "2%", marginBottom: "2%" }}>
-            <img
-              src="https://www.aysa.com.ar/assets/Menu/img/logo.png"
-              alt="aysa logo"
-            />
-          </div>
-          <Divider />
-          <h1>Reservá tu turno para ir al Centro de Atención</h1>
-          <Divider />
-          <Stepper
-            activeStep={activeStep}
-            orientation="horinzal"
-            style={{ marginTop: "2%", marginBottom: "2%", width: "100%" }}
-          >
-            {steps.map((label, index) => (
-              <Step key={label}>
-                <StepLabel>{label}</StepLabel>
-                <StepContent style={{ width: "100%" }}>
-                  <div>{getStepContent(index, disclaimerStep, userStep)}</div>
-                  <div className={classes.actionsContainer}>
-                    <div>
-                      <Button
-                        disabled={activeStep === 0}
-                        onClick={handleCancel}
-                        className={classes.button}
-                      >
-                        Cancelar
-                      </Button>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleNext}
-                        className={classes.button}
-                        disabled={checkStep(activeStep)}
-                      >
-                        Siguiente
-                      </Button>
-                    </div>
-                  </div>
-                </StepContent>
-              </Step>
-            ))}
-          </Stepper>
-          {activeStep === steps.length && (
-            <Paper square elevation={0} className={classes.resetContainer}>
-              <div style={{ display: "flex", justifyContent: "center" }}>
-                <TurnoConfirmado />
-              </div>
-              <p>
-                <div style={{ display: "flex", justifyContent: "center" }}>
-                  <Button
-                    onClick={handleReset}
-                    className={classes.button}
-                    variant="contained"
-                    color="primary"
-                  >
-                    Solicitar nuevo turno
-                  </Button>
-                </div>
-              </p>
-            </Paper>
-          )}
+    <Container fixed>
+      <div className={classes.root}>
+        <div style={{ marginTop: "2%", marginBottom: "2%" }}>
+          <img
+            src="https://www.aysa.com.ar/assets/Menu/img/logo.png"
+            alt="aysa logo"
+          />
         </div>
-      </Container>
-    </div>
+        <Divider />
+        <h1>Reservá tu turno para ir al Centro de Atención</h1>
+        <Divider />
+        <Stepper
+          activeStep={activeStep}
+          orientation="horinzal"
+          style={{ marginTop: "2%", marginBottom: "2%", width: "100%" }}
+        >
+          {steps.map((label, index) => (
+              <div>
+            <Step key={label}>
+              <StepLabel>{label}</StepLabel>
+              </Step>  
+              <Divider />
+                <div>{getStepContent(index,disclaimerStep, userStep)}</div>
+                <div className={classes.actionsContainer}>
+                  <div>
+                    <Button
+                      disabled={activeStep === 0}
+                      onClick={handleCancel}
+                      className={classes.button}
+                    >
+                      Cancelar
+                    </Button>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleNext}
+                      className={classes.button}
+                      disabled={checkStep(activeStep)}
+                    >
+                      Siguiente
+                    </Button>
+                  </div>
+                </div>
+                </div>
+            
+          ))}
+        </Stepper>
+        {activeStep === steps.length && (
+          <Paper square elevation={0} className={classes.resetContainer}>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <TurnoConfirmado />
+            </div>
+            <p>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <Button
+                  onClick={handleReset}
+                  className={classes.button}
+                  variant="contained"
+                  color="primary"
+                >
+                  Solicitar nuevo turno
+                </Button>
+              </div>
+            </p>
+          </Paper>
+        )}
+      </div>
+    </Container>
+  </div>
   );
 }
-export default NewFront;

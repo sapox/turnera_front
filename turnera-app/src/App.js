@@ -23,6 +23,7 @@ import BackOffice from "./components/BackOffice";
 import SingleLogInForm from "./components/SingleLogInForm";
 import BackOfficeLoguado from "./components/BackOfficeLogueado";
 import TablaResultados from "./components/TablaResultados";
+import FrontHorizontal from "./components/FrontHorizontal";
 import NewFront from "./components/NewFront";
 
 
@@ -36,6 +37,8 @@ const useStyles = makeStyles(theme => ({
   },
   button: { 
     marginTop: theme.spacing(1),
+    color:'#009bdb',
+    backgroundColor: '#009bdb'
   },
   newTurnButton: {
     marginTop: theme.spacing(1),
@@ -191,7 +194,7 @@ function Home(){
                   </Button>
                   <Button 
                     variant="contained"
-                    color="primary"
+                    color="#009bdb"
                     onClick={handleNext}
                     className={classes.button}
                     disabled={checkStep(activeStep)}
@@ -251,6 +254,9 @@ class App extends Component {
         </Route>
         <Route path="/newFront" exact component={NewFront}>
           <NewFront />
+        </Route>
+        <Route path="/front" exact component={FrontHorizontal}>
+          <FrontHorizontal />
         </Route>
       </Switch>
     </Router>
