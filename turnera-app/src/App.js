@@ -36,6 +36,7 @@ const useStyles = makeStyles(theme => ({
   },
   button: { 
     marginTop: theme.spacing(1), 
+    border: "1px solid",
   },
   nextButton: {
     marginTop: theme.spacing(1),

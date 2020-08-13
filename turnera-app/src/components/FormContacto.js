@@ -245,21 +245,6 @@ const FormContacto = () => {
 						/>
 					</Grid>
 					<Grid>
-						<div id="titular">
-							<TextField 
-								placeholder="Titular de la Cuenta" 
-								label="Titular de la Cuenta"
-								id="titularCuenta"
-								name="titularCuenta"
-								disabled={habilitado}
-								onChange={formik.handleChange}
-								value={formik.values.titularCuenta} 
-								helperText={formik.errors.titularCuenta}
-								error={formik.errors.titularCuenta} 
-							/>
-						</div>
-					</Grid>
-					<Grid>
 						<RadioGroup style={{marginLeft: 15, marginTop: 23}} row aria-label="position" name="position" defaultValue="top" >
 							<FormControlLabel
 							value="Si"
@@ -276,6 +261,21 @@ const FormContacto = () => {
 							labelPlacement="No"
 							/>
 						</RadioGroup>
+					</Grid>
+					<Grid item xs>
+						<div id="titular">
+							<TextField 
+								placeholder="Titular de la Cuenta" 
+								label="Titular de la Cuenta"
+								id="titularCuenta"
+								name="titularCuenta"
+								disabled={habilitado}
+								onChange={formik.handleChange}
+								value={formik.values.titularCuenta} 
+								helperText={formik.errors.titularCuenta}
+								error={formik.errors.titularCuenta} 
+							/>
+						</div>
 					</Grid>
 				</Grid>
 				<Grid >
