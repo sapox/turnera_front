@@ -26,41 +26,30 @@ import {
   Typography,
 } from "@material-ui/core";
 
+
 const Style = {
-  c: {
-    fontFamily: "Roboto",
-    textTransform: "none",
-    color: "#0055a6",
-    fontSize: "8pt",
-    fontWeight: "bold",
-  },
-  d: {
-    fontFamily: "Roboto",
-    fontWeight: "bold",
-    textTransform: "none",
-    color: "#009bdb",
-    fontSize: "9pt",
-  },
-  button: {
-    color: "white",
-    background: "#009bdb",
-    "&:hover": {
-      background: "#009bdb",
-    },
-  },
-};
-import React , { useState, useEffect, } from 'react';
-import Paper from '@material-ui/core/Paper';
-import Zoom from '@material-ui/core/Zoom';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { FormControl, TextField, Button, FormControlLabel } from "@material-ui/core";
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import { useDispatch } from 'react-redux';
-import { setUserValues } from './features/contacto/userSlice';
-import $ from "jquery"
-import service from './features/contacto/service.png';
+	c: {
+	  fontFamily: "Roboto",
+	  textTransform: "none",
+	  color: "#0055a6",
+	  fontSize: "8pt",
+	  fontWeight: "bold",
+	},
+	d: {
+	  fontFamily: "Roboto",
+	  fontWeight: "bold",
+	  textTransform: "none",
+	  color: "#009bdb",
+	  fontSize: "9pt",
+	},
+	button: {
+	  color: "white",
+	  background: "#009bdb",
+	  "&:hover": {
+		background: "#009bdb",
+	  },
+	},
+  };
 
 const validation = Yup.object({
   dni: Yup.string("Ingrese dni")
@@ -72,7 +61,9 @@ const validation = Yup.object({
   apellido: Yup.string()
     .max(20, "Debe contener 20 caracteres o menos")
     .required("requerido"),
-  email: Yup.string().email("Coloque un email válido").required("requerido"),
+  email: Yup.string()
+	.email("Coloque un email válido")
+	.required("requerido"),
   confirmarEmail: Yup.string()
     .oneOf([Yup.ref("email"), null], "Debe coincidir con el email ingresado")
     .email("Coloque un email válido")
@@ -416,154 +407,6 @@ const FormContacto = () => {
       </FormControl>
     </form>
   );
-	useEffect(() => { 
-		try{ disablePaste("#confirmarEmail"); }
-		 catch(err){ setError(err); } }, []);
-		 
-	return (
-		<form onSubmit={formik.handleSubmit}>
-			<FormControl>
-				<TextField
-					label="Nro Documento"
-					id="dni"
-					name="dni"
-					type="number"
-					disabled={habilitado}
-					onChange={formik.handleChange}
-					value={formik.values.dni}
-					helperText={formik.errors.dni || "*Campo requerido"}
-					error={formik.errors.dni}
-				/>
-				<TextField 
-					placeholder="Nombre" 
-					label="Nombre"
-					id="nombre"
-					name="nombre"
-					disabled={habilitado}
-					onChange={formik.handleChange}
-					value={formik.values.nombre} 
-					helperText={formik.errors.nombre || "*Campo requerido"}
-					error={formik.errors.nombre}
-				/>
-				<TextField 
-					placeholder="Apellido" 
-					label="Apellido"
-					id="apellido"
-					name="apellido"
-					disabled={habilitado}
-					onChange={formik.handleChange}
-					value={formik.values.apellido}  
-					helperText={formik.errors.apellido || "*Campo requerido"}
-					error={formik.errors.apellido}
-				/>
-				<TextField 
-					placeholder="Email" 
-					label="Email"
-					id="email"
-					name="email"
-					disabled={habilitado}
-					onChange={formik.handleChange}
-					value={formik.values.email} 
-					helperText={formik.errors.email || "*Campo requerido"}
-					error={formik.errors.email}
-				/>
-				<TextField 
-					placeholder="confirmar Email" 
-					label="Confirmar Email"
-					id="confirmarEmail"
-					name="confirmarEmail"
-					disabled={habilitado}
-					onChange={formik.handleChange}
-					value={formik.values.confirmarEmail} 
-					helperText={formik.errors.confirmarEmail || "*Campo requerido"}
-					error={formik.errors.confirmarEmail}
-       			/>
-				<tr>
-					<TextField style={{maxWidth: 75}}
-						type="codArea"
-						placeholder="codArea" 
-						label="Cod. área"
-						id="codArea"
-						name="codArea"
-						disabled={habilitado}
-						onChange={formik.handleChange}
-						value={formik.values.codArea}  
-						helperText={formik.errors.codArea || "*Ingrese Cod. Area sin el 0"}
-						error={formik.errors.codArea} 
-					/>
-					<TextField style={{maxWidth: 130}}
-						type="number"
-						placeholder="Telefono" 
-						label="Telefono"
-						id="telefono"
-						name="telefono"
-						disabled={habilitado}
-						onChange={formik.handleChange}
-						value={formik.values.telefono}  
-						helperText={formik.errors.telefono || "*Ingrese el numero sin el 15"}
-						error={formik.errors.telefono}
-					/>
-				</tr>
-				<TextField 
-					placeholder="Cuenta Contrato" 
-					label="Cuenta de Servicios"
-					id="cuentaContrato"
-					name="cuentaContrato"
-					disabled={habilitado}
-					onChange={formik.handleChange}
-					value={formik.values.cuentaContrato} 
-					helperText={formik.errors.cuentaContrato}
-					error={formik.errors.cuentaContrato} 
-				/>
-				<Button  
-					onClick={handleToggle}
-					style={{fontSize: '10px', color: "blue"}}>
-					¿Donde lo encuentro?
-				</Button>
-				<Zoom in={toggle}>
-					<Paper elevation={4}>
-						{toggle && <img id="service" style={{width: 350, height: 150}} src={service} alt="factura ejemplo"></img>}
-					</Paper>
-				</Zoom>
-				<RadioGroup row aria-label="position" name="position" defaultValue="top" >
-					<FormControlLabel
-					value="Si"
-					disabled={habilitado}
-					control={<Radio color="primary" onChange={hide}/>}
-					label="Si"
-					labelPlacement="Si"
-					/>
-					<FormControlLabel
-					value="No"
-					disabled={habilitado}
-					control={<Radio color="primary" onChange={show}/>}
-					label="No"
-					labelPlacement="No"
-					/>
-     			</RadioGroup>
-				<div id="titular">
-				<TextField 
-						placeholder="Titular de la Cuenta" 
-						label="Titular de la Cuenta"
-						id="titularCuenta"
-						name="titularCuenta"
-						disabled={habilitado}
-						onChange={formik.handleChange}
-						value={formik.values.titularCuenta} 
-						helperText={formik.errors.titularCuenta}
-						error={formik.errors.titularCuenta} 
-					/>
-				</div>
-				<Button 
-					disabled={habilitado}
-					type="submit" 
-					variant="contained" 
-					color="secondary">
-						Confirmar Datos
-				</Button>
-		</FormControl>
-		</form>
-	);
 };
 
 export default FormContacto;
