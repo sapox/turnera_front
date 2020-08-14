@@ -72,7 +72,7 @@ export const BackOffice = (props) => {
                 </Grid>
                 <Grid container spacing={1} style={{marginTop: '1%'}}>
                   <Grid item xs>
-                    <Link to="/" style={{ textDecoration: "none" }}>
+                    <Link to="/new" style={{ textDecoration: "none" }}>
                       <Button
                         type="submit"
                         fullWidth

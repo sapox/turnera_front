@@ -3,6 +3,8 @@ import Paper from "@material-ui/core/Paper";
 import Zoom from "@material-ui/core/Zoom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import Divider from "@material-ui/core/Divider";
+
 import {
   FormControl,
   TextField,
@@ -37,6 +39,13 @@ const Style = {
     textTransform: "none",
     color: "#009bdb",
     fontSize: "9pt",
+  },
+  button: {
+    color: "white",
+    background: "#009bdb",
+    "&:hover": {
+      background: "#009bdb",
+    },
   },
 };
 
@@ -109,16 +118,16 @@ const FormContacto = () => {
   };
 
   const show = () => {
-	setShowT(true);
+    setShowT(true);
 
     //document.getElementById("titular").style.display = "block";
-   // formik.values.titularCuenta = document.getElementById(
-   //   "titularCuenta"
+    // formik.values.titularCuenta = document.getElementById(
+    //   "titularCuenta"
     //).value;
   };
 
   const hide = () => {
-	setShowT(false);
+    setShowT(false);
 
     //document.getElementById("titular").style.display = "none";
     //formik.values.titularCuenta = "";
@@ -134,23 +143,23 @@ const FormContacto = () => {
 
   const [showT, setShowT] = React.useState(false);
   const Titular = () => {
-	  return (
-		<div id="titular">
-		<TextField
-		  placeholder="Titular de la Cuenta"
-		  label="Titular de la Cuenta"
-		  id="titularCuenta"
-		  name="titularCuenta"
-		  disabled={habilitado}
-		  onChange={formik.handleChange}
-		  value={formik.values.titularCuenta}
-		  helperText={formik.errors.titularCuenta}
-		  error={formik.errors.titularCuenta}
-		/>
-	  </div>
-	  );
+    return (
+      <div id="titular">
+        <TextField
+          placeholder="Titular de la Cuenta"
+          label="Titular de la Cuenta"
+          id="titularCuenta"
+          name="titularCuenta"
+          disabled={habilitado}
+          onChange={formik.handleChange}
+          value={formik.values.titularCuenta}
+          helperText={formik.errors.titularCuenta}
+          error={formik.errors.titularCuenta}
+        />
+      </div>
+    );
   };
-  
+
   return (
     <form onSubmit={formik.handleSubmit}>
       <FormControl style={{ width: "100%" }}>
@@ -298,78 +307,79 @@ const FormContacto = () => {
           </Grid>
           <Grid item xs></Grid>
         </Grid>
-        <Grid container spacing={3}>
-          <Grid item xs={4}>
-            <TextField
-              placeholder="0123456789"
-              label="Cuenta de Servicios"
-              id="cuentaContrato"
-              name="cuentaContrato"
-              disabled={habilitado}
-              onChange={formik.handleChange}
-              value={formik.values.cuentaContrato}
-              helperText={formik.errors.cuentaContrato}
-              error={formik.errors.cuentaContrato}
-            />
-          </Grid>
-          <Grid item xs={8}>
-            <Grid container spacing={3}>
-              <Grid item xs={3}>
-                <p  style={{  marginBottom: '0%' }}>Sos titular de la cuenta ?</p>
-                <RadioGroup
-                  style={{  marginBottom: '0%' }}
-                  row
-                  aria-label="position"
-                  name="position"
-                  defaultValue="top"
-                >
-                  <FormControlLabel
-                    value="Si"
-                    disabled={habilitado}
-                    control={<Radio color="primary" onChange={hide} />}
-                    label="Si"
-                    labelPlacement="Si"
-                  />
-                  <FormControlLabel
-                    value="No"
-                    disabled={habilitado}
-                    control={<Radio color="primary" onChange={show} />}
-                    label="No"
-                    labelPlacement="No"
-                  />
-                </RadioGroup>
+        <Grid container>
+          <Grid item xs >
+           
+                <TextField
+                  
+                  placeholder="0123456789"
+                  label="Cuenta de Servicios"
+                  id="cuentaContrato"
+                  name="cuentaContrato"
+                  disabled={habilitado}
+                  onChange={formik.handleChange}
+                  value={formik.values.cuentaContrato}
+                  helperText={formik.errors.cuentaContrato}
+                  error={formik.errors.cuentaContrato}
+                />
+                <div>
+                  <Button
+                    onClick={handleToggle}
+                    style={{ height: "3px", marginTop: "0%" }}
+                  >
+                    <Typography variant="p" style={Style.d}>
+                      ¿Donde lo encuentro?
+                    </Typography>
+                  </Button>
+                  <div>
+                    <Zoom in={toggle}>
+                      <Paper>
+                        {toggle && (
+                          <img
+                            id="service"
+                            style={{ width: 350, height: 150 }}
+                            src={service}
+                          ></img>
+                        )}
+                      </Paper>
+                    </Zoom>
+                  </div>
+                </div>
               </Grid>
-              <Grid item xs={9}>
-			  {showT ? <Titular /> : ''}
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid>
-          <td>
-            <Button
-              onClick={handleToggle}
-              style={{ height: "3px", marginTop: "0%" }}
-            >
-              <Typography variant="p" style={Style.d}>
-                ¿Donde lo encuentro?
-              </Typography>
-            </Button>
-            <div>
-              <Zoom in={toggle}>
-                <Paper>
-                  {toggle && (
-                    <img
-                      id="service"
-                      style={{ width: 350, height: 150 }}
-                      src={service}
-                    ></img>
-                  )}
-                </Paper>
-              </Zoom>
+              
+          
+          <Grid item xs /*style={{width:'150%}}*/>
+            <div style={{ marginTop: "4%", display: "flex" }}>
+              <p stylr={{ alignSelf: "flex-end" }}>Titular de la cuenta ? </p>
+              <RadioGroup
+                style={{ marginTop: "0%", marginLeft: "3%" }}
+                row
+                aria-label="position"
+                name="position"
+                defaultValue="top"
+              >
+                <FormControlLabel
+                  value="Si"
+                  disabled={habilitado}
+                  control={<Radio color="primary" onChange={hide} />}
+                  label="Si"
+                  labelPlacement="Si"
+                />
+                <FormControlLabel
+                  value="No"
+                  disabled={habilitado}
+                  control={<Radio color="primary" onChange={show} />}
+                  label="No"
+                  labelPlacement="No"
+                />
+              </RadioGroup>
             </div>
-          </td>
+          </Grid>
+          <Grid item xs>
+            {showT ? <Titular /> : null}
+          </Grid>
         </Grid>
+        <Divider />
         <div
           style={{
             display: "flex",
@@ -384,7 +394,7 @@ const FormContacto = () => {
               disabled={habilitado}
               type="submit"
               variant="contained"
-              style={{backgroundColor: '#009bdb', color:'white'}}
+              style={Style.button}
             >
               Confirmar Datos
             </Button>
