@@ -8,8 +8,10 @@ import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import es from "date-fns/locale/es";
 import { getSucursales, getFeriados, getTurnosDisponibles, createTurno } from "../api";
+import Map from "../Maps";
 import { setTurnoValues } from "./features/contacto/turnoSlice";
 import { setTurnoConfirmado } from "./features/contacto/turnoConfirmadoSlice";
+import credentials from '../credentials'
 
 registerLocale("es", es);
 
@@ -180,6 +182,14 @@ const FormTurnos = () => {
 						))}
 					</Select>
 				</FormControl>
+				<div>
+				<Map
+					googleMapURL= {`https://maps.googleapis.com/maps/api/js?=3.exp&key=${credentials.mapsKey}`}
+					containerElement = {<div style={{height: '300px', width: '300px'}}/>}
+					mapElement = {<div style={{height: '100%'}}/>}
+					loadingElement = {<p>Cargando...</p>}
+				/>
+				</div>
 				<div id="datePicker">
 					<DatePicker 
 						id="fecha"
@@ -217,7 +227,7 @@ const FormTurnos = () => {
 				}
 				<Zoom in={horaTurno}>
 					<div  style={{width: "50%" ,border: "ridge", textAlign: "justify"}}>Ud. <b>{nombreUser} {apellidoUser}</b>, con DNI: <b>{dniUser}</b> esta a punto de sacar un turno 
-					para la oficina comercial de <b>{sucursalNombre}({sucursalDireccion}),{sucursalLocalidad}</b>.  
+					para la oficina comercial de <b>{sucursalNombre}({sucursalDireccion}) - {sucursalLocalidad}</b>.  
 				 	En la fecha <b>{fechaTurno}</b> a las <b>{horaTurno} hs</b>.</div>
 				</Zoom>
 			<Button

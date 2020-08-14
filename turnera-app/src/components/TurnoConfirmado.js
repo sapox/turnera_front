@@ -95,7 +95,7 @@ const TurnoConfirmado = () => {
                 <p style={{fontFamily: "Roboto"}}><b>Fecha: </b> {`${fecha}`}</p>
                 <p style={{fontFamily: "Roboto"}}><b>Hora: </b> {`${hora}`}</p>
                 <p style={{fontFamily: "Roboto"}}><b>Tipo de tramite:</b> {caja.tipo.nombre}</p>
-                <p style={{fontFamily: "Roboto"}}><b>Centro de Atención:</b> {sucursal.nombre} - {sucursal.direccion}, {sucursal.distrito.localidad.nombre}</p>
+                <p style={{fontFamily: "Roboto"}}><b>Centro de Atención:</b> {sucursal.nombre}, {sucursal.direccion} - {sucursal.distrito.localidad.nombre}</p>
                 <p style={{textAlign: 'justify', fontFamily: "Roboto"}}><b>Importante: </b>No olvides traer tu DNI y recordá que este comprobante te servirá para circular en la calle desde tu domicilio hasta la oficina comercial, así como para ser atendido.</p>
                 <div  style={{ display: 'flex', justifyContent: 'center'}}>
                   <Button 
