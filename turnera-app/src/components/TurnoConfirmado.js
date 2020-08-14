@@ -80,7 +80,7 @@ const TurnoConfirmado = () => {
                 <p>{`${cliente.nombre} ${cliente.apellido}. DNI: ${cliente.dni}`}</p>
                 <p>{`Turno: ${fecha}. Horario: ${hora}`}</p>
                 <b>Tipo de tramite:</b> {caja.tipo.nombre}
-                <p><b>Oficina Comercial:</b> {sucursal.nombre} - {sucursal.direccion}, {sucursal.distrito.localidad.nombre}</p>
+                <p><b>Oficina Comercial:</b> {sucursal.nombre} - {sucursal.direccion}, {sucursal.localidad.nombre}</p>
                 <p style={{textAlign: 'justify'}}><b>No olvides traer tu DNI y recordá que este comprobante te servirá para circular en la calle desde tu domicilio hasta la oficina comercial, así como para ser atendido.</b></p>
                 <div  style={{ display: 'flex', justifyContent: 'center'}}>
                   <Button 

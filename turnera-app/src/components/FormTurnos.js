@@ -140,7 +140,7 @@ const FormTurnos = () => {
 	const sucursalData = value => {
 		sucursales.map(sucursal => {
 			if(sucursal.id === value){
-				sucursalLocalidad = sucursal.distrito.localidad.nombre;
+				sucursalLocalidad = sucursal.localidad.nombre;
 				sucursalNombre = sucursal.nombre;
 				sucursalDireccion = sucursal.direccion;
 			}
