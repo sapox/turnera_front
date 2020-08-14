@@ -1,9 +1,8 @@
 
 import React, { useState, useEffect } from "react";
 
-import { makeStyles } from "@material-ui/core/styles";
 import { Button, Grid, Paper, TableRow, TableContainer, TableCell, Table, TableHead, TableBody } from "@material-ui/core";
-import { createMuiTheme,  responsiveFontSizes } from "@material-ui/core";
+import { createMuiTheme,  responsiveFontSizes, makeStyles } from "@material-ui/core";
 import { printTurno, getTurnosByFecha_Caja_Sucursal } from "../api";
 
 const useStyles = makeStyles({
@@ -12,13 +11,16 @@ const useStyles = makeStyles({
   },
 });
 
-export default function TablaResultados(props) {
+const TablaResultados = (props) => {
   let theme = createMuiTheme();
   theme = responsiveFontSizes(theme);
   const classes = useStyles();
   const [error, setError] = useState("");
   const [turnos, setTurnos] = useState([]);
   const [url, setUrl] = useState("");
+  const sucursalId = props.params.sucursalId;
+  const tipoCajaId = props.params.tramiteId;
+  const fecha = props.params.fecha;
 
   async function getTurnosFunc(sucursalId, fecha, tipoCajaId) {
     const res = await getTurnosByFecha_Caja_Sucursal(
@@ -26,13 +28,13 @@ export default function TablaResultados(props) {
       fecha,
       tipoCajaId
     );
-
     setTurnos(res.data);
   }
 
-  const sucursalId = props.params.sucursalId;
-  const tipoCajaId = props.params.tramiteId;
-  const fecha = props.params.fecha;
+  const reload = () => {
+    window.location.reload(false);
+  };
+  
   useEffect(() => {
     try {
       getTurnosFunc(sucursalId, fecha, tipoCajaId);
@@ -40,10 +42,6 @@ export default function TablaResultados(props) {
       setError(err);
     }
   }, [sucursalId, fecha, tipoCajaId]);
-
-  const reload = () => {
-    window.location.reload(false);
-  };
 
   async function print(sucursalId, fecha, tipoCajaId) {
     const url = await printTurno(sucursalId, fecha, tipoCajaId)
@@ -56,7 +54,6 @@ export default function TablaResultados(props) {
         console.log(error);
       });
   }
-  const baseUrl = window.location.href;
 
   return (
     <div>
@@ -78,19 +75,19 @@ export default function TablaResultados(props) {
             </TableHead>
             <TableBody>
               {turnos.content &&
-                turnos.content.map((row) => (
-                  <TableRow key={row.name}>
+                turnos.content.map(({id, name, caja, hora, cliente}) => (
+                  <TableRow key={name}>
                     <TableCell component="th" scope="row">
-                      {row.id}
+                      {id}
                     </TableCell>
-                    <TableCell>{row.caja.tipo.nombre}</TableCell>
-                    <TableCell>{row.hora}</TableCell>
-                    <TableCell>{row.cliente.nombre}</TableCell>
-                    <TableCell>{row.cliente.dni}</TableCell>
-                    <TableCell>{row.cliente.email}</TableCell>
-                    <TableCell>{row.cliente.cuenta}</TableCell>
-                    <TableCell>{row.cliente.telefono}</TableCell>
-                    <TableCell>{row.cliente.titularCuenta}</TableCell>
+                    <TableCell>{caja.tipo.nombre}</TableCell>
+                    <TableCell>{hora}</TableCell>
+                    <TableCell>{cliente.nombre}</TableCell>
+                    <TableCell>{cliente.dni}</TableCell>
+                    <TableCell>{cliente.email}</TableCell>
+                    <TableCell>{cliente.cuenta}</TableCell>
+                    <TableCell>{cliente.telefono}</TableCell>
+                    <TableCell>{cliente.titularCuenta}</TableCell>
                   </TableRow>
                 ))}
             </TableBody>
@@ -135,3 +132,4 @@ export default function TablaResultados(props) {
     </div>
   );
 }
+export default TablaResultados;

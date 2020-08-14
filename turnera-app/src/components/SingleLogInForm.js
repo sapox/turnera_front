@@ -3,12 +3,9 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { makeStyles } from "@material-ui/core/styles";
 import { TextField, Button, Grid, Box, Typography, Container, Paper, FormControlLabel, Checkbox } from "@material-ui/core";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-import Header from "./Header";
-import BuscarTurno from "./BuscarTurno";
-
-export const SingleLogInForm = (props) => {
+const SingleLogInForm = (props) => {
   const validation = Yup.object({
     email: Yup.string()
       .email( <Typography
@@ -192,6 +189,7 @@ export const SingleLogInForm = (props) => {
     </div>
   );
 };
+
 SingleLogInForm.defaultProps = {
   actions: {
     postLogin: () => new Promise((resolve, reject) => resolve({})),
