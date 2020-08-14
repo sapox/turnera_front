@@ -2,8 +2,10 @@ import React, { Component, useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from 'react-redux';
-import { Stepper, Step, StepLabel, StepContent, CardContent } from "@material-ui/core";
-import { MenuItem, Select, FormControl, InputLabel, Button, Paper, Card } from "@material-ui/core";
+import { Stepper, Step, StepLabel, StepContent } from "@material-ui/core";
+import { MenuItem, Select, FormControl, InputLabel, Button, Paper }  from "@material-ui/core"; 
+import Divider from '@material-ui/core/Divider';
+import Container from "@material-ui/core/Container";
 import FormContacto from './components/FormContacto';
 import FormTurnos from './components/FormTurnos';
 import TurnoConfirmado from './components/TurnoConfirmado';
@@ -16,13 +18,14 @@ import { resetTurnoConfirmadoValues } from './components/features/contacto/turno
 import { resetCajaValues } from './components/features/contacto/cajaSlice';
 import { resetDisclaimer } from './components/features/contacto/disclaimerSlice';
 import FormLogin from './components/FormLogin'
-import swal from 'sweetalert';
+import swal from 'sweetalert2';
 import Header from "./components/Header";
 import BuscarTurno from "./components/BuscarTurno";
 import BackOffice from "./components/BackOffice";
 import SingleLogInForm from "./components/SingleLogInForm";
 import BackOfficeLoguado from "./components/BackOfficeLogueado";
 import TablaResultados from "./components/TablaResultados";
+import New from "./components/New";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -33,15 +36,28 @@ const useStyles = makeStyles(theme => ({
     }
   },
   button: { 
-    marginTop: theme.spacing(1),
+    marginTop: theme.spacing(1), 
+    border: "1px solid",
   },
-  newTurnButton: {
+  nextButton: {
     marginTop: theme.spacing(1),
     marginLeft: theme.spacing(3),
-    marginRight: theme.spacing(7),
+    color: "white",
+    background: '#009bdb',
+    '&:hover': {
+       background: '#009bdb',
+    },
+  },
+  newTurnButton: {
+    marginTop: theme.spacing(1),    
+    color: "white",
+    background: '#009bdb',
+    '&:hover': {
+       background: '#009bdb',
+    },
   },
   actionsContainer: {
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(2),
   },
   resetContainer: {
     padding: theme.spacing(3)
@@ -124,14 +140,18 @@ function Home(){
   };
 
   const handleCancel = () => {
-      swal({
+      swal.fire({
         title: "Cancelar Operacion",
         text: "¿Esta seguro que desea salir de esta operacion?",
         icon: "warning",
-        buttons: ["No", "Si"],
-        dangerMode: true
-      }).then((isCanceled) => {
-        if (isCanceled) {
+        confirmButtonColor: "#009bdb",
+        confirmButtonText: 'Si',
+        showCancelButton: true,
+        cancelButtonText: 'No',
+        cancelButtonColor: '#b7b7b7',
+        animation: true
+      }).then((result) => {
+        if(result.value){
           handleReset();
           window.location.reload();
         }
@@ -162,61 +182,73 @@ function Home(){
   }
 
   return (
-  <div style={{display: 'flex', justifyContent: 'center'}}>
-  <Card className={classes.cardContainer} style={{ marginTop:'30px' }}>
-  <div className={classes.root}>
-    <div style={{ display: "flex", justifyContent: "center" }}>
-      <img
-        src="https://www.aysa.com.ar/assets/Menu/img/logo.png"
-        alt="aysa logo"
-      />  
-    </div>
-
-    
-      <Stepper activeStep={activeStep} orientation="vertical">
-        {steps.map((label, index) => (
-          <Step key={label}>
-            <StepLabel>{label}</StepLabel>
-            <StepContent>
-              <div>{getStepContent(index, disclaimerStep, userStep)}</div>
-              <div className={classes.actionsContainer}>
-                <div>
-                  <Button
-                    onClick={handleCancel}
-                    className={classes.button}
-                  >
-                    Cancelar
-                  </Button>
-                  <Button 
-                    variant="contained"
-                    color="primary"
-                    onClick={handleNext}
-                    className={classes.button}
-                    disabled={checkStep(activeStep)}
-                  >
-                    Siguiente
-                  </Button>
+    <div>
+    <Container fixed>
+      <div className={classes.root}>
+        <div style={{ marginTop: "2%",marginBottom:'2%'}}>
+          <img
+            src="https://www.aysa.com.ar/assets/Menu/img/logo.png"
+            alt="aysa logo"
+          />
+        </div>
+        <Divider />
+        <h1 style={{fontFamily: "roboto"}}>
+        Reservá tu turno para ir al Centro de Atención
+        </h1>
+        <Divider />
+        <Stepper activeStep={activeStep} orientation="horinzal" style={{marginTop:'2%',marginBottom:'2%',width:'100%'}}>
+          {steps.map((label, index) => (
+            <Step key={label}>
+              <StepLabel>{label}</StepLabel>
+              <StepContent style={{width:'100%', display: "flex", justifyContent: "center"}}>
+                <div>{getStepContent(index, disclaimerStep, userStep)}</div>
+                <div className={classes.actionsContainer}>
+                  <div>
+                    <Button
+                      variant="outlined"
+                      onClick={handleCancel}
+                      className={classes.button}
+                    >
+                      Cancelar
+                    </Button>
+                    <Button
+                      variant="contained"
+                      onClick={handleNext}
+                      className={classes.nextButton}
+                      disabled={checkStep(activeStep)}
+                    >
+                      Siguiente
+                    </Button>
+                  </div>
                 </div>
+              </StepContent>
+            </Step>
+          ))}
+        </Stepper>
+        {activeStep === steps.length && (
+          <Paper square elevation={0} className={classes.resetContainer}>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <TurnoConfirmado />
               </div>
-            </StepContent>
-          </Step>
-        ))}
-      </Stepper>
-   
-    {activeStep === steps.length && (
-      <Paper square elevation={0} className={classes.resetContainer}>
-        <TurnoConfirmado />
-        <Button onClick={handleReset} className={classes.newTurnButton}
-                variant="contained"
-                color="primary">
-          Solicitar nuevo turno
-        </Button>
-      </Paper>
-    )}
+              <p>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <Button
+                  onClick={handleReset}
+                  className={classes.newTurnButton}
+                  variant="contained"
+                  color="primary"
+                >
+                  Solicitar nuevo turno
+                </Button>
+                </div>
+              </p>
+          </Paper>
+        )}
+      </div>
+    </Container>
   </div>
-</Card>
-</div>
-)}
+);
+}
 
 class App extends Component {
   render() {
@@ -246,6 +278,9 @@ class App extends Component {
         </Route>
         <Route path="/tabla" exact component={TablaResultados}>
           <TablaResultados />
+        </Route>
+        <Route path="/new" exact component={New}>
+          <New />
         </Route>
       </Switch>
     </Router>

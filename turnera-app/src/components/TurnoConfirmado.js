@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useRef, useEffect } from 'react';
+import { makeStyles } from "@material-ui/core/styles";
 import { useSelector } from 'react-redux';
 import { Card, CardContent, Button } from "@material-ui/core";
 import { useReactToPrint } from 'react-to-print';
@@ -9,11 +10,23 @@ import { Link } from 'react-router-dom';
 import * as QueryString from "query-string";
 import { getTurnoConfirmado } from './../api';
 
+const useStyles = makeStyles(theme => ({
+  printButton: {
+    marginTop: theme.spacing(1),
+    color: "white",
+    background: '#009bdb',
+    '&:hover': {
+       background: '#009bdb',
+    },
+  },
+}));
+
 const TurnoConfirmado = () => {
 
   const [ turnoConfirmado, setTurnoConfirmado ] = useState([]);
   const [ error, setError ] = useState('');
 
+  const classes = useStyles();
   const baseUrl = window.location.host;
   const userDni = useSelector((state) => state.user.dni);
   const turnoId = useSelector((state) => state.turnoConfirmado.idTurno);
@@ -48,7 +61,7 @@ const TurnoConfirmado = () => {
   const { cliente, caja, fecha, hora, sucursal } = turnoConfirmado;
   
   return (
-    <Card style={{maxWidth: '250px', justifyContent: "center"}} ref={componentRef}>
+    <Card style={{maxWidth: '250px', justifyContent: "center", marginTop: '2%'}} ref={componentRef}>
       
       <div style={{ display: "flex", justifyContent: "center", flexDirection: 'column'}}>
         <div style={{ alignSelf: 'center'}}>
@@ -85,7 +98,7 @@ const TurnoConfirmado = () => {
                 <div  style={{ display: 'flex', justifyContent: 'center'}}>
                   <Button 
                     variant="contained" 
-                    color="primary"
+                    className={classes.printButton}
                     onClick={handlePrint}
                     startIcon={<PrintIcon />}
                     >
