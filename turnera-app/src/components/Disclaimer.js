@@ -3,7 +3,7 @@ import React, { Fragment } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { text } from './../const/disclaimer';
-import { Checkbox, FormControl, FormControlLabel } from "@material-ui/core";
+import { Checkbox, FormControl, FormControlLabel, Container } from "@material-ui/core";
 import { useSelector, useDispatch } from 'react-redux';
 import { setDisclaimerValue } from './features/contacto/disclaimerSlice';
 
@@ -29,11 +29,13 @@ const Disclaimer = () => {
 
 	return (
 		<form onChange={formik.handleSubmit}>
-      <div style={{ display: "flex", justifyContent: "center", textAlign: "justify" }}>
+      <div style={{ display: "flex", justifyContent: "center", textAlign: "justify" ,marginRight:'10%'}}>
+        <Container>
         <FormControl>
           {text.map((t, i) => (
               <Fragment key={i}>
                 <article>
+                  <h3>IMPORTANTE</h3>
                   <p>{t.content}</p>
                 </article>
               </Fragment>
@@ -51,6 +53,7 @@ const Disclaimer = () => {
             label="Confirmar términos"
           /> 
       </FormControl>
+      </Container>
     </div>
 			
 		</form>

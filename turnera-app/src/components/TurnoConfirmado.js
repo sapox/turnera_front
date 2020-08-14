@@ -61,7 +61,7 @@ const TurnoConfirmado = () => {
   const { cliente, caja, fecha, hora, sucursal } = turnoConfirmado;
   
   return (
-    <Card style={{maxWidth: '250px', justifyContent: "center"}} ref={componentRef}>
+    <Card style={{maxWidth: '250px', justifyContent: "center", marginTop: '2%'}} ref={componentRef}>
       
       <div style={{ display: "flex", justifyContent: "center", flexDirection: 'column'}}>
         <div style={{ alignSelf: 'center'}}>

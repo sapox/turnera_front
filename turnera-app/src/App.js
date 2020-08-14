@@ -25,6 +25,7 @@ import BackOffice from "./components/BackOffice";
 import SingleLogInForm from "./components/SingleLogInForm";
 import BackOfficeLoguado from "./components/BackOfficeLogueado";
 import TablaResultados from "./components/TablaResultados";
+import New from "./components/New";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -277,6 +278,9 @@ class App extends Component {
         </Route>
         <Route path="/tabla" exact component={TablaResultados}>
           <TablaResultados />
+        </Route>
+        <Route path="/new" exact component={New}>
+          <New />
         </Route>
       </Switch>
     </Router>
