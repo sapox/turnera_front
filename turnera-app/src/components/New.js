@@ -70,8 +70,8 @@ function getSteps() {
   return [
     "Datos de contacto",
     "Tipo de tramite",
-    "Confirmar Terminos",
-    "Oficina Comercial",
+    "Confirmar Términos",
+    "Centro de Atención",
   ];
 }
 
@@ -120,9 +120,9 @@ const SelectTipo = () => {
     <div style={{ display: "flex", justifyContent: "center", flexDirection: 'column'}}>
     <FormControl style={{marginTop: '3%',
     marginRight: '10%',
-    width: '50%',
+    width: '20%',
     alignSelf: 'center'}}>
-      <InputLabel>Seleccionar</InputLabel>
+      <InputLabel>Tipo de Trámite</InputLabel>
       <Select value={tipo} onChange={handleChange} style={{ minWidth: 150 }}>
         {tipoDecajas &&
           tipoDecajas.map((tipo) => (

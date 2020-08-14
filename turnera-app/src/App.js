@@ -68,7 +68,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function getSteps() {
-  return ["Datos de contacto", "Tipo de tramite", "Confirmar Terminos", "Oficina Comercial"];
+  return ["Datos de contacto", "Tipo de tramite", "Confirmar Términos", "Centro de Atención"];
 }
 
 function getStepContent(step, disclaimer, userStep) {

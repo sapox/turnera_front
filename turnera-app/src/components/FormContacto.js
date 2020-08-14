@@ -44,9 +44,9 @@ const Style = {
 	},
 	button: {
 	  color: "white",
-	  background: "#009bdb",
+	  background: "#0055a6",
 	  "&:hover": {
-		background: "#009bdb",
+		background: "#0055a6",
 	  },
 	},
   };
@@ -123,18 +123,10 @@ const FormContacto = () => {
 
   const show = () => {
     setShowT(true);
-
-    //document.getElementById("titular").style.display = "block";
-    // formik.values.titularCuenta = document.getElementById(
-    //   "titularCuenta"
-    //).value;
   };
 
   const hide = () => {
     setShowT(false);
-
-    //document.getElementById("titular").style.display = "none";
-    //formik.values.titularCuenta = "";
   };
 
   useEffect(() => {
@@ -170,10 +162,11 @@ const FormContacto = () => {
         <Grid container>
           <Grid item xs>
             <TextField
-              label="Nro Documento"
+			  placeholder= "Número"
+              label="N° de Documento"
               id="dni"
               name="dni"
-              type="number"
+			  type="number"
               disabled={habilitado}
               onChange={formik.handleChange}
               value={formik.values.dni}
@@ -189,8 +182,8 @@ const FormContacto = () => {
           </Grid>
           <Grid item xs>
             <TextField
-              placeholder="Nombre"
-              label="Nombre"
+              placeholder="Nombre/s"
+              label="Nombre/s"
               id="nombre"
               name="nombre"
               disabled={habilitado}
@@ -208,8 +201,8 @@ const FormContacto = () => {
           </Grid>
           <Grid item xs>
             <TextField
-              placeholder="Apellido"
-              label="Apellido"
+              placeholder="Apellido/s"
+              label="Apellido/s"
               id="apellido"
               name="apellido"
               disabled={habilitado}
@@ -229,8 +222,8 @@ const FormContacto = () => {
         <Grid container>
           <Grid item xs>
             <TextField
-              placeholder="Email"
-              label="Email"
+              placeholder="E-mail"
+              label="E-mail"
               id="email"
               name="email"
               disabled={habilitado}
@@ -248,8 +241,8 @@ const FormContacto = () => {
           </Grid>
           <Grid item xs>
             <TextField
-              placeholder="confirmar Email"
-              label="Confirmar Email"
+              placeholder="Confirmar e-mail"
+              label="Confirmar e-mail"
               id="confirmarEmail"
               name="confirmarEmail"
               disabled={habilitado}
@@ -272,7 +265,7 @@ const FormContacto = () => {
             <TextField
               type="codArea"
               placeholder="Ej: 11"
-              label="Cod. área"
+              label="Código de área"
               id="codArea"
               name="codArea"
               disabled={habilitado}
@@ -281,7 +274,7 @@ const FormContacto = () => {
               helperText={
                 formik.errors.codArea || (
                   <Typography variant="p" style={Style.c}>
-                    *Ingrese Cod. Area sin el 0
+                    *Ingrese Cod. Área sin el 0
                   </Typography>
                 )
               }
@@ -293,7 +286,7 @@ const FormContacto = () => {
               value="rigth"
               type="number"
               placeholder="Ej: 12345678"
-              label="Telefono"
+              label="Teléfono"
               id="telefono"
               name="telefono"
               disabled={habilitado}
@@ -302,7 +295,7 @@ const FormContacto = () => {
               helperText={
                 formik.errors.telefono || (
                   <Typography variant="p" style={Style.c}>
-                    *Ingrese el numero sin el 15
+                    *Ingrese el número sin el 15
                   </Typography>
                 )
               }
@@ -312,10 +305,8 @@ const FormContacto = () => {
           <Grid item xs></Grid>
         </Grid>
         <Grid container>
-          <Grid item xs >
-           
-                <TextField
-                  
+          	<Grid item xs >
+                <TextField  
                   placeholder="0123456789"
                   label="Cuenta de Servicios"
                   id="cuentaContrato"
@@ -349,12 +340,10 @@ const FormContacto = () => {
                     </Zoom>
                   </div>
                 </div>
-              </Grid>
-              
-          
-          <Grid item xs /*style={{width:'150%}}*/>
+            </Grid>
+        <Grid item xs /*style={{width:'150%}}*/>
             <div style={{ marginTop: "4%", display: "flex" }}>
-              <p stylr={{ alignSelf: "flex-end" }}>Titular de la cuenta ? </p>
+			<p style={{ alignSelf: "flex-end", fontSize: '12pt' }}><b>Titular de la cuenta</b></p>
               <RadioGroup
                 style={{ marginTop: "0%", marginLeft: "3%" }}
                 row

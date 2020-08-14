@@ -197,11 +197,11 @@ const FormTurnos = () => {
             alignSelf: "center",
           }}
         >
-          <InputLabel>Oficina Comercial</InputLabel>
+          <InputLabel><b>Centro de Atención</b></InputLabel>
           <Select
             id="sucursalId"
-            name="sucursalId"
-            style={{ marginBottom: "15px", minWidth: "150" }}
+			name="sucursalId"
+            style={{ border: "1px solid", marginBottom: "15px", minWidth: "150", width: "100%", alignSelf: 'center' }}
             disabled={habilitado}
             onChange={formik.handleChange}
             value={formik.values.sucursalId}
@@ -209,12 +209,14 @@ const FormTurnos = () => {
             {sucursales &&
               sucursales.map((sucursal) => (
                 <MenuItem
+				  style={{fontSize: "12pt"}}
                   key={`sucursal_${sucursal.id}`}
                   value={sucursal.id}
                   onChange={sucursalData(formik.values.sucursalId)}
                 >
-                  {sucursal.nombre} -
-                  <p style={{ fontSize: 13 }}>{sucursal.direccion}</p>
+				  {sucursal.distrito.localidad.nombre} - 		
+                   {sucursal.nombre},
+                  <p style={{ fontSize: "10pt" }}> {sucursal.direccion}</p>
                 </MenuItem>
               ))}
           </Select>
@@ -229,7 +231,8 @@ const FormTurnos = () => {
             flexDirection: "column",
           }}
         >
-          <DatePicker
+		<div id="datePicker">
+		<DatePicker
             style={{
               marginTop: "3%",
               marginRight: "10%",
@@ -248,8 +251,8 @@ const FormTurnos = () => {
             inline={formik.values.sucursalId !== ""}
             excludeDates={populateFeriados(feriados)}
           />
+		</div>
         </FormControl>
-
         {turnos.length > 0 && (
           <FormControl
             style={{
@@ -264,7 +267,8 @@ const FormTurnos = () => {
             <InputLabel>Horario</InputLabel>
             <Select
               id="hora"
-              name="hora"
+			  name="hora"
+			  style={{ border: "1px solid" }}
               disabled={habilitado}
               onChange={formik.handleChange}
               value={formik.values.hora}
@@ -290,21 +294,18 @@ const FormTurnos = () => {
 
               marginLeft: "0%",
               marginRight: "10%",
-              width: "50%",
+              width: "30%",
               border: "ridge",
               textAlign: "justify",
             }}
           >
+			<div><b>Datos del Turno</b></div>
             Ud.{" "}
-            <b>
               {nombreUser} {apellidoUser}
-            </b>
-            , con DNI: <b>{dniUser}</b> esta a punto de sacar un turno para la
+            , con DNI: {dniUser} esta a punto de sacar un turno para la
             oficina comercial de{" "}
-            <b>
-              {sucursalNombre}({sucursalDireccion}),{sucursalLocalidad}
-            </b>
-            . En la fecha <b>{fechaTurno}</b> a las <b>{horaTurno} hs</b>.
+              {sucursalNombre}({sucursalDireccion}) - {sucursalLocalidad}
+            . En la fecha {fechaTurno} a las {horaTurno} hs.
           </div>
         </Zoom>
         <div
@@ -321,7 +322,7 @@ const FormTurnos = () => {
               disabled={habilitado}
               type="submit"
               variant="contained"
-              style={{backgroundColor: '#009bdb', color:'white'}}
+              style={{backgroundColor: '#0055a6', color:'white'}}
             >
               Confirmar Turno
             </Button>

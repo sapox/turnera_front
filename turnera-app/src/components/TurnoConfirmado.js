@@ -75,9 +75,9 @@ const TurnoConfirmado = () => {
         <CardContent >
           {turnoConfirmado ? (
             <Fragment>
-              <h2>Turno Confirmado</h2>
+              <h2 style={{textAling: "justify", fontFamily: "Roboto"}}>Turno Confirmado</h2>
               {cliente &&
-              <p style={{textAlign: 'justify'}}>{`Se ha enviado la confirmación del turno a su correo electrónico ${cliente.email}`}.</p>
+              <p style={{fontFamily: "Roboto"}}>{`Se ha enviado la confirmación del turno a su correo electrónico ${cliente.email}`}.</p>
               }
               <Link to={`/turno_confirmado?turnoId=${turnoId}&userDni=${userDni}`}>
                 <QRCode 
@@ -90,11 +90,14 @@ const TurnoConfirmado = () => {
               </Link>
               {cliente && 
                 <Fragment>
-                <p>{`${cliente.nombre} ${cliente.apellido}. DNI: ${cliente.dni}`}</p>
-                <p>{`Turno: ${fecha}. Horario: ${hora}`}</p>
-                <b>Tipo de tramite:</b> {caja.tipo.nombre}
-                <p><b>Oficina Comercial:</b> {sucursal.nombre} - {sucursal.direccion}, {sucursal.distrito.localidad.nombre}</p>
-                <p style={{textAlign: 'justify'}}><b>No olvides traer tu DNI y recordá que este comprobante te servirá para circular en la calle desde tu domicilio hasta la oficina comercial, así como para ser atendido.</b></p>
+                <p style={{fontFamily: "Roboto"}}><b>Nombre: </b>{`${cliente.nombre} ${cliente.apellido}`}</p>
+                <p style={{fontFamily: "Roboto"}}><b>DNI: </b> {`${cliente.dni}`}</p>
+                <p style={{fontFamily: "Roboto"}}><b>Fecha: </b> {`${fecha}`}</p>
+                <p style={{fontFamily: "Roboto"}}><b>Hora: </b> {`${hora}`}</p>
+                <p style={{fontFamily: "Roboto"}}><b>Tipo de tramite:</b> {caja.tipo.nombre}</p>
+                <p style={{fontFamily: "Roboto"}}><b>Centro de Atención:</b> {sucursal.nombre}, {sucursal.direccion} - {sucursal.distrito.localidad.nombre}</p>
+                <p style={{textAlign: 'justify', fontFamily: "Roboto"}}><b>Importante: </b>No olvides traer tu DNI y recordá que este comprobante te servirá para ser atendido en nuestro Centro de Atención.</p>
+                <p style={{textAlign: 'justify', fontFamily: "Roboto"}}>Si por algún motivo tenés que cancelar el turno, escribinos a {sucursal.email}.</p>
                 <div  style={{ display: 'flex', justifyContent: 'center'}}>
                   <Button 
                     variant="contained" 
