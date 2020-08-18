@@ -274,7 +274,7 @@ const FormContacto = () => {
               helperText={
                 formik.errors.codArea || (
                   <Typography variant="p" style={Style.c}>
-                    *Ingrese Cod. Área sin el 0
+                    *Ingrese código de área sin el 0
                   </Typography>
                 )
               }
@@ -323,7 +323,7 @@ const FormContacto = () => {
                     style={{ height: "3px", marginTop: "0%" }}
                   >
                     <Typography variant="p" style={Style.d}>
-                      ¿Donde lo encuentro?
+                      ¿Dónde lo encuentro?
                     </Typography>
                   </Button>
                   <div>

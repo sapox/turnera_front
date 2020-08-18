@@ -16,7 +16,7 @@ import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import es from "date-fns/locale/es";
 import {
-  getSucursales,
+  getSucursalesByTipoCaja,
   getFeriados,
   getTurnosDisponibles,
   createTurno,
@@ -113,7 +113,7 @@ const FormTurnos = () => {
   }
 
   async function getSucursalesFunc() {
-    const res = await getSucursales();
+    const res = await getSucursalesByTipoCaja(tipoCaja);
     setSucursales(res.data);
   }
 
@@ -159,7 +159,7 @@ const FormTurnos = () => {
   const sucursalData = (value) => {
     sucursales.map((sucursal) => {
       if (sucursal.id === value) {
-        sucursalLocalidad = sucursal.distrito.localidad.nombre;
+        sucursalLocalidad = sucursal.localidad.nombre;
         sucursalNombre = sucursal.nombre;
         sucursalDireccion = sucursal.direccion;
       }
@@ -200,7 +200,7 @@ const FormTurnos = () => {
           <InputLabel><b>Centro de Atención</b></InputLabel>
           <Select
             id="sucursalId"
-			name="sucursalId"
+			      name="sucursalId"
             style={{ border: "1px solid", marginBottom: "15px", minWidth: "150", width: "100%", alignSelf: 'center' }}
             disabled={habilitado}
             onChange={formik.handleChange}
@@ -209,13 +209,13 @@ const FormTurnos = () => {
             {sucursales &&
               sucursales.map((sucursal) => (
                 <MenuItem
-				  style={{fontSize: "12pt"}}
+				        style={{fontSize: "12pt"}}
                   key={`sucursal_${sucursal.id}`}
                   value={sucursal.id}
                   onChange={sucursalData(formik.values.sucursalId)}
                 >
-				  {sucursal.distrito.localidad.nombre} - 		
-                   {sucursal.nombre},
+				          {sucursal.localidad.nombre} - 		
+                  <p style={{ fontSize: "11pt" }}> {sucursal.nombre}, </p>
                   <p style={{ fontSize: "10pt" }}> {sucursal.direccion}</p>
                 </MenuItem>
               ))}
@@ -232,7 +232,7 @@ const FormTurnos = () => {
           }}
         >
 		<div id="datePicker">
-		<DatePicker
+		      <DatePicker
             style={{
               marginTop: "3%",
               marginRight: "10%",
@@ -267,8 +267,7 @@ const FormTurnos = () => {
             <InputLabel>Horario</InputLabel>
             <Select
               id="hora"
-			  name="hora"
-			  style={{ border: "1px solid" }}
+			        name="hora"
               disabled={habilitado}
               onChange={formik.handleChange}
               value={formik.values.hora}
@@ -295,11 +294,11 @@ const FormTurnos = () => {
               marginLeft: "0%",
               marginRight: "10%",
               width: "30%",
-              border: "ridge",
+              border: "1px solid",
               textAlign: "justify",
             }}
           >
-			<div><b>Datos del Turno</b></div>
+			    <div><b>Datos del Turno</b></div>
             Ud.{" "}
               {nombreUser} {apellidoUser}
             , con DNI: {dniUser} esta a punto de sacar un turno para la

@@ -59,6 +59,7 @@ const TurnoConfirmado = () => {
   }, [userDni, turnoId]);
 
   const { cliente, caja, fecha, hora, sucursal } = turnoConfirmado;
+
   
   return (
     <Card style={{maxWidth: '250px', justifyContent: "center", marginTop: '2%'}} ref={componentRef}>
@@ -95,7 +96,7 @@ const TurnoConfirmado = () => {
                 <p style={{fontFamily: "Roboto"}}><b>Fecha: </b> {`${fecha}`}</p>
                 <p style={{fontFamily: "Roboto"}}><b>Hora: </b> {`${hora}`}</p>
                 <p style={{fontFamily: "Roboto"}}><b>Tipo de tramite:</b> {caja.tipo.nombre}</p>
-                <p style={{fontFamily: "Roboto"}}><b>Centro de Atención:</b> {sucursal.nombre}, {sucursal.direccion} - {sucursal.distrito.localidad.nombre}</p>
+                <p style={{fontFamily: "Roboto"}}><b>Centro de Atención:</b> {sucursal.nombre}, {sucursal.direccion} - {sucursal.localidad.nombre}</p>
                 <p style={{textAlign: 'justify', fontFamily: "Roboto"}}><b>Importante: </b>No olvides traer tu DNI y recordá que este comprobante te servirá para ser atendido en nuestro Centro de Atención.</p>
                 <p style={{textAlign: 'justify', fontFamily: "Roboto"}}>Si por algún motivo tenés que cancelar el turno, escribinos a {sucursal.email}.</p>
                 <div  style={{ display: 'flex', justifyContent: 'center'}}>
