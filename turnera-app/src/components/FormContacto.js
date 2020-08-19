@@ -158,15 +158,15 @@ const FormContacto = () => {
 
   return (
     <form onSubmit={formik.handleSubmit}>
-      <FormControl style={{ width: "100%" }}>
+      <FormControl style={{ width: "100%", marginLeft: '10%' }}>
         <Grid container>
           <Grid item xs>
             <TextField
-			  placeholder= "Número"
+			        placeholder= "Número"
               label="N° de Documento"
               id="dni"
               name="dni"
-			  type="number"
+			        type="number"
               disabled={habilitado}
               onChange={formik.handleChange}
               value={formik.values.dni}
@@ -343,7 +343,7 @@ const FormContacto = () => {
             </Grid>
         <Grid item xs /*style={{width:'150%}}*/>
             <div style={{ marginTop: "4%", display: "flex" }}>
-			<p style={{ alignSelf: "flex-end", fontSize: '12pt' }}><b>Titular de la cuenta</b></p>
+			      <p style={{ alignSelf: "flex-end", fontSize: '12pt', fontFamily: "Roboto" }}><b>Titular de la cuenta</b></p>
               <RadioGroup
                 style={{ marginTop: "0%", marginLeft: "3%" }}
                 row
@@ -381,7 +381,7 @@ const FormContacto = () => {
           }}
         >
           <div
-            style={{ marginTop: "1%", alignSelf: "center", marginRight: "10%" }}
+            style={{ marginTop: "1%", alignSelf: "center", marginRight: "20%", fontFamily: "Roboto" }}
           >
             <Button
               disabled={habilitado}

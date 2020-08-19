@@ -182,26 +182,26 @@ const FormTurnos = () => {
 
   return (
     <form onSubmit={formik.handleSubmit}>
+    <FormControl
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        flexDirection: "column",
+      }}
+    >
       <FormControl
         style={{
-          display: "flex",
-          justifyContent: "center",
-          flexDirection: "column",
+          marginTop: "3%",
+
+          width: "25%",
+          alignSelf: "center",
         }}
       >
-        <FormControl
-          style={{
-            marginTop: "3%",
-            marginRight: "10%",
-            width: "50%",
-            alignSelf: "center",
-          }}
-        >
           <InputLabel><b>Centro de Atención</b></InputLabel>
           <Select
             id="sucursalId"
 			      name="sucursalId"
-            style={{ border: "1px solid", marginBottom: "15px", minWidth: "150", width: "100%", alignSelf: 'center' }}
+            style={{ marginBottom: "15px", minWidth: "150" }}
             disabled={habilitado}
             onChange={formik.handleChange}
             value={formik.values.sucursalId}
@@ -221,18 +221,15 @@ const FormTurnos = () => {
               ))}
           </Select>
         </FormControl>
-
         <FormControl
           style={{
-            marginRight: "10%",
             alignSelf: "center",
             display: "flex",
             justifyContent: "center",
             flexDirection: "column",
           }}
         >
-		<div id="datePicker">
-		      <DatePicker
+          <DatePicker
             style={{
               marginTop: "3%",
               marginRight: "10%",
@@ -251,7 +248,7 @@ const FormTurnos = () => {
             inline={formik.values.sucursalId !== ""}
             excludeDates={populateFeriados(feriados)}
           />
-		</div>
+		
         </FormControl>
         {turnos.length > 0 && (
           <FormControl
@@ -259,7 +256,7 @@ const FormTurnos = () => {
               maxWidth: 200,
               marginBottom: "15px",
               marginTop: "3%",
-              marginRight: "10%",
+
               width: "50%",
               alignSelf: "center",
             }}
@@ -290,12 +287,10 @@ const FormTurnos = () => {
               position: "relative",
               alignSelf: "center",
               transform: "none",
-
+              fontFamily: "Roboto",
               marginLeft: "0%",
-              marginRight: "10%",
               width: "30%",
-              border: "1px solid",
-              textAlign: "justify",
+              textAling: "center",
             }}
           >
 			    <div><b>Datos del Turno</b></div>
@@ -314,14 +309,12 @@ const FormTurnos = () => {
             flexDirection: "column",
           }}
         >
-          <div
-            style={{ marginTop: "1%", alignSelf: "center", marginRight: "10%" }}
-          >
+          <div style={{ marginTop: "1%", alignSelf: "center" }}>
             <Button
               disabled={habilitado}
               type="submit"
               variant="contained"
-              style={{backgroundColor: '#0055a6', color:'white'}}
+              style={{ backgroundColor: "#009bdb", color: "white" }}
             >
               Confirmar Turno
             </Button>
@@ -330,6 +323,6 @@ const FormTurnos = () => {
       </FormControl>
     </form>
   );
-};
+} 
 
 export default FormTurnos;

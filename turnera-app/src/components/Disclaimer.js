@@ -29,7 +29,7 @@ const Disclaimer = () => {
 
 	return (
 		<form onChange={formik.handleSubmit}>
-      <div style={{ display: "flex", justifyContent: "center", textAlign: "justify" ,marginRight:'10%',  alignSelf: 'center'}}>
+      <div style={{ display: "flex", justifyContent: "center", textAlign: "justify" ,marginRight:'10%',  alignSelf: 'center', marginLeft: '10%', fontFamily: "Roboto"}}>
         <Container>
         <FormControl>
           {text.map((t, i) => (

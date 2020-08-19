@@ -119,8 +119,7 @@ const SelectTipo = () => {
   return (
     <div style={{ display: "flex", justifyContent: "center", flexDirection: 'column'}}>
     <FormControl style={{marginTop: '3%',
-    marginRight: '10%',
-    width: '20%',
+    width: '25%',
     alignSelf: 'center'}}>
       <InputLabel>Tipo de Trámite</InputLabel>
       <Select value={tipo} onChange={handleChange} style={{ minWidth: 150 }}>
@@ -212,7 +211,6 @@ export default function New() {
       </h1>
       <Divider />
       <Stepper
-  
         activeStep={activeStep}
         alternativeLabel
       >
@@ -223,7 +221,6 @@ export default function New() {
         ))}
       </Stepper>
       <Divider />
-
       <div>
         {activeStep === steps.length ? (
           <div >
@@ -247,8 +244,7 @@ export default function New() {
           </div>
         ) : (
           <div >
-            <div style={{  marginLeft: "10%" }}>{getStepContent(activeStep, disclaimerStep, userStep)}</div>
-
+            <div >{getStepContent(activeStep, disclaimerStep, userStep)}</div>
             <div className={classes.actionsContainer}>
               <div style={{marginTop:'1%',alignSelf: 'center'}}>
                 <Button
