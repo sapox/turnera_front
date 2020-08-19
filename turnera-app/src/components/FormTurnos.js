@@ -229,26 +229,27 @@ const FormTurnos = () => {
             flexDirection: "column",
           }}
         >
-          <DatePicker
-            style={{
-              marginTop: "3%",
-              marginRight: "10%",
-              width: "50%",
-              alignSelf: "center",
-            }}
-            id="fecha"
-            locale="es"
-            selected={formik.values.fecha}
-            name="fecha"
-            onChange={(date) => handleDateChange(date)}
-            dateFormat="MMMM d, yyyy"
-            filterDate={isWeekday}
-            minDate={setMinutes(addDays(new Date(), 1), 30)}
-            showDisabledMonthNavigation
-            inline={formik.values.sucursalId !== ""}
-            excludeDates={populateFeriados(feriados)}
-          />
-		
+          <div id="datePicker">
+            <DatePicker
+              style={{
+                marginTop: "3%",
+                marginRight: "10%",
+                width: "50%",
+                alignSelf: "center",
+              }}
+              id="fecha"
+              locale="es"
+              selected={formik.values.fecha}
+              name="fecha"
+              onChange={(date) => handleDateChange(date)}
+              dateFormat="MMMM d, yyyy"
+              filterDate={isWeekday}
+              minDate={setMinutes(addDays(new Date(), 1), 30)}
+              showDisabledMonthNavigation
+              inline={formik.values.sucursalId !== ""}
+              excludeDates={populateFeriados(feriados)}
+            />
+          </div>
         </FormControl>
         {turnos.length > 0 && (
           <FormControl

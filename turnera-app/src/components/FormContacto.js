@@ -127,6 +127,7 @@ const FormContacto = () => {
 
   const hide = () => {
     setShowT(false);
+    formik.values.titularCuenta = "";
   };
 
   useEffect(() => {

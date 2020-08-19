@@ -167,11 +167,11 @@ export default function New() {
   const handleCancel = () => {
     swal
       .fire({
-        title: "Cancelar Operacion",
-        text: "¿Esta seguro que desea salir de esta operacion?",
+        title: "Cancelar Operación",
+        text: "¿Esta seguro que desea salir de esta operación?",
         icon: "warning",
         confirmButtonColor: "#009bdb",
-        confirmButtonText: "Si",
+        confirmButtonText: "Sí",
         showCancelButton: true,
         cancelButtonText: "No",
         cancelButtonColor: "#b7b7b7",
