@@ -344,19 +344,17 @@ const FormContacto = () => {
           </Grid>
           <Grid item xs={8}>
             <Grid container>
-              <Grid item xs={4}>
+              <Grid item xs={6}>
                 {" "}
                 <div>
-                <p style={{ fontWeight : 'bold',fontSize : '14pt', fontFamily: 'Roboto',marginTop: "11%",marginLeft:'14px'}}>
+                <p style={{ fontWeight : 'bold',fontSize : '10pt', fontFamily: 'Roboto',marginLeft:'14px'}}>
                   Titular de la cuenta
                 </p>
                 </div>
-                
-              </Grid>
-              <Grid item xs>
+              
                 {" "}
                 <RadioGroup
-                  style={{ marginTop: "14%"}}
+                 style={{marginLeft: '2%', marginTop: '-2%'}}
                   row
                   aria-label="position"
                   name="position"
@@ -378,7 +376,7 @@ const FormContacto = () => {
                   />
                 </RadioGroup>
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs>
                 <div id="titular" style={{ display: "none"}}>
                   <TextField
                     //style={{marginLeft:'-8%'}}
