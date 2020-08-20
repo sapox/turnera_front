@@ -157,7 +157,6 @@ const FormContacto = () => {
   };
 
   return (
-  
       <form onSubmit={formik.handleSubmit}>
       <FormControl style={{ width: "100%" , marginLeft: '10%'}}>
         <Grid container>
