@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import Paper from "@material-ui/core/Paper";
 import Zoom from "@material-ui/core/Zoom";
@@ -12,6 +11,7 @@ import {
   Button,
   Checkbox,
   FormControlLabel,
+  Container,
 } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import Radio from "@material-ui/core/Radio";
@@ -26,30 +26,29 @@ import {
   Typography,
 } from "@material-ui/core";
 
-
 const Style = {
-	c: {
-	  fontFamily: "Roboto",
-	  textTransform: "none",
-	  color: "#0055a6",
-	  fontSize: "8pt",
-	  fontWeight: "bold",
-	},
-	d: {
-	  fontFamily: "Roboto",
-	  fontWeight: "bold",
-	  textTransform: "none",
-	  color: "#009bdb",
-	  fontSize: "9pt",
-	},
-	button: {
-	  color: "white",
-	  background: "#0055a6",
-	  "&:hover": {
-		background: "#0055a6",
-	  },
-	},
-  };
+  c: {
+    fontFamily: "Roboto",
+    textTransform: "none",
+    color: "#0055a6",
+    fontSize: "8pt",
+    fontWeight: "bold",
+  },
+  d: {
+    fontFamily: "Roboto",
+    fontWeight: "bold",
+    textTransform: "none",
+    color: "#009bdb",
+    fontSize: "9pt",
+  },
+  button: {
+    color: "white",
+    background: "#0055a6",
+    "&:hover": {
+      background: "#0055a6",
+    },
+  },
+};
 
 const validation = Yup.object({
   dni: Yup.string("Ingrese dni")
@@ -61,9 +60,7 @@ const validation = Yup.object({
   apellido: Yup.string()
     .max(20, "Debe contener 20 caracteres o menos")
     .required("requerido"),
-  email: Yup.string()
-	.email("Coloque un email válido")
-	.required("requerido"),
+  email: Yup.string().email("Coloque un email válido").required("requerido"),
   confirmarEmail: Yup.string()
     .oneOf([Yup.ref("email"), null], "Debe coincidir con el email ingresado")
     .email("Coloque un email válido")
@@ -122,11 +119,13 @@ const FormContacto = () => {
   };
 
   const show = () => {
-    setShowT(true);
+    document.getElementById("titular").style.display = "block";
+    //setShowT(true);
   };
 
   const hide = () => {
-    setShowT(false);
+    document.getElementById("titular").style.display = "none";
+    //setShowT(false);
     formik.values.titularCuenta = "";
   };
 
@@ -158,16 +157,17 @@ const FormContacto = () => {
   };
 
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <FormControl style={{ width: "100%", marginLeft: '10%' }}>
+   <Container>
+      <form onSubmit={formik.handleSubmit}>
+      <FormControl style={{ width: "100%"}}>
         <Grid container>
           <Grid item xs>
             <TextField
-			        placeholder= "Número"
+              placeholder="Número"
               label="N° de Documento"
               id="dni"
               name="dni"
-			        type="number"
+              type="number"
               disabled={habilitado}
               onChange={formik.handleChange}
               value={formik.values.dni}
@@ -306,83 +306,113 @@ const FormContacto = () => {
           <Grid item xs></Grid>
         </Grid>
         <Grid container>
-          	<Grid item xs >
-                <TextField  
-                  placeholder="0123456789"
-                  label="Cuenta de Servicios"
-                  id="cuentaContrato"
-                  name="cuentaContrato"
-                  disabled={habilitado}
-                  onChange={formik.handleChange}
-                  value={formik.values.cuentaContrato}
-                  helperText={formik.errors.cuentaContrato}
-                  error={formik.errors.cuentaContrato}
-                />
-                <div>
-                  <Button
-                    onClick={handleToggle}
-                    style={{ height: "3px", marginTop: "0%" }}
-                  >
-                    <Typography variant="p" style={Style.d}>
-                      ¿Dónde lo encuentro?
-                    </Typography>
-                  </Button>
-                  <div>
-                    <Zoom in={toggle}>
-                      <Paper>
-                        {toggle && (
-                          <img
-                            id="service"
-                            style={{ width: 350, height: 150 }}
-                            src={service}
-                          ></img>
-                        )}
-                      </Paper>
-                    </Zoom>
-                  </div>
-                </div>
-            </Grid>
-        <Grid item xs /*style={{width:'150%}}*/>
-            <div style={{ marginTop: "4%", display: "flex" }}>
-			      <p style={{ alignSelf: "flex-end", fontSize: '12pt', fontFamily: "Roboto" }}><b>Titular de la cuenta</b></p>
-              <RadioGroup
-                style={{ marginTop: "0%", marginLeft: "3%" }}
-                row
-                aria-label="position"
-                name="position"
-                defaultValue="top"
+          <Grid item xs>
+            <TextField
+              placeholder="0123456789"
+              label="Cuenta de Servicios"
+              id="cuentaContrato"
+              name="cuentaContrato"
+              disabled={habilitado}
+              onChange={formik.handleChange}
+              value={formik.values.cuentaContrato}
+              helperText={formik.errors.cuentaContrato}
+              error={formik.errors.cuentaContrato}
+            />
+            <div>
+              <Button
+                onClick={handleToggle}
+                style={{ height: "3px", marginTop: "0%" ,marginBottom: '2%'}}
               >
-                <FormControlLabel
-                  value="Si"
-                  disabled={habilitado}
-                  control={<Radio color="primary" onChange={hide} />}
-                  label="Si"
-                  labelPlacement="Si"
-                />
-                <FormControlLabel
-                  value="No"
-                  disabled={habilitado}
-                  control={<Radio color="primary" onChange={show} />}
-                  label="No"
-                  labelPlacement="No"
-                />
-              </RadioGroup>
+                <Typography variant="p" style={Style.d}>
+                  ¿Dónde lo encuentro?
+                </Typography>
+              </Button>
+              <div>
+                <Zoom in={toggle}>
+                  <Paper>
+                    {toggle && (
+                      <img
+                        id="service"
+                        style={{ width: 350, height: 150 }}
+                        src={service}
+                      ></img>
+                    )}
+                  </Paper>
+                </Zoom>
+              </div>
             </div>
           </Grid>
-          <Grid item xs>
-            {showT ? <Titular /> : null}
+          <Grid item xs={8}>
+            <Grid container>
+              <Grid item xs={3}>
+                {" "}
+                <div>
+                <p style={{marginTop: "18%",marginLeft:'13%'}}>
+                  <b>Titular de la cuenta</b>
+                </p>
+                </div>
+                
+              </Grid>
+              <Grid item xs>
+                {" "}
+                <RadioGroup
+                  style={{ marginTop: "12%"}}
+                  row
+                  aria-label="position"
+                  name="position"
+                  defaultValue="top"
+                >
+                  <FormControlLabel
+                    value="Si"
+                    disabled={habilitado}
+                    control={<Radio color="primary" onChange={hide} />}
+                    label="Si"
+                    labelPlacement="Si"
+                  />
+                  <FormControlLabel
+                    value="No"
+                    disabled={habilitado}
+                    control={<Radio color="primary" onChange={show} />}
+                    label="No"
+                    labelPlacement="No"
+                  />
+                </RadioGroup>
+              </Grid>
+              <Grid item xs={6}>
+                <div id="titular" style={{ display: "none"}}>
+                  <TextField
+                    //style={{marginLeft:'-8%'}}
+                    placeholder="Titular de la Cuenta"
+                    label="Titular de la Cuenta"
+                    id="titularCuenta"
+                    name="titularCuenta"
+                    disabled={habilitado}
+                    onChange={formik.handleChange}
+                    value={formik.values.titularCuenta}
+                    helperText={formik.errors.titularCuenta}
+                    error={formik.errors.titularCuenta}
+                  />
+                </div>
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
         <Divider />
         <div
           style={{
+            marginTop: "1%",
             display: "flex",
             justifyContent: "center",
             flexDirection: "column",
           }}
         >
           <div
-            style={{ marginTop: "1%", alignSelf: "center", marginRight: "20%", fontFamily: "Roboto" }}
+            style={{
+              marginTop: "1%",
+              alignSelf: "center",
+              
+              fontFamily: "Roboto",
+            }}
           >
             <Button
               disabled={habilitado}
@@ -396,6 +426,7 @@ const FormContacto = () => {
         </div>
       </FormControl>
     </form>
+   </Container>
   );
 };
 
