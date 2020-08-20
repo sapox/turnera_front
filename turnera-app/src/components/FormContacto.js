@@ -157,9 +157,9 @@ const FormContacto = () => {
   };
 
   return (
-   <Container>
+  
       <form onSubmit={formik.handleSubmit}>
-      <FormControl style={{ width: "100%"}}>
+      <FormControl style={{ width: "100%" , marginLeft: '10%'}}>
         <Grid container>
           <Grid item xs>
             <TextField
@@ -410,7 +410,7 @@ const FormContacto = () => {
             style={{
               marginTop: "1%",
               alignSelf: "center",
-              
+              marginRight: '20%',
               fontFamily: "Roboto",
             }}
           >
@@ -426,7 +426,7 @@ const FormContacto = () => {
         </div>
       </FormControl>
     </form>
-   </Container>
+   
   );
 };
 
