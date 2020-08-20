@@ -316,7 +316,7 @@ const FormTurnos = () => {
               disabled={habilitado}
               type="submit"
               variant="contained"
-              style={{ backgroundColor: "#009bdb", color: "white" }}
+              style={{ backgroundColor: "#0055a6", color: "white" }}
             >
               Confirmar Turno
             </Button>
