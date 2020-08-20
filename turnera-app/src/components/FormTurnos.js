@@ -6,7 +6,7 @@ import {
   FormControl,
   InputLabel,
   Button,
-  Paper,
+  Typography,
   Zoom,
 } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
@@ -209,14 +209,12 @@ const FormTurnos = () => {
             {sucursales &&
               sucursales.map((sucursal) => (
                 <MenuItem
-				        style={{fontSize: "12pt" ,fontFamily:'Roboto'}}
+				        style={{fontSize: "11pt" , fontFamily:'Roboto'}}
                   key={`sucursal_${sucursal.id}`}
                   value={sucursal.id}
                   onChange={sucursalData(formik.values.sucursalId)}
                 >
-				          {sucursal.localidad.nombre} -  		
-                  <p style={{ fontSize: "11pt" }}> {sucursal.nombre}, </p>
-                  <p style={{ fontSize: "10pt" }}> {sucursal.direccion}</p>
+                  {`${sucursal.localidad.nombre} - ${sucursal.nombre}, ${sucursal.direccion}`}
                 </MenuItem>
               ))}
           </Select>

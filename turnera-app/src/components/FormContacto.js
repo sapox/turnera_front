@@ -43,6 +43,7 @@ const Style = {
   },
   button: {
     color: "white",
+    fontFamily: "Roboto",
     background: "#0055a6",
     "&:hover": {
       background: "#0055a6",
@@ -328,15 +329,15 @@ const FormContacto = () => {
               </Button>
               <div>
                 <Zoom in={toggle}>
-                  <Paper>
+                  <div>
                     {toggle && (
                       <img
                         id="service"
-                        style={{ width: 350, height: 150 }}
+                        style={{ width: "75%", height: "50%" }}
                         src={service}
                       ></img>
                     )}
-                  </Paper>
+                  </div>
                 </Zoom>
               </div>
             </div>
@@ -346,14 +347,14 @@ const FormContacto = () => {
               <Grid item xs={6}>
                 {" "}
                 <div>
-                <p style={{ fontWeight : 'bold',fontSize : '10pt', fontFamily: 'Roboto',marginLeft:'14px'}}>
+                <p style={{ fontWeight : 'bold',fontSize : '10pt', fontFamily: 'Roboto', marginLeft:'3%' }}>
                   Titular de la cuenta
                 </p>
                 </div>
               
                 {" "}
                 <RadioGroup
-                 style={{marginLeft: '2%', marginTop: '-2%'}}
+                 style={{marginLeft: '3%', marginTop: '-2%', width: "150%" }}
                   row
                   aria-label="position"
                   name="position"
@@ -408,7 +409,6 @@ const FormContacto = () => {
               marginTop: "1%",
               alignSelf: "center",
               marginRight: '20%',
-              fontFamily: "Roboto",
             }}
           >
             <Button

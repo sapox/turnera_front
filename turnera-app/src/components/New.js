@@ -42,10 +42,12 @@ const useStyles = makeStyles((theme) => ({
   button: {
     marginTop: theme.spacing(1),
     border: "1px solid",
+    fontFamily: "Roboto",
   },
   nextButton: {
     marginTop: theme.spacing(1),
     marginLeft: theme.spacing(3),
+    fontFamily: "Roboto",
     color: "white",
     background: "#009bdb",
     "&:hover": {
@@ -54,6 +56,7 @@ const useStyles = makeStyles((theme) => ({
   },
   newTurnButton: {
     marginTop: theme.spacing(1),
+    fontFamily: "Roboto",
     color: "white",
     background: "#009bdb",
     "&:hover": {
@@ -206,7 +209,7 @@ export default function New() {
         />
       </div>
       <Divider />
-      <h1 style={{ fontFamily: "roboto", marginLeft: "10%" }}>
+      <h1 style={{ fontFamily: "Roboto", marginLeft: "10%" }}>
         Reservá tu turno para ir al Centro de Atención
       </h1>
       <Divider />
