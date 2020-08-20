@@ -122,6 +122,7 @@ const FormContacto = () => {
   const show = () => {
     document.getElementById("titular").style.display = "block";
     //setShowT(true);
+    formik.values.titularCuenta = document.getElementById('titularCuenta').value;
   };
 
   const hide = () => {
@@ -364,7 +365,7 @@ const FormContacto = () => {
                     value="Si"
                     disabled={habilitado}
                     control={<Radio color="primary" onChange={hide} />}
-                    label="Si"
+                    label="Sí"
                     labelPlacement="Si"
                   />
                   <FormControlLabel
