@@ -347,7 +347,7 @@ const FormContacto = () => {
               <Grid item xs={4}>
                 {" "}
                 <div>
-                <p style={{ fontSize : '14pt', fontFamily: 'Roboto',marginTop: "11%",marginLeft:'14px'}}>
+                <p style={{ fontWeight : 'bold',fontSize : '14pt', fontFamily: 'Roboto',marginTop: "11%",marginLeft:'14px'}}>
                   Titular de la cuenta
                 </p>
                 </div>
