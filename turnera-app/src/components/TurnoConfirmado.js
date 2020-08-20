@@ -99,6 +99,11 @@ const TurnoConfirmado = () => {
                 <p><b>Centro de Atención:</b> {sucursal.nombre}, {sucursal.direccion} - {sucursal.localidad.nombre}</p>
                 <p style={{textAlign: 'justify' }}><b>Importante: </b>No olvides traer tu DNI y recordá que este comprobante te servirá para ser atendido en nuestro Centro de Atención.</p>
                 <p style={{textAlign: 'justify' }}>Si por algún motivo tenés que cancelar el turno, escribinos a {sucursal.email}.</p>
+                <p>{`${cliente.nombre} ${cliente.apellido}. DNI: ${cliente.dni}`}</p>
+                <p>{`Turno: ${fecha}. Horario: ${hora}`}</p>
+                <b>Tipo de tramite:</b> {caja.tipo.nombre}
+                <p><b>Oficina Comercial:</b> {sucursal.nombre} - {sucursal.direccion}, {sucursal.localidad.nombre}</p>
+                <p style={{textAlign: 'justify'}}><b>No olvides traer tu DNI y recordá que este comprobante te servirá para circular en la calle desde tu domicilio hasta la oficina comercial, así como para ser atendido.</b></p>
                 <div  style={{ display: 'flex', justifyContent: 'center'}}>
                   <Button 
                     variant="contained" 
