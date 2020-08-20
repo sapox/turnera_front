@@ -193,7 +193,7 @@ const FormTurnos = () => {
         style={{
           marginTop: "3%",
 
-          width: "25%",
+          width: "50%",
           alignSelf: "center",
         }}
       >
@@ -209,12 +209,12 @@ const FormTurnos = () => {
             {sucursales &&
               sucursales.map((sucursal) => (
                 <MenuItem
-				        style={{fontSize: "12pt"}}
+				        style={{fontSize: "12pt" ,fontFamily:'Roboto'}}
                   key={`sucursal_${sucursal.id}`}
                   value={sucursal.id}
                   onChange={sucursalData(formik.values.sucursalId)}
                 >
-				          {sucursal.localidad.nombre} - 		
+				          {sucursal.localidad.nombre} -  		
                   <p style={{ fontSize: "11pt" }}> {sucursal.nombre}, </p>
                   <p style={{ fontSize: "10pt" }}> {sucursal.direccion}</p>
                 </MenuItem>
@@ -289,12 +289,13 @@ const FormTurnos = () => {
               alignSelf: "center",
               transform: "none",
               fontFamily: "Roboto",
-              marginLeft: "0%",
-              width: "30%",
-              textAling: "center",
+              padding: '9pt',
+              width: "50%",
+              border: 'outset',
+              textAlign: "center",
             }}
           >
-			    <div><b>Datos del Turno</b></div>
+			    <div style={{textAlign: "center"}}><b>Datos del Turno</b></div>
             Ud.{" "}
               {nombreUser} {apellidoUser}
             , con DNI: {dniUser} esta a punto de sacar un turno para la

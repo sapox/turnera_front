@@ -119,7 +119,7 @@ const SelectTipo = () => {
   return (
     <div style={{ display: "flex", justifyContent: "center", flexDirection: 'column'}}>
     <FormControl style={{marginTop: '3%',
-    width: '25%',
+    width: '30%',
     alignSelf: 'center'}}>
       <InputLabel>Tipo de Trámite</InputLabel>
       <Select value={tipo} onChange={handleChange} style={{ minWidth: 150 }}>
