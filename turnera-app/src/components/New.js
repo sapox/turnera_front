@@ -42,10 +42,12 @@ const useStyles = makeStyles((theme) => ({
   button: {
     marginTop: theme.spacing(1),
     border: "1px solid",
+    fontFamily: "Roboto",
   },
   nextButton: {
     marginTop: theme.spacing(1),
     marginLeft: theme.spacing(3),
+    fontFamily: "Roboto",
     color: "white",
     background: "#009bdb",
     "&:hover": {
@@ -54,6 +56,7 @@ const useStyles = makeStyles((theme) => ({
   },
   newTurnButton: {
     marginTop: theme.spacing(1),
+    fontFamily: "Roboto",
     color: "white",
     background: "#009bdb",
     "&:hover": {
@@ -69,9 +72,9 @@ const useStyles = makeStyles((theme) => ({
 function getSteps() {
   return [
     "Datos de contacto",
-    "Tipo de tramite",
-    "Confirmar Terminos",
-    "Oficina Comercial",
+    "Tipo de trámite",
+    "Confirmar Términos",
+    "Centro de Atención",
   ];
 }
 
@@ -119,10 +122,9 @@ const SelectTipo = () => {
   return (
     <div style={{ display: "flex", justifyContent: "center", flexDirection: 'column'}}>
     <FormControl style={{marginTop: '3%',
-    marginRight: '10%',
-    width: '50%',
+    width: '30%',
     alignSelf: 'center'}}>
-      <InputLabel>Seleccionar</InputLabel>
+      <InputLabel>Tipo de Trámite</InputLabel>
       <Select value={tipo} onChange={handleChange} style={{ minWidth: 150 }}>
         {tipoDecajas &&
           tipoDecajas.map((tipo) => (
@@ -168,11 +170,11 @@ export default function New() {
   const handleCancel = () => {
     swal
       .fire({
-        title: "Cancelar Operacion",
-        text: "¿Esta seguro que desea salir de esta operacion?",
+        title: "Cancelar Operación",
+        text: "¿Esta seguro que desea salir de esta operación?",
         icon: "warning",
         confirmButtonColor: "#009bdb",
-        confirmButtonText: "Si",
+        confirmButtonText: "Sí",
         showCancelButton: true,
         cancelButtonText: "No",
         cancelButtonColor: "#b7b7b7",
@@ -207,12 +209,11 @@ export default function New() {
         />
       </div>
       <Divider />
-      <h1 style={{ fontFamily: "roboto", marginLeft: "10%" }}>
+      <h1 style={{ fontFamily: "Roboto", marginLeft: "10%" }}>
         Reservá tu turno para ir al Centro de Atención
       </h1>
       <Divider />
       <Stepper
-  
         activeStep={activeStep}
         alternativeLabel
       >
@@ -223,7 +224,6 @@ export default function New() {
         ))}
       </Stepper>
       <Divider />
-
       <div>
         {activeStep === steps.length ? (
           <div >
@@ -247,8 +247,7 @@ export default function New() {
           </div>
         ) : (
           <div >
-            <div style={{  marginLeft: "10%" }}>{getStepContent(activeStep, disclaimerStep, userStep)}</div>
-
+            <div >{getStepContent(activeStep, disclaimerStep, userStep)}</div>
             <div className={classes.actionsContainer}>
               <div style={{marginTop:'1%',alignSelf: 'center'}}>
                 <Button

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import Paper from "@material-ui/core/Paper";
 import Zoom from "@material-ui/core/Zoom";
@@ -12,6 +11,7 @@ import {
   Button,
   Checkbox,
   FormControlLabel,
+  Container,
 } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import Radio from "@material-ui/core/Radio";
@@ -26,30 +26,30 @@ import {
   Typography,
 } from "@material-ui/core";
 
-
 const Style = {
-	c: {
-	  fontFamily: "Roboto",
-	  textTransform: "none",
-	  color: "#0055a6",
-	  fontSize: "8pt",
-	  fontWeight: "bold",
-	},
-	d: {
-	  fontFamily: "Roboto",
-	  fontWeight: "bold",
-	  textTransform: "none",
-	  color: "#009bdb",
-	  fontSize: "9pt",
-	},
-	button: {
-	  color: "white",
-	  background: "#009bdb",
-	  "&:hover": {
-		background: "#009bdb",
-	  },
-	},
-  };
+  c: {
+    fontFamily: "Roboto",
+    textTransform: "none",
+    color: "#0055a6",
+    fontSize: "8pt",
+    fontWeight: "bold",
+  },
+  d: {
+    fontFamily: "Roboto",
+    fontWeight: "bold",
+    textTransform: "none",
+    color: "#009bdb",
+    fontSize: "9pt",
+  },
+  button: {
+    color: "white",
+    fontFamily: "Roboto",
+    background: "#0055a6",
+    "&:hover": {
+      background: "#0055a6",
+    },
+  },
+};
 
 const validation = Yup.object({
   dni: Yup.string("Ingrese dni")
@@ -61,9 +61,7 @@ const validation = Yup.object({
   apellido: Yup.string()
     .max(20, "Debe contener 20 caracteres o menos")
     .required("requerido"),
-  email: Yup.string()
-	.email("Coloque un email válido")
-	.required("requerido"),
+  email: Yup.string().email("Coloque un email válido").required("requerido"),
   confirmarEmail: Yup.string()
     .oneOf([Yup.ref("email"), null], "Debe coincidir con el email ingresado")
     .email("Coloque un email válido")
@@ -122,19 +120,14 @@ const FormContacto = () => {
   };
 
   const show = () => {
-    setShowT(true);
-
-    //document.getElementById("titular").style.display = "block";
-    // formik.values.titularCuenta = document.getElementById(
-    //   "titularCuenta"
-    //).value;
+    document.getElementById("titular").style.display = "block";
+    //setShowT(true);
   };
 
   const hide = () => {
-    setShowT(false);
-
-    //document.getElementById("titular").style.display = "none";
-    //formik.values.titularCuenta = "";
+    document.getElementById("titular").style.display = "none";
+    //setShowT(false);
+    formik.values.titularCuenta = "";
   };
 
   useEffect(() => {
@@ -165,12 +158,13 @@ const FormContacto = () => {
   };
 
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <FormControl style={{ width: "100%" }}>
+      <form onSubmit={formik.handleSubmit}>
+      <FormControl style={{ width: "100%" , marginLeft: '10%'}}>
         <Grid container>
           <Grid item xs>
             <TextField
-              label="Nro Documento"
+              placeholder="Número"
+              label="N° de Documento"
               id="dni"
               name="dni"
               type="number"
@@ -189,8 +183,8 @@ const FormContacto = () => {
           </Grid>
           <Grid item xs>
             <TextField
-              placeholder="Nombre"
-              label="Nombre"
+              placeholder="Nombre/s"
+              label="Nombre/s"
               id="nombre"
               name="nombre"
               disabled={habilitado}
@@ -208,8 +202,8 @@ const FormContacto = () => {
           </Grid>
           <Grid item xs>
             <TextField
-              placeholder="Apellido"
-              label="Apellido"
+              placeholder="Apellido/s"
+              label="Apellido/s"
               id="apellido"
               name="apellido"
               disabled={habilitado}
@@ -229,8 +223,8 @@ const FormContacto = () => {
         <Grid container>
           <Grid item xs>
             <TextField
-              placeholder="Email"
-              label="Email"
+              placeholder="E-mail"
+              label="E-mail"
               id="email"
               name="email"
               disabled={habilitado}
@@ -248,8 +242,8 @@ const FormContacto = () => {
           </Grid>
           <Grid item xs>
             <TextField
-              placeholder="confirmar Email"
-              label="Confirmar Email"
+              placeholder="Confirmar e-mail"
+              label="Confirmar e-mail"
               id="confirmarEmail"
               name="confirmarEmail"
               disabled={habilitado}
@@ -272,7 +266,7 @@ const FormContacto = () => {
             <TextField
               type="codArea"
               placeholder="Ej: 11"
-              label="Cod. área"
+              label="Código de área"
               id="codArea"
               name="codArea"
               disabled={habilitado}
@@ -281,7 +275,7 @@ const FormContacto = () => {
               helperText={
                 formik.errors.codArea || (
                   <Typography variant="p" style={Style.c}>
-                    *Ingrese Cod. Area sin el 0
+                    *Ingrese código de área sin el 0
                   </Typography>
                 )
               }
@@ -293,7 +287,7 @@ const FormContacto = () => {
               value="rigth"
               type="number"
               placeholder="Ej: 12345678"
-              label="Telefono"
+              label="Teléfono"
               id="telefono"
               name="telefono"
               disabled={habilitado}
@@ -302,7 +296,7 @@ const FormContacto = () => {
               helperText={
                 formik.errors.telefono || (
                   <Typography variant="p" style={Style.c}>
-                    *Ingrese el numero sin el 15
+                    *Ingrese el número sin el 15
                   </Typography>
                 )
               }
@@ -312,87 +306,110 @@ const FormContacto = () => {
           <Grid item xs></Grid>
         </Grid>
         <Grid container>
-          <Grid item xs >
-           
-                <TextField
-                  
-                  placeholder="0123456789"
-                  label="Cuenta de Servicios"
-                  id="cuentaContrato"
-                  name="cuentaContrato"
-                  disabled={habilitado}
-                  onChange={formik.handleChange}
-                  value={formik.values.cuentaContrato}
-                  helperText={formik.errors.cuentaContrato}
-                  error={formik.errors.cuentaContrato}
-                />
-                <div>
-                  <Button
-                    onClick={handleToggle}
-                    style={{ height: "3px", marginTop: "0%" }}
-                  >
-                    <Typography variant="p" style={Style.d}>
-                      ¿Donde lo encuentro?
-                    </Typography>
-                  </Button>
-                  <div>
-                    <Zoom in={toggle}>
-                      <Paper>
-                        {toggle && (
-                          <img
-                            id="service"
-                            style={{ width: 350, height: 150 }}
-                            src={service}
-                          ></img>
-                        )}
-                      </Paper>
-                    </Zoom>
-                  </div>
-                </div>
-              </Grid>
-              
-          
-          <Grid item xs /*style={{width:'150%}}*/>
-            <div style={{ marginTop: "4%", display: "flex" }}>
-              <p stylr={{ alignSelf: "flex-end" }}>Titular de la cuenta ? </p>
-              <RadioGroup
-                style={{ marginTop: "0%", marginLeft: "3%" }}
-                row
-                aria-label="position"
-                name="position"
-                defaultValue="top"
+          <Grid item xs>
+            <TextField
+              placeholder="0123456789"
+              label="Cuenta de Servicios"
+              id="cuentaContrato"
+              name="cuentaContrato"
+              disabled={habilitado}
+              onChange={formik.handleChange}
+              value={formik.values.cuentaContrato}
+              helperText={formik.errors.cuentaContrato}
+              error={formik.errors.cuentaContrato}
+            />
+            <div>
+              <Button
+                onClick={handleToggle}
+                style={{ height: "3px", marginTop: "0%" ,marginBottom: '2%'}}
               >
-                <FormControlLabel
-                  value="Si"
-                  disabled={habilitado}
-                  control={<Radio color="primary" onChange={hide} />}
-                  label="Si"
-                  labelPlacement="Si"
-                />
-                <FormControlLabel
-                  value="No"
-                  disabled={habilitado}
-                  control={<Radio color="primary" onChange={show} />}
-                  label="No"
-                  labelPlacement="No"
-                />
-              </RadioGroup>
+                <Typography variant="p" style={Style.d}>
+                  ¿Dónde lo encuentro?
+                </Typography>
+              </Button>
+              <div>
+                <Zoom in={toggle}>
+                  <div>
+                    {toggle && (
+                      <img
+                        id="service"
+                        style={{ width: "75%", height: "50%" }}
+                        src={service}
+                      ></img>
+                    )}
+                  </div>
+                </Zoom>
+              </div>
             </div>
           </Grid>
-          <Grid item xs>
-            {showT ? <Titular /> : null}
+          <Grid item xs={8}>
+            <Grid container>
+              <Grid item xs={6}>
+                {" "}
+                <div>
+                <p style={{ fontWeight : 'bold',fontSize : '10pt', fontFamily: 'Roboto', marginLeft:'3%' }}>
+                  Titular de la cuenta
+                </p>
+                </div>
+              
+                {" "}
+                <RadioGroup
+                 style={{marginLeft: '3%', marginTop: '-2%', width: "150%" }}
+                  row
+                  aria-label="position"
+                  name="position"
+                  defaultValue="top"
+                >
+                  <FormControlLabel
+                    value="Si"
+                    disabled={habilitado}
+                    control={<Radio color="primary" onChange={hide} />}
+                    label="Si"
+                    labelPlacement="Si"
+                  />
+                  <FormControlLabel
+                    value="No"
+                    disabled={habilitado}
+                    control={<Radio color="primary" onChange={show} />}
+                    label="No"
+                    labelPlacement="No"
+                  />
+                </RadioGroup>
+              </Grid>
+              <Grid item xs>
+                <div id="titular" style={{ display: "none"}}>
+                  <TextField
+                    //style={{marginLeft:'-8%'}}
+                    placeholder="Titular de la Cuenta"
+                    label="Titular de la Cuenta"
+                    id="titularCuenta"
+                    name="titularCuenta"
+                    disabled={habilitado}
+                    onChange={formik.handleChange}
+                    value={formik.values.titularCuenta}
+                    helperText={formik.errors.titularCuenta}
+                    error={formik.errors.titularCuenta}
+                  />
+                </div>
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
         <Divider />
         <div
           style={{
+            marginTop: "1%",
             display: "flex",
             justifyContent: "center",
             flexDirection: "column",
           }}
         >
           <div
-            style={{ marginTop: "1%", alignSelf: "center", marginRight: "10%" }}
+            style={{
+              marginTop: "1%",
+              alignSelf: "center",
+              marginRight: '20%',
+            }}
           >
             <Button
               disabled={habilitado}
@@ -406,6 +423,7 @@ const FormContacto = () => {
         </div>
       </FormControl>
     </form>
+   
   );
 };
 

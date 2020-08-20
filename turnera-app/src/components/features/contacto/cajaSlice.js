@@ -11,7 +11,9 @@ export const cajaSlice = createSlice({
   reducers: {
     setCajaValues: (state, action) => {
       state.tipo = action.payload;
-      state.submitted = !state.submitted;
+      if(!state.submitted){
+        state.submitted = !state.submitted;
+      }
     },
     resetCajaValues: (state) => {
       Object.assign(state, initialState);

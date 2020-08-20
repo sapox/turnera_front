@@ -6,7 +6,7 @@ import {
   FormControl,
   InputLabel,
   Button,
-  Paper,
+  Typography,
   Zoom,
 } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
@@ -16,7 +16,7 @@ import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import es from "date-fns/locale/es";
 import {
-  getSucursales,
+  getSucursalesByTipoCaja,
   getFeriados,
   getTurnosDisponibles,
   createTurno,
@@ -113,7 +113,7 @@ const FormTurnos = () => {
   }
 
   async function getSucursalesFunc() {
-    const res = await getSucursales();
+    const res = await getSucursalesByTipoCaja(tipoCaja);
     setSucursales(res.data);
   }
 
@@ -182,25 +182,25 @@ const FormTurnos = () => {
 
   return (
     <form onSubmit={formik.handleSubmit}>
+    <FormControl
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        flexDirection: "column",
+      }}
+    >
       <FormControl
         style={{
-          display: "flex",
-          justifyContent: "center",
-          flexDirection: "column",
+          marginTop: "3%",
+
+          width: "50%",
+          alignSelf: "center",
         }}
       >
-        <FormControl
-          style={{
-            marginTop: "3%",
-            marginRight: "10%",
-            width: "50%",
-            alignSelf: "center",
-          }}
-        >
-          <InputLabel>Oficina Comercial</InputLabel>
+          <InputLabel><b>Centro de Atención</b></InputLabel>
           <Select
             id="sucursalId"
-            name="sucursalId"
+			      name="sucursalId"
             style={{ marginBottom: "15px", minWidth: "150" }}
             disabled={habilitado}
             onChange={formik.handleChange}
@@ -209,54 +209,53 @@ const FormTurnos = () => {
             {sucursales &&
               sucursales.map((sucursal) => (
                 <MenuItem
+				        style={{fontSize: "11pt" , fontFamily:'Roboto'}}
                   key={`sucursal_${sucursal.id}`}
                   value={sucursal.id}
                   onChange={sucursalData(formik.values.sucursalId)}
                 >
-                  {sucursal.nombre} -
-                  <p style={{ fontSize: 13 }}>{sucursal.direccion}</p>
+                  {`${sucursal.localidad.nombre} - ${sucursal.nombre}, ${sucursal.direccion}`}
                 </MenuItem>
               ))}
           </Select>
         </FormControl>
-
         <FormControl
           style={{
-            marginRight: "10%",
             alignSelf: "center",
             display: "flex",
             justifyContent: "center",
             flexDirection: "column",
           }}
         >
-          <DatePicker
-            style={{
-              marginTop: "3%",
-              marginRight: "10%",
-              width: "50%",
-              alignSelf: "center",
-            }}
-            id="fecha"
-            locale="es"
-            selected={formik.values.fecha}
-            name="fecha"
-            onChange={(date) => handleDateChange(date)}
-            dateFormat="MMMM d, yyyy"
-            filterDate={isWeekday}
-            minDate={setMinutes(addDays(new Date(), 1), 30)}
-            showDisabledMonthNavigation
-            inline={formik.values.sucursalId !== ""}
-            excludeDates={populateFeriados(feriados)}
-          />
+          <div id="datePicker">
+            <DatePicker
+              style={{
+                marginTop: "3%",
+                marginRight: "10%",
+                width: "50%",
+                alignSelf: "center",
+              }}
+              id="fecha"
+              locale="es"
+              selected={formik.values.fecha}
+              name="fecha"
+              onChange={(date) => handleDateChange(date)}
+              dateFormat="MMMM d, yyyy"
+              filterDate={isWeekday}
+              minDate={setMinutes(addDays(new Date(), 1), 30)}
+              showDisabledMonthNavigation
+              inline={formik.values.sucursalId !== ""}
+              excludeDates={populateFeriados(feriados)}
+            />
+          </div>
         </FormControl>
-
         {turnos.length > 0 && (
           <FormControl
             style={{
               maxWidth: 200,
               marginBottom: "15px",
               marginTop: "3%",
-              marginRight: "10%",
+
               width: "50%",
               alignSelf: "center",
             }}
@@ -264,7 +263,7 @@ const FormTurnos = () => {
             <InputLabel>Horario</InputLabel>
             <Select
               id="hora"
-              name="hora"
+			        name="hora"
               disabled={habilitado}
               onChange={formik.handleChange}
               value={formik.values.hora}
@@ -287,24 +286,20 @@ const FormTurnos = () => {
               position: "relative",
               alignSelf: "center",
               transform: "none",
-
-              marginLeft: "0%",
-              marginRight: "10%",
+              fontFamily: "Roboto",
+              padding: '9pt',
               width: "50%",
-              border: "ridge",
-              textAlign: "justify",
+              border: 'outset',
+              textAlign: "center",
             }}
           >
+			    <div style={{textAlign: "center"}}><b>Datos del Turno</b></div>
             Ud.{" "}
-            <b>
               {nombreUser} {apellidoUser}
-            </b>
-            , con DNI: <b>{dniUser}</b> esta a punto de sacar un turno para la
+            , con DNI: {dniUser} esta a punto de sacar un turno para la
             oficina comercial de{" "}
-            <b>
-              {sucursalNombre}({sucursalDireccion}),{sucursalLocalidad}
-            </b>
-            . En la fecha <b>{fechaTurno}</b> a las <b>{horaTurno} hs</b>.
+              {sucursalNombre}({sucursalDireccion}) - {sucursalLocalidad}
+            . En la fecha {fechaTurno} a las {horaTurno} hs.
           </div>
         </Zoom>
         <div
@@ -314,14 +309,12 @@ const FormTurnos = () => {
             flexDirection: "column",
           }}
         >
-          <div
-            style={{ marginTop: "1%", alignSelf: "center", marginRight: "10%" }}
-          >
+          <div style={{ marginTop: "1%", alignSelf: "center" }}>
             <Button
               disabled={habilitado}
               type="submit"
               variant="contained"
-              style={{backgroundColor: '#009bdb', color:'white'}}
+              style={{ backgroundColor: "#0055a6", color: "white" }}
             >
               Confirmar Turno
             </Button>
@@ -330,6 +323,6 @@ const FormTurnos = () => {
       </FormControl>
     </form>
   );
-};
+} 
 
 export default FormTurnos;
