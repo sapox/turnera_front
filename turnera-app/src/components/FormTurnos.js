@@ -197,7 +197,7 @@ const FormTurnos = () => {
           alignSelf: "center",
         }}
       >
-          <InputLabel><b>Elegí el Centro de Atención,la fecha y hora del turno</b></InputLabel>
+          <InputLabel><b>Elegí el Centro de Atención, fecha y hora del turno</b></InputLabel>
           <Select
             id="sucursalId"
 			      name="sucursalId"
@@ -296,9 +296,9 @@ const FormTurnos = () => {
 			    <div style={{textAlign: "center"}}><b>Datos del Turno</b></div>
             Ud.{" "}
               {nombreUser} {apellidoUser}
-            , con DNI: {dniUser} esta a punto de sacar un turno para la
-            oficina comercial de{" "}
-              {sucursalNombre}({sucursalDireccion}) - {sucursalLocalidad}
+            , con DNI: {dniUser} esta a punto de sacar un turno para el Centro
+              de Atención de{" "}
+              {sucursalNombre} ({sucursalDireccion}) - {sucursalLocalidad}
             . En la fecha {fechaTurno} a las {horaTurno} hs.
           </div>
         </Zoom>

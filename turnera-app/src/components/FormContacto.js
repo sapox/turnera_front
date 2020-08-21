@@ -121,13 +121,11 @@ const FormContacto = () => {
 
   const show = () => {
     document.getElementById("titular").style.display = "block";
-    //setShowT(true);
     formik.values.titularCuenta = document.getElementById('titularCuenta').value;
   };
 
   const hide = () => {
     document.getElementById("titular").style.display = "none";
-    //setShowT(false);
     formik.values.titularCuenta = "";
   };
 
