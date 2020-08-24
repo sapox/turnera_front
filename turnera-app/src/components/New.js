@@ -1,8 +1,7 @@
-import React, { Component, useEffect, useState } from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
-import { Stepper, Step, StepLabel, StepContent } from "@material-ui/core";
+import { Stepper, Step, StepLabel } from "@material-ui/core";
 import {
   MenuItem,
   Select,
@@ -12,7 +11,6 @@ import {
   Paper,
 } from "@material-ui/core";
 import Divider from "@material-ui/core/Divider";
-import Container from "@material-ui/core/Container";
 import FormContacto from "./FormContacto";
 import FormTurnos from "./FormTurnos";
 import TurnoConfirmado from "./TurnoConfirmado";
@@ -25,11 +23,6 @@ import { resetTurnoConfirmadoValues } from "./features/contacto/turnoConfirmadoS
 import { resetCajaValues } from "./features/contacto/cajaSlice";
 import { resetDisclaimer } from "./features/contacto/disclaimerSlice";
 import swal from "sweetalert2";
-import {
-  createMuiTheme,
-  responsiveFontSizes,
-  Typography,
-} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {

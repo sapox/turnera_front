@@ -4,7 +4,6 @@ import Container from "@material-ui/core/Container";
 import { Link } from "react-router-dom";
 import SingleLogInForm from "./SingleLogInForm";
 import Typography from "@material-ui/core/Typography";
-import { Button } from "@material-ui/core";
 import Header from "./Header";
 
 const FormLogin = (props) => {
