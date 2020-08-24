@@ -61,7 +61,9 @@ const validation = Yup.object({
   apellido: Yup.string()
     .max(20, "Debe contener 20 caracteres o menos")
     .required("requerido"),
-  email: Yup.string().email("Coloque un email válido").required("requerido"),
+  email: Yup.string()
+    .email("Coloque un email válido")
+    .required("requerido"),
   confirmarEmail: Yup.string()
     .oneOf([Yup.ref("email"), null], "Debe coincidir con el email ingresado")
     .email("Coloque un email válido")
@@ -79,7 +81,7 @@ const validation = Yup.object({
     .notRequired(),
   titularCuenta: Yup.string()
     .max(20, "Debe contener 20 caracteres o menos")
-    .notRequired(),
+    .required("requerido"),
 });
 
 const FormContacto = () => {
@@ -99,7 +101,7 @@ const FormContacto = () => {
       cuentaContrato: "",
       titularCuenta: "",
     },
-    validationSchema: validation,
+    validationSchema: validation, 
     onSubmit: (values) => {
       dispatch(setUserValues(values));
       dispatch(deshabilitar());
@@ -126,7 +128,7 @@ const FormContacto = () => {
 
   const hide = () => {
     document.getElementById("titular").style.display = "none";
-    formik.values.titularCuenta = "";
+    formik.values.titularCuenta = " ";
   };
 
   useEffect(() => {
@@ -368,6 +370,7 @@ const FormContacto = () => {
                   />
                   <FormControlLabel
                     value="No"
+                    id="No"
                     disabled={habilitado}
                     control={<Radio color="primary" onChange={show} />}
                     label="No"
@@ -376,9 +379,8 @@ const FormContacto = () => {
                 </RadioGroup>
               </Grid>
               <Grid item xs>
-                <div id="titular" style={{ display: "none"}}>
+                <div id="titular" style={{ display: "none" }}>
                   <TextField
-                    //style={{marginLeft:'-8%'}}
                     placeholder="Titular de la Cuenta"
                     label="Titular de la Cuenta"
                     id="titularCuenta"
