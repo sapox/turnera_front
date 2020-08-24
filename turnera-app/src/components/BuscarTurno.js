@@ -171,7 +171,7 @@ function BuscarTurno(props) {
               </FormControl>
               <FormControl className={classes.formControl}>
                 <InputLabel style={{ fontSize: "16pt", fontFamily: "Roboto" }}>
-                  Oficina Comercial (obligatorio)
+                  Centro de Atención (obligatorio)
                 </InputLabel>
                 <Select
                   className={classes.textField}
