@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Paper from "@material-ui/core/Paper";
-import Zoom from "@material-ui/core/Zoom";
-import { useFormik } from "formik";
+import Collapse from "@material-ui/core/Collapse";
+import { useFormik, yupToFormErrors } from "formik";
 import * as Yup from "yup";
 import Divider from "@material-ui/core/Divider";
 
@@ -9,9 +9,7 @@ import {
   FormControl,
   TextField,
   Button,
-  Checkbox,
   FormControlLabel,
-  Container,
 } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import Radio from "@material-ui/core/Radio";
@@ -68,20 +66,20 @@ const validation = Yup.object({
     .oneOf([Yup.ref("email"), null], "Debe coincidir con el email ingresado")
     .email("Coloque un email válido")
     .required("requerido"),
-  codArea: Yup.string()
-    .min(2, "Debe contener 2 caracteres o mas")
+  /*codArea: Yup.string()
+    .min(2, "Debe contener 2 caracteres o más")
     .max(4, "Debe contener 4 caracteres o menos")
     .required("requerido"),
   telefono: Yup.string()
-    .min(5, "Debe contener 5 caracteres o mas")
+    .min(5, "Debe contener 5 caracteres o más")
     .max(8, "Debe contener 8 caracteres o menos")
-    .required("requerido"),
+    .required("requerido"),*/
   cuentaContrato: Yup.string()
     .max(12, "Debe contener 12 caracteres o menos")
     .notRequired(),
   titularCuenta: Yup.string()
     .max(20, "Debe contener 20 caracteres o menos")
-    .required("requerido"),
+    .required("requerido")
 });
 
 const FormContacto = () => {
@@ -133,6 +131,7 @@ const FormContacto = () => {
 
   useEffect(() => {
     try {
+      console.log(document.getElementsById("codArea").value);
       disablePaste("#confirmarEmail");
     } catch (err) {
       setError(err);
@@ -329,17 +328,17 @@ const FormContacto = () => {
                 </Typography>
               </Button>
               <div>
-                <Zoom in={toggle}>
+                <Collapse in={toggle}>
                   <div>
                     {toggle && (
                       <img
                         id="service"
-                        style={{ width: "75%", height: "50%" }}
+                        style={{ width: "75%", height: "50%", border: "outset" }}
                         src={service}
                       ></img>
                     )}
                   </div>
-                </Zoom>
+                </Collapse>
               </div>
             </div>
           </Grid>
@@ -371,6 +370,7 @@ const FormContacto = () => {
                   <FormControlLabel
                     value="No"
                     id="No"
+                    name="No"
                     disabled={habilitado}
                     control={<Radio color="primary" onChange={show} />}
                     label="No"
@@ -388,7 +388,10 @@ const FormContacto = () => {
                     disabled={habilitado}
                     onChange={formik.handleChange}
                     value={formik.values.titularCuenta}
-                    helperText={formik.errors.titularCuenta}
+                    helperText={formik.errors.titularCuenta || (
+                      <Typography variant="p" style={Style.c}>
+                      *Campo requerido
+                    </Typography>)}
                     error={formik.errors.titularCuenta}
                   />
                 </div>
