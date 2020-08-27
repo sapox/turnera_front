@@ -58,8 +58,11 @@ export const getTurnosByFecha_Caja_Sucursal = async ( sucursalId,fecha, tipoCaja
 	const url = `turnos/pagina?sucursalId=${sucursalId}&fecha=${fecha}&tipoCajaId=${tipoCajaId}`
 	return await api.get(url)
 }
+export const getSucursalesByTipoCaja = async (tipoCajaId) => {
+	const url = `sucursales/findSucursalesByTipoCaja?tipoCajaId=${tipoCajaId}`
+	return await api.get(url);
+}
 export const printTurno = async ( sucursalId,fecha, tipoCajaId) => {
 	const url = `turnos/print?sucursalId=${sucursalId}&fecha=${fecha}&tipoCajaId=${tipoCajaId}`
 	return await api.get(url,{responseType:'blob'})
 }
-

@@ -59,9 +59,10 @@ const TurnoConfirmado = () => {
   }, [userDni, turnoId]);
 
   const { cliente, caja, fecha, hora, sucursal } = turnoConfirmado;
+
   
   return (
-    <Card style={{maxWidth: '250px', justifyContent: "center", marginTop: '2%'}} ref={componentRef}>
+    <Card style={{maxWidth: '250px', justifyContent: "center", marginTop: '2%', fontFamily: "Roboto" }} ref={componentRef}>
       
       <div style={{ display: "flex", justifyContent: "center", flexDirection: 'column'}}>
         <div style={{ alignSelf: 'center'}}>
@@ -75,9 +76,9 @@ const TurnoConfirmado = () => {
         <CardContent >
           {turnoConfirmado ? (
             <Fragment>
-              <h2>Turno Confirmado</h2>
+              <h2 style={{textAling: "justify" }}>Turno Confirmado</h2>
               {cliente &&
-              <p style={{textAlign: 'justify'}}>{`Se ha enviado la confirmación del turno a su correo electrónico ${cliente.email}`}.</p>
+              <p>{`Se ha enviado la confirmación del turno a su correo electrónico ${cliente.email}`}.</p>
               }
               <Link to={`/turno_confirmado?turnoId=${turnoId}&userDni=${userDni}`}>
                 <QRCode 
@@ -90,10 +91,18 @@ const TurnoConfirmado = () => {
               </Link>
               {cliente && 
                 <Fragment>
+                <p><b>Nombre: </b>{`${cliente.nombre} ${cliente.apellido}`}</p>
+                <p><b>DNI: </b> {`${cliente.dni}`}</p>
+                <p><b>Fecha: </b> {`${fecha}`}</p>
+                <p><b>Hora: </b> {`${hora}`}</p>
+                <p><b>Tipo de tramite:</b> {caja.tipo.nombre}</p>
+                <p><b>Centro de Atención:</b> {sucursal.nombre}, {sucursal.direccion} - {sucursal.localidad.nombre}</p>
+                <p style={{textAlign: 'justify' }}><b>Importante: </b>No olvides traer tu DNI y recordá que este comprobante te servirá para ser atendido en nuestro Centro de Atención.</p>
+                <p style={{textAlign: 'justify' }}>Si por algún motivo tenés que cancelar el turno, escribinos a {sucursal.email}.</p>
                 <p>{`${cliente.nombre} ${cliente.apellido}. DNI: ${cliente.dni}`}</p>
                 <p>{`Turno: ${fecha}. Horario: ${hora}`}</p>
                 <b>Tipo de tramite:</b> {caja.tipo.nombre}
-                <p><b>Oficina Comercial:</b> {sucursal.nombre} - {sucursal.direccion}, {sucursal.distrito.localidad.nombre}</p>
+                <p><b>Oficina Comercial:</b> {sucursal.nombre} - {sucursal.direccion}, {sucursal.localidad.nombre}</p>
                 <p style={{textAlign: 'justify'}}><b>No olvides traer tu DNI y recordá que este comprobante te servirá para circular en la calle desde tu domicilio hasta la oficina comercial, así como para ser atendido.</b></p>
                 <div  style={{ display: 'flex', justifyContent: 'center'}}>
                   <Button 

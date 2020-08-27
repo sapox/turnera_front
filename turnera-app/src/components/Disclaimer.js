@@ -1,4 +1,3 @@
-
 import React, { Fragment } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -29,14 +28,14 @@ const Disclaimer = () => {
 
 	return (
 		<form onChange={formik.handleSubmit}>
-      <div style={{ display: "flex", justifyContent: "center", textAlign: "justify" ,marginRight:'10%'}}>
+      <div style={{ display: "flex", justifyContent: "center", textAlign: "justify" ,marginRight:'10%',  alignSelf: 'center', marginLeft: '10%', fontFamily: "Roboto"}}>
         <Container>
         <FormControl>
           {text.map((t, i) => (
               <Fragment key={i}>
                 <article>
                   <h3>IMPORTANTE</h3>
-                  <p>{t.content}</p>
+                  <p>{t.content}<b> Cuidarnos es Responsabilidad de todos.</b></p>
                 </article>
               </Fragment>
             ))}
