@@ -73,15 +73,21 @@ const validation = Yup.object().shape({
   telefono: Yup.string()
     .when("codArea", {
       is: (value) => value && value.length == 2,
-      then: Yup.string().required("debe tener 8 dígitos numéricos"),
+      then: Yup.string().required("debe tener 8 dígitos numéricos")
+      .min(8, "debe tener 8 dígitos numéricos")
+      .max(8, "debe tener 8 dígitos numéricos"),
     })
     .when("codArea", {
       is: (value) => value && value.length == 3,
-      then: Yup.string().required("debe tener 7 dígitos numéricos"),
+      then: Yup.string().required("debe tener 7 dígitos numéricos")
+      .min(7, "debe tener 7 dígitos numéricos")
+      .max(7, "debe tener 7 dígitos numéricos"),
     })
     .when("codArea", {
       is: (value) => value && value.length == 4,
-      then: Yup.string().required("debe tener 6 dígitos numéricos"),
+      then: Yup.string().required("debe tener 6 dígitos numéricos")
+      .min(6, "debe tener 6 dígitos numéricos")
+      .max(6, "debe tener 6 dígitos numéricos"),
     })
     .when("codArea", {
       is: (value) => value && value.length > 4,
