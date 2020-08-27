@@ -222,7 +222,7 @@ const FormTurnos = () => {
           alignSelf: "center",
         }}
       >
-          <InputLabel><b>Elegí el Centro de Atención, fecha y hora del turno</b></InputLabel>
+          <InputLabel><b> Centro de Atención </b></InputLabel>
           <Select
             id="sucursalId"
 			      name="sucursalId"
