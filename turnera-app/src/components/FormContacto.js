@@ -4,12 +4,14 @@ import Zoom from "@material-ui/core/Zoom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Divider from "@material-ui/core/Divider";
+import FormGroup from "@material-ui/core/FormGroup";
+import Checkbox from "@material-ui/core/Checkbox";
+import FormLabel from "@material-ui/core/FormLabel";
 
 import {
   FormControl,
   TextField,
   Button,
-  Checkbox,
   FormControlLabel,
   Container,
 } from "@material-ui/core";
@@ -18,13 +20,9 @@ import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import { useDispatch } from "react-redux";
 import { setUserValues } from "./features/contacto/userSlice";
-import $, { param } from "jquery";
+import $ from "jquery";
 import service from "./features/contacto/service.png";
-import {
-  createMuiTheme,
-  responsiveFontSizes,
-  Typography,
-} from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 
 const Style = {
   c: {
@@ -51,7 +49,7 @@ const Style = {
   },
 };
 
-const validation = Yup.object({
+const validation = Yup.object().shape({
   dni: Yup.string("Ingrese dni")
     .min(8, "Debe contener 8 caracteres o más")
     .required("requerido"),
@@ -59,11 +57,10 @@ const validation = Yup.object({
     .max(20, "Debe contener 20 caracteres o menos")
     .required("requerido"),
   apellido: Yup.string()
+    //.typeError("the message")
     .max(20, "Debe contener 20 caracteres o menos")
     .required("requerido"),
-  email: Yup.string()
-    .email("Coloque un email válido")
-    .required("requerido"),
+  email: Yup.string().email("Coloque un email válido").required("requerido"),
   confirmarEmail: Yup.string()
     .oneOf([Yup.ref("email"), null], "Debe coincidir con el email ingresado")
     .email("Coloque un email válido")
@@ -72,10 +69,26 @@ const validation = Yup.object({
     .min(2, "Debe contener 2 caracteres o mas")
     .max(4, "Debe contener 4 caracteres o menos")
     .required("requerido"),
+
   telefono: Yup.string()
-    .min(5, "Debe contener 5 caracteres o mas")
-    .max(8, "Debe contener 8 caracteres o menos")
+    .when("codArea", {
+      is: (value) => value && value.length == 2,
+      then: Yup.string().required("debe tener 8 dígitos numéricos"),
+    })
+    .when("codArea", {
+      is: (value) => value && value.length == 3,
+      then: Yup.string().required("debe tener 7 dígitos numéricos"),
+    })
+    .when("codArea", {
+      is: (value) => value && value.length == 4,
+      then: Yup.string().required("debe tener 6 dígitos numéricos"),
+    })
+    .when("codArea", {
+      is: (value) => value && value.length > 4,
+      then: Yup.string().required("codigo de área supera el máximo permitido"),
+    })
     .required("requerido"),
+
   cuentaContrato: Yup.string()
     .max(12, "Debe contener 12 caracteres o menos")
     .notRequired(),
@@ -101,7 +114,7 @@ const FormContacto = () => {
       cuentaContrato: "",
       titularCuenta: "",
     },
-    validationSchema: validation, 
+    validationSchema: validation,
     onSubmit: (values) => {
       dispatch(setUserValues(values));
       dispatch(deshabilitar());
@@ -123,7 +136,9 @@ const FormContacto = () => {
 
   const show = () => {
     document.getElementById("titular").style.display = "block";
-    formik.values.titularCuenta = document.getElementById('titularCuenta').value;
+    formik.values.titularCuenta = document.getElementById(
+      "titularCuenta"
+    ).value;
   };
 
   const hide = () => {
@@ -133,6 +148,7 @@ const FormContacto = () => {
 
   useEffect(() => {
     try {
+      setClientWidth(document.documentElement.clientWidth);
       disablePaste("#confirmarEmail");
     } catch (err) {
       setError(err);
@@ -157,10 +173,18 @@ const FormContacto = () => {
       </div>
     );
   };
+  const [noCheckBox, setNoCheckBox] = React.useState(false);
+  const [siCheckBox, setSiCheckBox] = React.useState(true);
+  const [clientWidth , setClientWidth] = React.useState('');
+  const marginTop = clientWidth> 400 ? '8%' : '5%' ;
+  const checkOnchange = () => {
+    setNoCheckBox(!noCheckBox);
+    setSiCheckBox(!siCheckBox);
+  };
 
   return (
-      <form onSubmit={formik.handleSubmit}>
-      <FormControl style={{ width: "100%" , marginLeft: '10%'}}>
+    <form onSubmit={formik.handleSubmit}>
+      <FormControl style={{ width: "100%", marginLeft: "10%" }}>
         <Grid container>
           <Grid item xs>
             <TextField
@@ -304,7 +328,33 @@ const FormContacto = () => {
               error={formik.errors.telefono}
             />
           </Grid>
-          <Grid item xs></Grid>
+          <Grid item xs>
+            <div  style={{marginTop: marginTop , marginLeft: '2%',minWidth: '300px'}}>
+            <form >
+              Celular
+              <input
+              style={{marginLeft: '5%'}}
+                type="checkbox"
+                name="si"
+                id="si"
+                checked={siCheckBox}
+                value="si"
+                onChange={checkOnchange}
+              />
+              Sí
+              <input
+                type="checkbox"
+                name="no"
+                id="no"
+                checked={noCheckBox}
+                value="no"
+                onChange={checkOnchange}
+              />
+              No
+            </form>
+            </div>
+            
+          </Grid>
         </Grid>
         <Grid container>
           <Grid item xs>
@@ -322,7 +372,7 @@ const FormContacto = () => {
             <div>
               <Button
                 onClick={handleToggle}
-                style={{ height: "3px", marginTop: "0%" ,marginBottom: '2%'}}
+                style={{ height: "3px", marginTop: "0%", marginBottom: "2%" }}
               >
                 <Typography variant="p" style={Style.d}>
                   ¿Dónde lo encuentro?
@@ -348,14 +398,20 @@ const FormContacto = () => {
               <Grid item xs={6}>
                 {" "}
                 <div>
-                <p style={{ fontWeight : 'bold',fontSize : '10pt', fontFamily: 'Roboto', marginLeft:'3%' }}>
-                  Titular de la cuenta
-                </p>
-                </div>
-              
-                {" "}
+                  <p
+                    style={{
+                      minWidth: '300px',
+                      fontWeight: "bold",
+                      fontSize: "10pt",
+                      fontFamily: "Roboto",
+                      marginLeft: "3%",
+                    }}
+                  >
+                    Titular de la cuenta
+                  </p>
+                </div>{" "}
                 <RadioGroup
-                 style={{marginLeft: '3%', marginTop: '-2%', width: "150%" }}
+                  style={{ marginLeft: "3%", marginTop: "-2%", width: "150%" }}
                   row
                   aria-label="position"
                   name="position"
@@ -409,7 +465,7 @@ const FormContacto = () => {
             style={{
               marginTop: "1%",
               alignSelf: "center",
-              marginRight: '20%',
+              marginRight: "20%",
             }}
           >
             <Button
@@ -424,7 +480,6 @@ const FormContacto = () => {
         </div>
       </FormControl>
     </form>
-   
   );
 };
 
