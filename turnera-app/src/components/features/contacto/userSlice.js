@@ -8,6 +8,7 @@ const initialState = {
   telefono: "",
   cuentaContrato: "",
   titularCuenta: "",
+  celular: "",
   submitted: false,
 };
 
@@ -25,6 +26,7 @@ export const userSlice = createSlice({
         telefono,
         cuentaContrato,
         titularCuenta,
+        celular,
       } = action.payload;
       state.dni = dni;
       state.nombre = nombre;
@@ -33,6 +35,7 @@ export const userSlice = createSlice({
       state.telefono = codArea+telefono;
       state.cuentaContrato = cuentaContrato;
       state.titularCuenta = titularCuenta;
+      state.celular= celular;
       state.submitted = !state.submitted;
     },
     resetUserValues: (state) => {

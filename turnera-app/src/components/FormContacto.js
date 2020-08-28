@@ -1,19 +1,15 @@
 import React, { useState, useEffect } from "react";
 import Paper from "@material-ui/core/Paper";
 import Zoom from "@material-ui/core/Zoom";
-import { useFormik } from "formik";
+import { useFormik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Divider from "@material-ui/core/Divider";
-import FormGroup from "@material-ui/core/FormGroup";
-import Checkbox from "@material-ui/core/Checkbox";
-import FormLabel from "@material-ui/core/FormLabel";
 
 import {
   FormControl,
   TextField,
   Button,
   FormControlLabel,
-  Container,
 } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import Radio from "@material-ui/core/Radio";
@@ -66,28 +62,31 @@ const validation = Yup.object().shape({
     .email("Coloque un email válido")
     .required("requerido"),
   codArea: Yup.string()
-    .min(2, "Debe contener 2 caracteres o mas")
+    .min(2, "Debe contener 2 caracteres o más")
     .max(4, "Debe contener 4 caracteres o menos")
     .required("requerido"),
 
   telefono: Yup.string()
     .when("codArea", {
       is: (value) => value && value.length == 2,
-      then: Yup.string().required("debe tener 8 dígitos numéricos")
-      .min(8, "debe tener 8 dígitos numéricos")
-      .max(8, "debe tener 8 dígitos numéricos"),
+      then: Yup.string()
+        .required("Debe tener 8 dígitos numéricos")
+        .min(8, "Debe tener 8 dígitos numéricos")
+        .max(8, "Debe tener 8 dígitos numéricos"),
     })
     .when("codArea", {
       is: (value) => value && value.length == 3,
-      then: Yup.string().required("debe tener 7 dígitos numéricos")
-      .min(7, "debe tener 7 dígitos numéricos")
-      .max(7, "debe tener 7 dígitos numéricos"),
+      then: Yup.string()
+        .required("Debe tener 7 dígitos numéricos")
+        .min(7, "Debe tener 7 dígitos numéricos")
+        .max(7, "Debe tener 7 dígitos numéricos"),
     })
     .when("codArea", {
       is: (value) => value && value.length == 4,
-      then: Yup.string().required("debe tener 6 dígitos numéricos")
-      .min(6, "debe tener 6 dígitos numéricos")
-      .max(6, "debe tener 6 dígitos numéricos"),
+      then: Yup.string()
+        .required("Debe tener 6 dígitos numéricos")
+        .min(6, "Debe tener 6 dígitos numéricos")
+        .max(6, "Debe tener 6 dígitos numéricos"),
     })
     .when("codArea", {
       is: (value) => value && value.length > 4,
@@ -101,6 +100,7 @@ const validation = Yup.object().shape({
   titularCuenta: Yup.string()
     .max(20, "Debe contener 20 caracteres o menos")
     .required("requerido"),
+  celular: Yup.boolean().required("requerido"),
 });
 
 const FormContacto = () => {
@@ -119,6 +119,7 @@ const FormContacto = () => {
       telefono: "",
       cuentaContrato: "",
       titularCuenta: "",
+      celular: "",
     },
     validationSchema: validation,
     onSubmit: (values) => {
@@ -180,13 +181,40 @@ const FormContacto = () => {
     );
   };
   const [noCheckBox, setNoCheckBox] = React.useState(false);
-  const [siCheckBox, setSiCheckBox] = React.useState(true);
-  const [clientWidth , setClientWidth] = React.useState('');
-  const marginTop = clientWidth> 400 ? '8%' : '5%' ;
-  const checkOnchange = () => {
-    setNoCheckBox(!noCheckBox);
+  const [siCheckBox, setSiCheckBox] = React.useState(false);
+  const [clientWidth, setClientWidth] = React.useState("");
+  const marginTop = clientWidth > 400 ? "5%" : "5%";
+  const width = clientWidth > 400 ? "50%" : "62%";
+  const sicheckOnchange = () => {
     setSiCheckBox(!siCheckBox);
+    if (noCheckBox) {
+      setNoCheckBox(!noCheckBox);
+    }
+    formik.values.celular = true;
   };
+  const nocheckOnchange = () => {
+    setNoCheckBox(!noCheckBox);
+    if (siCheckBox) {
+      setSiCheckBox(!siCheckBox);
+    }
+    formik.values.celular = false;
+  };
+  function errorText() {
+    return (
+      <div>
+        <Divider style={{ width: width, backgroundColor: "red" }} />
+        <p
+          style={{
+            marginTop: "0px",
+            fontSize: "10pt",
+            color: "red",
+          }}
+        >
+          requerido
+        </p>
+      </div>
+    );
+  }
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -335,31 +363,61 @@ const FormContacto = () => {
             />
           </Grid>
           <Grid item xs>
-            <div  style={{marginTop: marginTop , marginLeft: '2%',minWidth: '300px'}}>
-            <form >
-              Celular
-              <input
-              style={{marginLeft: '5%'}}
-                type="checkbox"
-                name="si"
-                id="si"
-                checked={siCheckBox}
-                value="si"
-                onChange={checkOnchange}
-              />
-              Sí
-              <input
-                type="checkbox"
-                name="no"
-                id="no"
-                checked={noCheckBox}
-                value="no"
-                onChange={checkOnchange}
-              />
-              No
-            </form>
+            <div
+              style={{
+                marginTop: marginTop,
+                marginLeft: "2%",
+                minWidth: "300px",
+              }}
+            >
+              <form>
+                <div style={{ marginBottom: "-1%" }}>
+                  <p
+                    style={{
+                      fontWeight: "bold",
+                      fontSize: "10pt",
+                      fontFamily: "Roboto",
+                      display: "inline-block",
+                    }}
+                  >
+                    Celular
+                  </p>
+                  <input
+                    style={{ marginLeft: "5%" }}
+                    type="checkbox"
+                    name="si"
+                    disabled={habilitado}
+                    id="si"
+                    checked={siCheckBox}
+                    value={formik.values.celular}
+                    onChange={sicheckOnchange}
+                  />
+                  Sí
+                  <input
+                    type="checkbox"
+                    name="no"
+                    id="no"
+                    disabled={habilitado}
+                    checked={noCheckBox}
+                    value={formik.values.celular}
+                    onChange={nocheckOnchange}
+                  />
+                  No
+                </div>
+
+                <div
+                  style={{
+                    marginTop: "0px",
+                    fontSize: "10pt",
+                    color: "red",
+                  }}
+                >
+                  {formik.values.celular == "" &&
+                    formik.errors.celular &&
+                    errorText()}
+                </div>
+              </form>
             </div>
-            
           </Grid>
         </Grid>
         <Grid container>
@@ -406,7 +464,7 @@ const FormContacto = () => {
                 <div>
                   <p
                     style={{
-                      minWidth: '300px',
+                      minWidth: "300px",
                       fontWeight: "bold",
                       fontSize: "10pt",
                       fontFamily: "Roboto",
