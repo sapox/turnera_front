@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Text } from "react";
+import React, { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import { Button, InputLabel, MenuItem, FormControl, Select, Container, TextField } from "@material-ui/core";
 import { makeStyles, MuiThemeProvider } from "@material-ui/core/styles";
@@ -12,7 +12,6 @@ import { createMuiTheme, responsiveFontSizes, Typography } from "@material-ui/co
 function BuscarTurno(props) {
   let theme = createMuiTheme();
   theme = responsiveFontSizes(theme);
-  const apiLogOut = () => {};
   const title = "Buscar Turno";
   const welcome = <Typography variant="p">Bienvenido!</Typography>;
 
@@ -30,8 +29,6 @@ function BuscarTurno(props) {
     },
   }));
   const classes = useStyles();
-  const sentence = "Salir";
-  const toLower = sentence.toLowerCase();
   const button = (
     <Link to="/backOffice" style={{ textDecoration: "none" }}>
       <Button size="small" variant="contained" color="#009bdb">
@@ -48,20 +45,13 @@ function BuscarTurno(props) {
       </Button>
     </Link>
   );
-  const [oficina, setOficina] = useState(false);
-  const [openFecha, setOpenFecha] = useState(false);
-  const [openTipoTramite, setOpenTipoTramite] = useState(false);
-  const [open, setOpen] = useState(false);
+  
   const [sucursales, setSucursales] = useState([]);
-  const [error, setError] = useState("");
-  const [turnos, setTurnos] = useState([]);
+  const [ , setError] = useState("");
+  const [ , setTurnos] = useState([]);
   const [tipoDecajas, setTipoDecajas] = useState([]);
 
-  const handleChange = (event) => {
-    setOficina(event.target.value);
-  };
-
-  const handleOpen = (value) => {
+  /*const handleOpen = (value) => {
     if (value === "oficina") {
       setOpen(!open);
     } else if (value === "fecha") {
@@ -69,7 +59,7 @@ function BuscarTurno(props) {
     } else if (value === "tipoTramite") {
       setOpenTipoTramite(!openTipoTramite);
     }
-  };
+  };*/
 
   async function getTurnosFunc(fecha, sucursal, tipoCaja) {
     //const auxFecha = formatISO(new Date(`${fecha}`), {representation: 'date' });
@@ -111,7 +101,7 @@ function BuscarTurno(props) {
     },
     validationSchema: validation,
     onSubmit: (values) => {
-      const { sucursalId, fecha, tramiteId } = values;
+      //const { sucursalId, fecha, tramiteId } = values;
 
       //getTurnosFunc(sucursalId, fecha ,tramiteId);
     },

@@ -6,7 +6,6 @@ import {
   FormControl,
   InputLabel,
   Button,
-  Typography,
   Zoom,
 } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
@@ -32,7 +31,7 @@ const FormTurnos = () => {
   const [feriados, setFeriados] = useState([]);
   const [habilitado, setHabilitado] = useState(false);
   const [turnos, setTurnos] = useState([]);
-  const [error, setError] = useState("");
+  const [ , setError] = useState("");
   //values from store
   const tipoCaja = useSelector((state) => state.caja.tipo);
   const dniUser = useSelector((state) => state.user.dni);

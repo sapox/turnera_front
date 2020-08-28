@@ -1,5 +1,5 @@
 import React from "react";
-import { TextField, Button, Paper, Grid, Typography, Container } from "@material-ui/core";
+import { Button, Paper, Grid, Typography, Container } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import Header from "./Header";
@@ -34,8 +34,6 @@ const BackOffice = (props) => {
   const title = null;
   const welcome = null;
   const button = null;
-
-  function getLogin() {}
 
   return (
     <div>

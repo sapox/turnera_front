@@ -62,16 +62,6 @@ const SingleLogInForm = (props) => {
     onSubmit: apiLogIn,
   });
 
-  const Style = {
-    turno: {
-      color: "gray",
-    },
-    h1: {
-      color: "white",
-      backgroundColor: "dodgerblue",
-      padding: "10px",
-    },
-  };
   const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
@@ -87,12 +77,9 @@ const SingleLogInForm = (props) => {
     },
   }));
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, ] = useState("");
+  const [password, ] = useState("");
   const classes = useStyles();
-  const title = null;
-  const welcome = null;
-  const button = null;
 
   const loginButton = (
     <Link to="/backOfficeL" style={{ textDecoration: "none" }}>

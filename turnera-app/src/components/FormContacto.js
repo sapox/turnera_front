@@ -1,28 +1,22 @@
 import React, { useState, useEffect } from "react";
-import Paper from "@material-ui/core/Paper";
 import Zoom from "@material-ui/core/Zoom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Divider from "@material-ui/core/Divider";
-
 import {
   FormControl,
   TextField,
   Button,
-  Checkbox,
   FormControlLabel,
-  Container,
 } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import { useDispatch } from "react-redux";
 import { setUserValues } from "./features/contacto/userSlice";
-import $, { param } from "jquery";
+import $ from "jquery";
 import service from "./features/contacto/service.png";
 import {
-  createMuiTheme,
-  responsiveFontSizes,
   Typography,
 } from "@material-ui/core";
 
@@ -86,7 +80,7 @@ const validation = Yup.object({
 
 const FormContacto = () => {
   const dispatch = useDispatch();
-  const [error, setError] = useState("");
+  const [ , setError] = useState("");
   const [toggle, setToggle] = useState(false);
   const [habilitado, setHabilitado] = useState(false);
   const formik = useFormik({
@@ -138,25 +132,6 @@ const FormContacto = () => {
       setError(err);
     }
   }, []);
-
-  const [showT, setShowT] = React.useState(false);
-  const Titular = () => {
-    return (
-      <div id="titular">
-        <TextField
-          placeholder="Titular de la Cuenta"
-          label="Titular de la Cuenta"
-          id="titularCuenta"
-          name="titularCuenta"
-          disabled={habilitado}
-          onChange={formik.handleChange}
-          value={formik.values.titularCuenta}
-          helperText={formik.errors.titularCuenta}
-          error={formik.errors.titularCuenta}
-        />
-      </div>
-    );
-  };
 
   return (
       <form onSubmit={formik.handleSubmit}>
@@ -285,7 +260,6 @@ const FormContacto = () => {
           </Grid>
           <Grid item xs>
             <TextField
-              value="rigth"
               type="number"
               placeholder="Ej: 12345678"
               label="Teléfono"

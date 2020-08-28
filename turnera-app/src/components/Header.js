@@ -7,9 +7,9 @@ import Grid from "@material-ui/core/Grid";
 import {
   createMuiTheme,
   responsiveFontSizes,
-  ThemeProvider,
   Typography,
 } from "@material-ui/core";
+
 function Header(props) {
   let theme = createMuiTheme();
   theme = responsiveFontSizes(theme);
@@ -35,7 +35,6 @@ function Header(props) {
   const classes = useStyles();
   const title = null;
   const welcome = null;
-  const apiLogOut = null;
   const button = null;
   return (
     <Container fixed>

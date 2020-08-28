@@ -1,8 +1,7 @@
-import React, { Component, useEffect, useState } from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
-import { Stepper, Step, StepLabel, StepContent } from "@material-ui/core";
+import { Stepper, Step, StepLabel } from "@material-ui/core";
 import {
   MenuItem,
   Select,
@@ -12,24 +11,18 @@ import {
   Paper,
 } from "@material-ui/core";
 import Divider from "@material-ui/core/Divider";
-import Container from "@material-ui/core/Container";
 import FormContacto from "./FormContacto";
 import FormTurnos from "./FormTurnos";
 import TurnoConfirmado from "./TurnoConfirmado";
 import Disclaimer from "./Disclaimer";
 import { getTipoCaja } from "../api";
 import { setCajaValues } from "./features/contacto/cajaSlice";
-import { resetUserValues, setUserValues } from "./features/contacto/userSlice";
+import { resetUserValues } from "./features/contacto/userSlice";
 import { resetTurnoValues } from "./features/contacto/turnoSlice";
 import { resetTurnoConfirmadoValues } from "./features/contacto/turnoConfirmadoSlice";
 import { resetCajaValues } from "./features/contacto/cajaSlice";
 import { resetDisclaimer } from "./features/contacto/disclaimerSlice";
 import swal from "sweetalert2";
-import {
-  createMuiTheme,
-  responsiveFontSizes,
-  Typography,
-} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -98,7 +91,7 @@ function getStepContent(step, disclaimer, userStep) {
 const SelectTipo = () => {
   const [tipo, setTipo] = React.useState("");
   const [tipoDecajas, setTipoDecajas] = useState([]);
-  const [error, setError] = useState("");
+  const [ , setError] = useState("");
 
   const dispatch = useDispatch();
   const handleChange = (event) => {
@@ -153,10 +146,7 @@ export default function New() {
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
+  
   const dispatch = useDispatch();
 
   const handleReset = () => {

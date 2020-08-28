@@ -41,10 +41,6 @@ export const BackOfficeLoguado = (props) => {
     </Link>
   );
 
-  function getLogin (){
-      
-  }
-
   return (
     <div>
       <Container fixed>

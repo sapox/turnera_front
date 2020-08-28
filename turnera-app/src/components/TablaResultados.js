@@ -15,9 +15,8 @@ const TablaResultados = (props) => {
   let theme = createMuiTheme();
   theme = responsiveFontSizes(theme);
   const classes = useStyles();
-  const [error, setError] = useState("");
+  const [ , setError] = useState("");
   const [turnos, setTurnos] = useState([]);
-  const [url, setUrl] = useState("");
   const sucursalId = props.params.sucursalId;
   const tipoCajaId = props.params.tramiteId;
   const fecha = props.params.fecha;
@@ -44,7 +43,7 @@ const TablaResultados = (props) => {
   }, [sucursalId, fecha, tipoCajaId]);
 
   async function print(sucursalId, fecha, tipoCajaId) {
-    const url = await printTurno(sucursalId, fecha, tipoCajaId)
+      await printTurno(sucursalId, fecha, tipoCajaId)
       .then((response) => {
         const file = new Blob([response.data], { type: "application/pdf" });
         const fileURL = URL.createObjectURL(file);
